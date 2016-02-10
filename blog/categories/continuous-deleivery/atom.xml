@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Continuous Deleivery | Infinity]]></title>
   <link href="http://rajatguptarg.github.io/blog/categories/continuous-deleivery/atom.xml" rel="self"/>
   <link href="http://rajatguptarg.github.io/"/>
-  <updated>2016-02-10T22:52:20+05:30</updated>
+  <updated>2016-02-10T22:58:06+05:30</updated>
   <id>http://rajatguptarg.github.io/</id>
   <author>
     <name><![CDATA[Rajat Gupta]]></name>
@@ -37,7 +37,7 @@ in Flask. As a Open Source project we want to upload this package to PyPi.</p>
 <li><strong>For Development:</strong> Flask</li>
 <li><strong>For CI:</strong> Travis</li>
 <li><strong>For Test Env:</strong> Own Host Machine</li>
-<li><strong>Deploy:</strong> [PyPi]<a href="https://pypi.python.org/pypi">https://pypi.python.org/pypi</a></li>
+<li><strong>Deploy:</strong> <a href="https://pypi.python.org/pypi">PyPi</a></li>
 </ul>
 
 ]]></content>
