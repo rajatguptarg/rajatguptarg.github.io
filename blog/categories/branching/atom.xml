@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Branching | Infinity]]></title>
   <link href="http://rajatguptarg.github.io/blog/categories/branching/atom.xml" rel="self"/>
   <link href="http://rajatguptarg.github.io/"/>
-  <updated>2016-02-10T22:21:47+05:30</updated>
+  <updated>2016-02-10T22:47:47+05:30</updated>
   <id>http://rajatguptarg.github.io/</id>
   <author>
     <name><![CDATA[Rajat Gupta]]></name>
@@ -18,8 +18,27 @@
     <link href="http://rajatguptarg.github.io/blog/2016/02/10/love-branching-with-continuous-integration-and-continuous-deleivery/"/>
     <updated>2016-02-10T22:11:21+05:30</updated>
     <id>http://rajatguptarg.github.io/blog/2016/02/10/love-branching-with-continuous-integration-and-continuous-deleivery</id>
-    <content type="html"><![CDATA[<p><strong>[Draft]</strong> I am writing this post after looking in lot of discussions and post
-about the Continuous Integration and Continuous Deleivery.</p>
+    <content type="html"><![CDATA[<p><strong>[Draft]</strong></p>
+
+<p>I am writing this post after looking in lot of discussions and post
+about the Continuous Integration and Continuous Deleivery. Finally, I conclude
+that we can achieve a CI and CD using Git Feature branches also.</p>
+
+<p>Here your targeted audience ask for the Web Application which can print
+&ldquo;Hello World&rdquo; when you land on the web page. We follow agile methodology and
+we will implement this project using CI and CD.</p>
+
+<p>I am Python lover, so I am going to demonstrate a basic web application written
+in Flask. As a Open Source project we want to upload this package to PyPi.</p>
+
+<p>Here is the complete developement details:</p>
+
+<ul>
+<li><strong>For Development:</strong> Flask</li>
+<li><strong>For CI:</strong> Travis</li>
+<li><strong>For Test Env:</strong> Own Host Machine</li>
+</ul>
+
 ]]></content>
   </entry>
   
