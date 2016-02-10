@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Love Branching with Continuous Integration and Continuous Deleivery"
+title: "Love Branching with Continuous Integration and Continuous Delivery"
 date: 2016-02-10 22:11:21 +0530
 content: "Branching with CI & CD"
 comments: true
@@ -29,3 +29,4 @@ Here is the complete developement details:
 * **For Development:** Flask
 * **For CI:** Travis
 * **For Test Env:** Own Host Machine
+* **Deploy:** [PyPi]https://pypi.python.org/pypi
