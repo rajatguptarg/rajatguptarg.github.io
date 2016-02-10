@@ -29,4 +29,4 @@ Here is the complete developement details:
 * **For Development:** Flask
 * **For CI:** Travis
 * **For Test Env:** Own Host Machine
-* **Deploy:** [PyPi]https://pypi.python.org/pypi
+* **Deploy:** [PyPi](https://pypi.python.org/pypi)
