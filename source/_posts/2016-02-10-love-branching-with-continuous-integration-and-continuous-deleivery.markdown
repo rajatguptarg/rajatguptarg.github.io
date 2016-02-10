@@ -26,7 +26,7 @@ in Flask. As a Open Source project we want to upload this package to PyPi.
 
 Here is the complete developement details:
 
-* **For Development:** Flask
-* **For CI:** Travis
+* **For Development:** [Flask](http://flask.pocoo.org/)
+* **For CI:** [Travis](https://travis-ci.org/)
 * **For Test Env:** Own Host Machine
 * **Deploy:** [PyPi](https://pypi.python.org/pypi)
