@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git Workflow | Infinity]]></title>
   <link href="http://rajatguptarg.github.io/blog/categories/git-workflow/atom.xml" rel="self"/>
   <link href="http://rajatguptarg.github.io/"/>
-  <updated>2016-02-10T22:58:06+05:30</updated>
+  <updated>2016-02-10T23:09:22+05:30</updated>
   <id>http://rajatguptarg.github.io/</id>
   <author>
     <name><![CDATA[Rajat Gupta]]></name>
@@ -34,8 +34,8 @@ in Flask. As a Open Source project we want to upload this package to PyPi.</p>
 <p>Here is the complete developement details:</p>
 
 <ul>
-<li><strong>For Development:</strong> Flask</li>
-<li><strong>For CI:</strong> Travis</li>
+<li><strong>For Development:</strong> <a href="http://flask.pocoo.org/">Flask</a></li>
+<li><strong>For CI:</strong> <a href="https://travis-ci.org/">Travis</a></li>
 <li><strong>For Test Env:</strong> Own Host Machine</li>
 <li><strong>Deploy:</strong> <a href="https://pypi.python.org/pypi">PyPi</a></li>
 </ul>
