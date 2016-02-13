@@ -9,8 +9,8 @@
   <meta name="author" content="Rajat Gupta">
 
   
-  <meta name="description" content="[Draft] I am writing this post after looking in lot of discussions and post
-about the Continuous Integration and Continuous Deleivery. Finally, I &hellip;">
+  <meta name="description" content="I am writing this post after looking in lot of discussions and post
+about the Continuous Integration and Continuous Deleivery. Finally, I conclude &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,9 +103,7 @@ about the Continuous Integration and Continuous Deleivery. Finally, I &hellip;">
   </header>
 
 
-<div class="entry-content"><p><strong>[Draft]</strong></p>
-
-<p>I am writing this post after looking in lot of discussions and post
+<div class="entry-content"><p>I am writing this post after looking in lot of discussions and post
 about the Continuous Integration and Continuous Deleivery. Finally, I conclude
 that we can achieve a CI and CD using Git Feature branches also.</p>
 
@@ -125,6 +123,40 @@ in Flask. As a Open Source project we want to upload this package to PyPi.</p>
 <li><strong>Deploy:</strong> <a href="https://pypi.python.org/pypi">PyPi</a></li>
 </ul>
 
+
+<p>Suppose I have 3 members in my team and we are working on different features.</p>
+
+<p>Lets come to continuous integrations. If you look on the Git Workflow, each one
+of us are working on our feaure branch. We use Travis CI, which will run all
+your test on every branch you create, on creating a Pull request(PR) for your
+<code>develop</code> branch of repository and also run tests on your develop branch when you
+merge the PR.</p>
+
+<p>I was working on <code>Feature-01</code> branch, now it got merged. Now the question is
+how we can achieve the Continuous Delivery. That is the biggest problem, how
+can we deploy it on our QA environment, beacause Travis is CI tool not the CD
+tool.</p>
+
+<p>Now we have 2 options:</p>
+
+<ul>
+<li><p>Use Docker Images and after every successful merge, deploy image to Docker
+Hub using Travis and Shell Script</p></li>
+<li><p>Use Travis to deploy your artifacts on Amazon S3</p></li>
+</ul>
+
+
+<p>I pick option 2. I will deploy my build artifacts to Amazon S3. Now in my QA
+environment I will write a Ansible script to pull the artifacts and deploy it
+to the QA environments. Now I can test my code in my QA environment.</p>
+
+<p>Similary I can replicate this thing for further environments like Staging.
+This will achieve the Continuous Delivery purpose.</p>
+
+<p>Now we delivered our project using Feature Branch and proper testing.</p>
+
+<p><strong>NOTE:</strong> I will release my source code soon on GitHub and will provide the
+link of the repository here.</p>
 </div>
 
 
