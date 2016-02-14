@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ibeacon | Infinity]]></title>
+  <link href="http://rajatguptarg.github.io/blog/categories/ibeacon/atom.xml" rel="self"/>
+  <link href="http://rajatguptarg.github.io/"/>
+  <updated>2016-02-14T12:08:47+05:30</updated>
+  <id>http://rajatguptarg.github.io/</id>
+  <author>
+    <name><![CDATA[Rajat Gupta]]></name>
+    <email><![CDATA[rajat.gupta712@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Convert iBeacon to Eddystone]]></title>
+    <link href="http://rajatguptarg.github.io/blog/2016/02/14/convert-ibeacon-to-eddystone/"/>
+    <updated>2016-02-14T12:04:08+05:30</updated>
+    <id>http://rajatguptarg.github.io/blog/2016/02/14/convert-ibeacon-to-eddystone</id>
+    <content type="html"><![CDATA[<p><strong>[Draft]</strong></p>
+
+<p>Beacons are new way for contextual suggestions to the users. Beacons uses
+BLE to transmit the information. This post is to explain how can you use
+Google Eddystone protocol without actually converting them into the
+Eddystone.</p>
+]]></content>
+  </entry>
+  
+</feed>
