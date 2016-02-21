@@ -15,3 +15,6 @@ Beacons are new way for contextual suggestions to the users. Beacons uses
 BLE to transmit the information. This post is to explain how can you use
 Google Eddystone protocol without actually converting them into the
 Eddystone.
+
+To get started with this article, you must know little knowledge of the
+Beacons and iBeacon & Eddystone Protocol.
