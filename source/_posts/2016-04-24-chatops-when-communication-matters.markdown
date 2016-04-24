@@ -43,6 +43,7 @@ Using all these things, we can really built an awesome infrastructure over the c
 Hubot is a programmatic bot, you can program this according to your needs. Basic template of hubot can get from GitHub repo. It is written in CoffeeScript.  You can implement custom listeners for messages in the chat or DMs with hubot. You can integrate the hubot with Slack, IRC or any other adapters.
 
 Mike: @hubot we love you
+
 Hubot: Same here
 
 **Part 2: Using Bash**
