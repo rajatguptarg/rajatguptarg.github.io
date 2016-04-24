@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://rajatguptarg.github.io/blog/2016/04/24/chatops-when-communication-matters/</loc>
-<lastmod>2016-04-24T00:00:00+05:30</lastmod>
+<lastmod>2016-04-24T20:04:08+05:30</lastmod>
 </url>
 <url>
 <loc>http://rajatguptarg.github.io/blog/2016/02/14/convert-ibeacon-to-eddystone/</loc>
@@ -41,5 +41,11 @@
 </url>
 <url>
 <loc>http://rajatguptarg.github.io/blog/categories/beacon/</loc>
+</url>
+<url>
+<loc>http://rajatguptarg.github.io/blog/categories/devops/</loc>
+</url>
+<url>
+<loc>http://rajatguptarg.github.io/blog/categories/chatops/</loc>
 </url>
 </urlset>

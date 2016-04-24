@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Infinity]]></title>
-  <link href="http://rajatguptarg.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Chatops | Infinity]]></title>
+  <link href="http://rajatguptarg.github.io/blog/categories/chatops/atom.xml" rel="self"/>
   <link href="http://rajatguptarg.github.io/"/>
   <updated>2016-04-24T21:13:54+05:30</updated>
   <id>http://rajatguptarg.github.io/</id>
@@ -77,91 +77,6 @@ Hubot: Same here</p>
 <p>In slack, one of the thing you want to notify you when your service fails. So you can easily write Notification Services in Python and integrate with the Slack, so when your services are not working, it will notify you that this service is not working. You can more python scripts according to your needs.</p>
 
 <p>Overall, using ChatOps, your deployments will become more easy and increase the confidence and knowledge of the deployments for your services and the product in the team. It brings everyone on board for DevOps.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Convert iBeacon to Eddystone]]></title>
-    <link href="http://rajatguptarg.github.io/blog/2016/02/14/convert-ibeacon-to-eddystone/"/>
-    <updated>2016-02-14T12:04:08+05:30</updated>
-    <id>http://rajatguptarg.github.io/blog/2016/02/14/convert-ibeacon-to-eddystone</id>
-    <content type="html"><![CDATA[<p><strong>[Draft]</strong></p>
-
-<p>Beacons are new way for contextual suggestions to the users. Beacons uses
-BLE to transmit the information. This post is to explain how can you use
-Google Eddystone protocol without actually converting them into the
-Eddystone.</p>
-
-<p>To get started with this article, you must know little knowledge of the
-Beacons and iBeacon &amp; Eddystone Protocol.</p>
-
-<ul>
-<li><strong>The Repository is:</strong> <a href="https://www.gitHub.com/rajatguptarg/beacons">Beacons</a>
-Eddystone</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Love Branching With Continuous Integration and Continuous Delivery]]></title>
-    <link href="http://rajatguptarg.github.io/blog/2016/02/10/love-branching-with-continuous-integration-and-continuous-deleivery/"/>
-    <updated>2016-02-10T22:11:21+05:30</updated>
-    <id>http://rajatguptarg.github.io/blog/2016/02/10/love-branching-with-continuous-integration-and-continuous-deleivery</id>
-    <content type="html"><![CDATA[<p>I am writing this post after looking in lot of discussions and post
-about the Continuous Integration and Continuous Deleivery. Finally, I conclude
-that we can achieve a CI and CD using Git Feature branches also.</p>
-
-<p>Here your targeted audience ask for the Web Application which can print
-&ldquo;Hello World&rdquo; when you land on the web page. We follow agile methodology and
-we will implement this project using CI and CD.</p>
-
-<p>I am Python lover, so I am going to demonstrate a basic web application written
-in Flask. As a Open Source project we want to upload this package to PyPi.</p>
-
-<p>Here is the complete developement details:</p>
-
-<ul>
-<li><strong>For Development:</strong> <a href="http://flask.pocoo.org/">Flask</a></li>
-<li><strong>For CI:</strong> <a href="https://travis-ci.org/">Travis</a></li>
-<li><strong>For Test Env:</strong> Own Host Machine</li>
-<li><strong>Deploy:</strong> <a href="https://pypi.python.org/pypi">PyPi</a></li>
-</ul>
-
-
-<p>Suppose I have 3 members in my team and we are working on different features.</p>
-
-<p>Lets come to continuous integrations. If you look on the Git Workflow, each one
-of us are working on our feaure branch. We use Travis CI, which will run all
-your test on every branch you create, on creating a Pull request(PR) for your
-<code>develop</code> branch of repository and also run tests on your develop branch when you
-merge the PR.</p>
-
-<p>I was working on <code>Feature-01</code> branch, now it got merged. Now the question is
-how we can achieve the Continuous Delivery. That is the biggest problem, how
-can we deploy it on our QA environment, beacause Travis is CI tool not the CD
-tool.</p>
-
-<p>Now we have 2 options:</p>
-
-<ul>
-<li><p>Use Docker Images and after every successful merge, deploy image to Docker
-Hub using Travis and Shell Script</p></li>
-<li><p>Use Travis to deploy your artifacts on Amazon S3</p></li>
-</ul>
-
-
-<p>I pick option 2. I will deploy my build artifacts to Amazon S3. Now in my QA
-environment I will write a Ansible script to pull the artifacts and deploy it
-to the QA environments. Now I can test my code in my QA environment.</p>
-
-<p>Similary I can replicate this thing for further environments like Staging.
-This will achieve the Continuous Delivery purpose.</p>
-
-<p>Now we delivered our project using Feature Branch and proper testing.</p>
-
-<p><strong>NOTE:</strong> I will release my source code soon on GitHub and will provide the
-link of the repository here.</p>
 ]]></content>
   </entry>
   
