@@ -9,8 +9,8 @@
   <meta name="author" content="Rajat Gupta">
 
   
-  <meta name="description" content="[Draft] Beacons are new way for contextual suggestions to the users. Beacons uses
-BLE to transmit the information. This post is to explain how can &hellip;">
+  <meta name="description" content="Hi All, I am assuming, everyone here have some knowledge about DevOps. Basically: What is DevOps?
+How people do DevOps? (not necessary) Here is new &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +84,93 @@ BLE to transmit the information. This post is to explain how can &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/04/24/chatops-when-communication-matters/">Chatops When Communication Matters</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-04-24T00:00:00+05:30'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hi All,</p>
+
+<p>I am assuming, everyone here have some knowledge about DevOps. Basically:</p>
+
+<ul>
+<li>What is DevOps?</li>
+<li>How people do DevOps?   (not necessary)</li>
+</ul>
+
+
+<p>Here is new era of DevOps is started, means all the DevOps work can be done over the chat. This is called as a ChatOps. Mostly DevOp do all the infrastructure related work over a shell. ChatOps focuses to create/maintain infrastructure over the chat (can be IRC, Slack, GitHub etc) .</p>
+
+<p><strong>Why ChatOps?</strong>
+- Really .. ?? Communication matters.</p>
+
+<p>We are working in agile teams which means much control and flexibility in the teams. And, ChatOps really provides all these things. Suppose, you deploy your infrastructure from Slack, and everyone (BAs, QAs, DEVs etc) knows about the deployment and its status within the Slack and everyone will have context, how the deployment works for the project.</p>
+
+<p>Now even the non-technical persons who doesn’t know about anything of DevOps can deploy the services over a chat and everyone will come to know how and what happened for that deployment. In case of failures, everyone will know.</p>
+
+<ul>
+<li>Hey.. Deployment failed..!!</li>
+<li>We know it. Tell something new.</li>
+</ul>
+
+
+<p>Really wants real fun?</p>
+
+<p>Its time to explore ChatOps. I am using these things for my ChatOps:</p>
+
+<ul>
+<li>Coffee Script</li>
+<li>Bash</li>
+<li>Ansible</li>
+<li>Python</li>
+</ul>
+
+
+<p>Using all these things, we can really built an awesome infrastructure over the chat. We will see all these things step by step.</p>
+
+<p><strong>Part 1: The Hubot</strong></p>
+
+<p>Hubot is a programmatic bot, you can program this according to your needs. Basic template of hubot can get from GitHub repo. It is written in CoffeeScript.  You can implement custom listeners for messages in the chat or DMs with hubot. You can integrate the hubot with Slack, IRC or any other adapters.</p>
+
+<p>Mike: @hubot we love you
+Hubot: Same here</p>
+
+<p><strong>Part 2: Using Bash</strong></p>
+
+<p>Hubot is easily listens to your commands and based on the given command to hubot, you can easily run some bash scripts. So I wrote my bash scripts for triggering some commands such as looking health of my load balancers which are attached to my services.</p>
+
+<p><strong>Part 3: Awesome Ansible</strong></p>
+
+<p>If you are writing your infrastructure as a code, then ansible is a good choice to do that. The interested thing that I did is to use Ansible and I integrated my Ansible scripts with Hubot. Based on the commands given to the hubot, it can execute ansible scripts, by which you can do the deployments and monitor the deployments activities of your team.</p>
+
+<p><strong>Part 4: One and only Python</strong></p>
+
+<p>In slack, one of the thing you want to notify you when your service fails. So you can easily write Notification Services in Python and integrate with the Slack, so when your services are not working, it will notify you that this service is not working. You can more python scripts according to your needs.</p>
+
+<p>Overall, using ChatOps, your deployments will become more easy and increase the confidence and knowledge of the deployments for your services and the product in the team. It brings everyone on board for DevOps.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -221,6 +308,10 @@ link of the repository here.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/04/24/chatops-when-communication-matters/">Chatops When Communication Matters</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/02/14/convert-ibeacon-to-eddystone/">Convert iBeacon to Eddystone</a>
