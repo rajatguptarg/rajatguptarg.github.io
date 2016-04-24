@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Chatops | Infinity]]></title>
   <link href="http://rajatguptarg.github.io/blog/categories/chatops/atom.xml" rel="self"/>
   <link href="http://rajatguptarg.github.io/"/>
-  <updated>2016-04-24T21:13:54+05:30</updated>
+  <updated>2016-04-24T21:17:07+05:30</updated>
   <id>http://rajatguptarg.github.io/</id>
   <author>
     <name><![CDATA[Rajat Gupta]]></name>
@@ -61,8 +61,9 @@
 
 <p>Hubot is a programmatic bot, you can program this according to your needs. Basic template of hubot can get from GitHub repo. It is written in CoffeeScript.  You can implement custom listeners for messages in the chat or DMs with hubot. You can integrate the hubot with Slack, IRC or any other adapters.</p>
 
-<p>Mike: @hubot we love you
-Hubot: Same here</p>
+<p>Mike: @hubot we love you</p>
+
+<p>Hubot: Same here</p>
 
 <p><strong>Part 2: Using Bash</strong></p>
 
