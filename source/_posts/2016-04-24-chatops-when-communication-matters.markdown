@@ -1,0 +1,52 @@
+Hi All,
+
+I am assuming, everyone here have some knowledge about DevOps. Basically:
+
+- What is DevOps?
+- How people do DevOps?   (not necessary)
+
+Here is new era of DevOps is started, means all the DevOps work can be done over the chat. This is called as a ChatOps. Mostly DevOp do all the infrastructure related work over a shell. ChatOps focuses to create/maintain infrastructure over the chat (can be IRC, Slack, GitHub etc) .
+
+**Why ChatOps?**
+- Really .. ?? Communication matters.
+
+We are working in agile teams which means much control and flexibility in the teams. And, ChatOps really provides all these things. Suppose, you deploy your infrastructure from Slack, and everyone (BAs, QAs, DEVs etc) knows about the deployment and its status within the Slack and everyone will have context, how the deployment works for the project.
+
+Now even the non-technical persons who doesn’t know about anything of DevOps can deploy the services over a chat and everyone will come to know how and what happened for that deployment. In case of failures, everyone will know.
+
+- Hey.. Deployment failed..!!
+- We know it. Tell something new.
+
+Really wants real fun?
+
+Its time to explore ChatOps. I am using these things for my ChatOps:
+
+- Coffee Script
+- Bash
+- Ansible
+- Python
+
+Using all these things, we can really built an awesome infrastructure over the chat. We will see all these things step by step.
+
+**Part 1: The Hubot**
+
+Hubot is a programmatic bot, you can program this according to your needs. Basic template of hubot can get from GitHub repo. It is written in CoffeeScript.  You can implement custom listeners for messages in the chat or DMs with hubot. You can integrate the hubot with Slack, IRC or any other adapters.
+
+Mike: @hubot we love you
+Hubot: Same here
+
+**Part 2: Using Bash**
+
+Hubot is easily listens to your commands and based on the given command to hubot, you can easily run some bash scripts. So I wrote my bash scripts for triggering some commands such as looking health of my load balancers which are attached to my services.
+
+
+**Part 3: Awesome Ansible**
+
+If you are writing your infrastructure as a code, then ansible is a good choice to do that. The interested thing that I did is to use Ansible and I integrated my Ansible scripts with Hubot. Based on the commands given to the hubot, it can execute ansible scripts, by which you can do the deployments and monitor the deployments activities of your team.
+
+
+**Part 4: One and only Python**
+
+In slack, one of the thing you want to notify you when your service fails. So you can easily write Notification Services in Python and integrate with the Slack, so when your services are not working, it will notify you that this service is not working. You can more python scripts according to your needs.
+
+Overall, using ChatOps, your deployments will become more easy and increase the confidence and knowledge of the deployments for your services and the product in the team. It brings everyone on board for DevOps.
