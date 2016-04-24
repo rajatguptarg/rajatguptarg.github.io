@@ -1,3 +1,13 @@
+---
+layout: post
+title: "ChatOps: When Communication matters"
+date: 2016-04-24 20:04:08 +0530
+comments: true
+categories:
+- DevOps
+- ChatOps
+---
+
 Hi All,
 
 I am assuming, everyone here have some knowledge about DevOps. Basically:
