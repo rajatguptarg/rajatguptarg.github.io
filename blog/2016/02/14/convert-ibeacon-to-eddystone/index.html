@@ -9,8 +9,8 @@
   <meta name="author" content="Rajat Gupta">
 
   
-  <meta name="description" content="[Draft] Beacons are new way for contextual suggestions to the users. Beacons uses
-BLE to transmit the information. This post is to explain how can &hellip;">
+  <meta name="description" content="Beacons are new way for contextual suggestions to the users. Beacons uses
+BLE to transmit the information. This post is to explain how can you use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,9 +103,7 @@ BLE to transmit the information. This post is to explain how can &hellip;">
   </header>
 
 
-<div class="entry-content"><p><strong>[Draft]</strong></p>
-
-<p>Beacons are new way for contextual suggestions to the users. Beacons uses
+<div class="entry-content"><p>Beacons are new way for contextual suggestions to the users. Beacons uses
 BLE to transmit the information. This post is to explain how can you use
 Google Eddystone protocol without actually converting them into the
 Eddystone.</p>
@@ -114,10 +112,111 @@ Eddystone.</p>
 Beacons and iBeacon &amp; Eddystone Protocol.</p>
 
 <ul>
-<li><strong>The Repository is:</strong> <a href="https://www.gitHub.com/rajatguptarg/beacons">Beacons</a>
-Eddystone</li>
+<li><strong>The Repository is:</strong> <a href="https://github.com/rajatguptarg/beacon-registry">Beacons</a></li>
 </ul>
 
+
+<p>Here is my logic to convert iBeacon to Eddystone Advertised id in Python:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def advertised_id(self):
+</span><span class='line'>    """
+</span><span class='line'>    Convert uuid, major, minor into advertised id
+</span><span class='line'>    """
+</span><span class='line'>    namespace = '0x' + self.uuid[:8] + self.uuid[-12:]
+</span><span class='line'>    major, minor = map(int, (self.major, self.minor))
+</span><span class='line'>    temp_instance = self._append_hex(major, minor)
+</span><span class='line'>    instance = self._add_padding(temp_instance)
+</span><span class='line'>    beacon_id = self._append_hex(int(namespace, 16), instance)
+</span><span class='line'>    return base64.b64encode(self.long_to_bytes(beacon_id))
+</span><span class='line'>
+</span><span class='line'>def _add_padding(self, instance):
+</span><span class='line'>    """
+</span><span class='line'>    Append padding of desired size
+</span><span class='line'>    """
+</span><span class='line'>    bit_length = (len(hex(instance)) - 2) * 4
+</span><span class='line'>    desired_padding_size = self.desired_instance_bits - bit_length
+</span><span class='line'>    padding = (2 ** desired_padding_size) - 1
+</span><span class='line'>    return self._append_hex(padding, instance)
+</span><span class='line'>
+</span><span class='line'>def _append_hex(self, a, b):
+</span><span class='line'>    """
+</span><span class='line'>    Append hex number a in front of b
+</span><span class='line'>    """
+</span><span class='line'>    sizeof_b = 0
+</span><span class='line'>
+</span><span class='line'>    # Count the number of bits in b
+</span><span class='line'>    while((b &gt;&gt; sizeof_b) &gt; 0):
+</span><span class='line'>        sizeof_b += 1
+</span><span class='line'>
+</span><span class='line'>    # make number of bits perfectly divisible by 4
+</span><span class='line'>    sizeof_b += 4 - ((sizeof_b % 4) or 4)
+</span><span class='line'>
+</span><span class='line'>    return (a &lt;&lt; sizeof_b) | b
+</span><span class='line'>
+</span><span class='line'>def long_to_bytes(self, value, endianness='big'):
+</span><span class='line'>    """
+</span><span class='line'>    Convert hexadecimal into byte array
+</span><span class='line'>    """
+</span><span class='line'>    width = value.bit_length()
+</span><span class='line'>    width += 8 - ((width % 8) or 8)
+</span><span class='line'>    fmt = '%%0%dx' % (width // 4)
+</span><span class='line'>    s = unhexlify(fmt % value)
+</span><span class='line'>
+</span><span class='line'>    if endianness == 'little':
+</span><span class='line'>        s = s[::-1]
+</span><span class='line'>
+</span><span class='line'>    return s</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For any doubt please write in comments.</p>
 </div>
 
 
