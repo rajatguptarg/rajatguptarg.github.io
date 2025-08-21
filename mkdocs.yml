@@ -1,8 +1,97 @@
 site_name: My Thoughts
+site_description: Exploring the art and science of building reliable systems, scaling engineering teams, and mastering technical leadership
+site_author: Rajat Gupta
+site_url: https://rajatguptarg.github.io
+
 theme:
   name: material
   palette:
-    scheme: default
-    toggle:
-      icon: material/toggle-switch
-      name: Switch to dark mode
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - toc.follow
+    - content.code.copy
+    - content.tabs.link
+
+plugins:
+  - search
+  - tags:
+      tags_file: tags.md
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: rajatguptarg
+      repo: blog-rg
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Home: index.md
+  - Technical Posts:
+    - SRE & Reliability: technical/sre-reliability.md
+    - Monitoring & Observability: technical/monitoring-observability.md
+    - Automation & DevOps: technical/automation-devops.md
+  - Leadership Posts:
+    - Team Building: leadership/team-building.md
+    - Technical Leadership: leadership/technical-leadership.md
+    - Career Development: leadership/career-development.md
+  - Tags: tags.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/rajatguptarg
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/rajatguptarg

@@ -1,6 +1,6 @@
-# rajatguptarg.github.io
+# CLAUDE.md
 
-This is the repository to host my blogs on the GitHub pages. I am using https://squidfunk.github.io/mkdocs-material/ for creating the blog posts.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Repository Overview
 
