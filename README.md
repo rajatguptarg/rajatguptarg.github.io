@@ -1,2 +1,2 @@
 # rajatguptarg.github.io
-My Blogs
+My Thoughts
