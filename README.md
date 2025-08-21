@@ -1,6 +1,6 @@
-# rajatguptarg.github.io
+# Tech Leadership Chronicles
 
-This is the repository to host my blogs on the GitHub pages. I am using https://squidfunk.github.io/mkdocs-material/ for creating the blog posts.
+This is the repository for "Tech Leadership Chronicles" - a blog exploring the art and science of building reliable systems, scaling engineering teams, and mastering technical leadership. The blog is hosted on GitHub Pages using https://squidfunk.github.io/mkdocs-material/.
 
 ## Repository Overview
 

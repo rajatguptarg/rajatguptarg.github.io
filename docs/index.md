@@ -1,4 +1,4 @@
-# My Thoughts
+# Tech Leadership Chronicles
 
 Welcome to my blog exploring the art and science of building reliable systems, scaling engineering teams, and mastering technical leadership.
 
