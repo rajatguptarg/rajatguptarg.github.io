@@ -18,7 +18,13 @@ Engineering Manager focused on platform reliability, security, and developer pro
 
 <section class="card">
   <h2>What I Do</h2>
-  <p>I help engineering organizations ship resilient systems by pairing SRE practices with secure-by-default platforms. I love mentoring teams, rolling out clear SLOs, and translating complex technical work into business impact.</p>
+  <p>
+    I lead engineering teams that keep platforms reliable, secure, and ready to scale. My work sits at the intersection of SRE, Security, and backend systems, where clarity and ownership matter as much as technical depth. I guide teams through complex problems, help them make decisions with data, and build processes that reduce noise instead of adding more of it.<br><br>
+
+    I spend a lot of time shaping cross-functional work so that people know who owns what and why. When something critical needs to be delivered, I bring structure, alignment, and a clear path forward. I also enjoy driving green-field initiatives, especially the ones that need both technical judgment and steady leadership to get from idea to production.<br><br>
+
+    Along the way, I write about the lessons I learn. My goal is to share practical insights with other engineers and leaders, not theory for its own sake. I like turning complicated systems into simple explanations that help others think more clearly.
+  </p>
   <p><a href="{{ '/experience/' | relative_url }}">See the detailed experience timeline →</a></p>
 </section>
 
