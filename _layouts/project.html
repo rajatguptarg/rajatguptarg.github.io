@@ -1,18 +1,20 @@
 ---
 layout: default
 ---
-<article class="card project-detail">
-  <header>
-    <p class="pill">{{ page.role }}</p>
+<article class="post">
+  <header class="post-header">
+    <div class="pill-group">
+      <span class="pill">{{ page.role }}</span>
+    </div>
     <h1>{{ page.title }}</h1>
     {% if page.impact %}
-      <p><strong>Impact:</strong> {{ page.impact }}</p>
+      <p class="post-description">{{ page.impact }}</p>
     {% endif %}
     {% if page.timeline %}
-      <p><strong>Timeline:</strong> {{ page.timeline }}</p>
+      <p class="post-meta">{{ page.timeline }}</p>
     {% endif %}
   </header>
-  <section class="project-content">
+  <section class="post-content">
     {{ content }}
   </section>
 </article>

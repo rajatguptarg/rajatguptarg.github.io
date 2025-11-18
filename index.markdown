@@ -32,7 +32,7 @@ Engineering Manager focused on platform reliability, security, and developer pro
 <section class="card">
   <h2>Featured Work</h2>
   <ul>
-    {% for project in site.projects | slice: 0, 3 %}
+    {% for project in site.projects limit:3 %}
       <li>
         <strong><a href="{{ project.url }}">{{ project.title }}</a></strong> — {{ project.impact }}
       </li>

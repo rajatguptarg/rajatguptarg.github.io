@@ -1,13 +1,11 @@
-<header style="background:#0f172a;color:#f1f5f9;padding:1.25rem 1.5rem;">
-  <div style="max-width:840px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
-    <a href="{{ '/' | relative_url }}" style="color:#f1f5f9;text-decoration:none;font-weight:600;font-size:1.1rem;">
+<header class="site-header">
+  <div class="header-container">
+    <a href="{{ '/' | relative_url }}" class="site-title">
       {{ site.title }}
     </a>
-    <nav style="display:flex;gap:1rem;flex-wrap:wrap;font-size:0.95rem;">
+    <nav class="site-nav">
       {% for link in site.nav_links %}
-        <a href="{{ link.url | relative_url }}" style="color:#cbd5f5;text-decoration:none;">
-          {{ link.title }}
-        </a>
+        <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
       {% endfor %}
     </nav>
   </div>

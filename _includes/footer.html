@@ -1,14 +1,12 @@
-<footer style="background:#0f172a;color:#cbd5f5;padding:2rem 1.5rem;">
-  <div style="max-width:840px;margin:0 auto;">
-    <p>&copy; {{ site.title }} {{ 'now' | date: '%Y' }} · {{ site.description }}</p>
+<footer class="site-footer">
+  <div class="footer-container">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ site.title }} · {{ site.description }}</p>
     {% if site.social_links %}
-      <p>
+      <div class="footer-social">
         {% for social in site.social_links %}
-          <a href="{{ social.url }}" style="color:#93c5fd;margin-right:1rem;">
-            {{ social.label }}
-          </a>
+          <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer">{{ social.label }}</a>
         {% endfor %}
-      </p>
+      </div>
     {% endif %}
   </div>
 </footer>
