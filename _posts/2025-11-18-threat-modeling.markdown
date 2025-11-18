@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Threat Modeling: The Ultimate Guide"
-date: 2025-11-18 00:00:00 +0100
+date: 2025-11-16 00:00:00 +0100
 categories: security threat-modeling devsecops
 ---
 
