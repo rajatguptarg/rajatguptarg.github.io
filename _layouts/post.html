@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<article class="post">
+  <header class="post-header">
+    {% if page.date %}
+      <p class="post-meta">{{ page.date | date: '%B %d, %Y' }}{% if page.categories %} · {{ page.categories | array_to_sentence_string }}{% endif %}</p>
+    {% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}
+      <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+  </header>
+  <section class="post-content">
+    {{ content }}
+  </section>
+</article>

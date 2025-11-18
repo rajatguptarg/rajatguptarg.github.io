@@ -22,8 +22,8 @@ title: Rajat Gupta
 email: contact@rajatgupta.work
 description: Engineering Manager · Open Source Enthusiast · Blogger · Speaker · Learner
 baseurl: ""
-url: "https://rajatguptarg.github.io"
-domain: "rajatguptarg.github.io"
+url: "https://rajatgupta.work"
+domain: "rajatgupta.work"
 twitter_username: rajatgupta712
 github_username: rajatguptarg
 
@@ -61,9 +61,13 @@ social_links:
     url: https://twitter.com/rajatgupta712
   - label: Medium
     url: https://pulse.rajatgupta.work
+
+
+# Use the default GitHub Pages theme so builds don't require external gems.
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-include-cache
 
 # Exclude from processing.
 # The following items will not be processed, by default.
