@@ -23,3 +23,18 @@ As Engineering Manager I owned the program charter, partnered with product leade
 - Streaming sessions now anchor to the closest healthy edge, improving perceived responsiveness and overall uptime.
 - Multi-provider leverage cut CDN costs 12% while reducing dependency risk.
 - Product teams can roll out features without waiting on manual CDN configuration, accelerating experimentation and reinforcing SRE best practices.
+
+## Technologies & Tools
+**CDN & Edge:** Fastly, Cloudflare, CloudFront
+
+**Infrastructure as Code:** Terraform
+
+**Observability:** DataDog
+
+**Orchestration:** Docker, AWS ECS
+
+**Development:** Python, Go
+
+**Secrets Management:** AWS Secret Manager
+
+**Cloud Platform:** AWS

@@ -23,3 +23,16 @@ As the Site Reliability Engineer leading both Platform Automation and Observabil
 - Operational toil dropped by 40%, freeing engineers to focus on higher-leverage improvements.
 - Observability coverage expanded to every data center, giving central SRE instant visibility and faster incident response.
 - Automation paved the way for future hybrid-cloud expansions because provisioning workflows were fully codified.
+
+## Technologies & Tools
+**Automation & Configuration:** Ansible, Terraform, Packer
+
+**Observability Stack:** Prometheus, Grafana, AlertManager, ELK (Elasticsearch, Logstash, Kibana)
+
+**Infrastructure:** Docker, Kubernetes
+
+**Development:** Python, Go
+
+**Cloud & Infrastructure:** AWS, Hybrid Infrastructure (20+ global data centers)
+
+**Security:** Vault

@@ -23,3 +23,18 @@ As the Engineering Manager for TIDAL's SRE group I was accountable for the roadm
 - All 14 product teams adopted the model; incident MTTR dropped by half while platform reliability scores rose 80%.
 - Service-tier clarity aligned investment with risk, enabling deliberate trade-offs during roadmap planning.
 - Runbooks and automated incident flows are now part of the standard definition of done, giving new teams a proven playbook from day one.
+
+## Technologies & Tools
+**Observability & Monitoring:** DataDog
+
+**Incident Management:** PagerDuty, DataDog
+
+**Infrastructure & Orchestration:** Docker, AWS ECS, Terraform
+
+**Development:** Python, Go
+
+**Secrets Management:** AWS Secret Manager
+
+**Cloud Platform:** AWS
+
+**Methodologies:** DORA metrics, Error budgets, Service-tier classification, SLO/SLI frameworks

@@ -23,3 +23,16 @@ I directed the observability roadmap, stacked-ranked investments with product le
 - Engineering teams became mindful of log volume and value, trimming redundant ingestion by 30% and lowering observability spend 12% without sacrificing coverage.
 - Runbooks, telemetry, and cost data now co-exist, letting on-call engineers jump straight from an alert to remediation context.
 - Product conversations reference the same metrics and budgets, improving prioritization of resilience work.
+
+## Technologies & Tools
+**Observability & IDP:** DataDog
+
+**Incident Management:** PagerDuty, DataDog
+
+**Infrastructure & Orchestration:** Docker, AWS ECS, Terraform
+
+**Development:** Python, Go
+
+**Secrets Management:** AWS Secret Manager
+
+**Cloud Platform:** AWS

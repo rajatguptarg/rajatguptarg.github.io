@@ -23,3 +23,16 @@ I owned the technical strategy and execution for discovery modernisation, chairi
 - Platform teams can retire EC2 workloads on their schedule without blocking new ECS features.
 - mTLS policies between services now ship as defaults, raising the security baseline across the estate.
 - Discovery data powers auto-generated topology views, giving engineers a clearer understanding of blast radius before deploying changes.
+
+## Technologies & Tools
+**Service Discovery:** Consul, AWS App Mesh (deprecated)
+
+**Infrastructure as Code:** Terraform, Ansible
+
+**Container Orchestration:** Docker, AWS ECS
+
+**Cloud Platform:** AWS (EC2, ECS)
+
+**Security:** AWS Secret Manager, mTLS
+
+**Development:** Python, Go

@@ -16,6 +16,7 @@ permalink: /experience/
     <li>Co-designed the data platform that unlocks real-time analytics on 1.5B+ annual payment transactions.</li>
     <li>Defined the long-term roadmap for SRE and Security, delivering a self-service platform with GenAI automation that eliminates manual toil.</li>
   </ul>
+  <p><strong>Technologies:</strong> Kubernetes, Terraform, Prometheus, Grafana, GCP, Python, Go, GenAI, Spanner, Backstage</p>
 </div>
 
 <div class="card">
@@ -27,6 +28,7 @@ permalink: /experience/
     <li>Partnered with Engineering and Product to revamp CI/CD and automated testing, gaining 8% uptime and 70% higher user satisfaction.</li>
     <li>Drove projects such as Edge Compute, CDN, service discovery, and IDP, achieving 12% cost savings and a 90% observability uplift.</li>
   </ul>
+  <p><strong>Technologies:</strong> Docker, AWS ECS, Terraform, Consul, DataDog, PagerDuty, Python, Go, AWS Secret Manager, Fastly, Cloudflare, CloudFront, AWS</p>
 </div>
 
 <div class="card">
@@ -37,6 +39,7 @@ permalink: /experience/
     <li>Ran hybrid infrastructure across AWS and 20+ global data centers to maintain 99.99% uptime for the cloud gaming service.</li>
     <li>Built a Prometheus/Grafana-based observability platform and improved incident visibility, cutting downtime incidents by 30%.</li>
   </ul>
+  <p><strong>Technologies:</strong> Ansible, Terraform, Packer, Prometheus, Grafana, AlertManager, ELK, Kubernetes, Docker, Vault, Python, Go, AWS, Hybrid Infrastructure</p>
 </div>
 
 <div class="card">
@@ -47,6 +50,7 @@ permalink: /experience/
     <li>Designed CI/CD pipelines for hybrid deployments, halving release times while improving reliability.</li>
     <li>Optimized cloud architecture with efficient load balancing and caching to trim latency by 20%.</li>
   </ul>
+  <p><strong>Technologies:</strong> GCP, Terraform, Docker, Kubernetes, Python, CI/CD pipelines</p>
 </div>
 
 <div class="card">
@@ -57,6 +61,7 @@ permalink: /experience/
     <li>Implemented infrastructure to remotely operate 200+ hydropower plants.</li>
     <li>Migrated and optimized services to sustain 100% availability across multiple data centers.</li>
   </ul>
+  <p><strong>Technologies:</strong> Ansible, Terraform, Docker, Kubernetes, Python, Hybrid Infrastructure</p>
 </div>
 
 <div class="card">
@@ -67,6 +72,7 @@ permalink: /experience/
     <li>Managed and monitored AWS workloads to maintain 99.99% uptime.</li>
     <li>Enabled auto-scaling and secure delivery pipelines to remove manual operational effort.</li>
   </ul>
+  <p><strong>Technologies:</strong> AWS, Docker, Terraform, Ansible, Python, Microservices</p>
 </div>
 
 <div class="card">
@@ -77,6 +83,7 @@ permalink: /experience/
     <li>Delivered ML, big data, and microservice projects while refining requirements directly with clients.</li>
     <li>Championed collaboration between product stakeholders and delivery teams for faster launches.</li>
   </ul>
+  <p><strong>Technologies:</strong> Python, Java, AWS, Docker, Machine Learning, Big Data, Microservices</p>
 </div>
 
 <div class="card">
@@ -86,6 +93,7 @@ permalink: /experience/
     <li>Developed ERP systems using open-source technologies for large e-commerce clients.</li>
     <li>Built scalable web applications on an in-house open-source framework.</li>
   </ul>
+  <p><strong>Technologies:</strong> Python, PostgreSQL, Open-source frameworks</p>
 </div>
 
 Looking for a full resume? Download the PDF on the <a href="{{ '/cv/' | relative_url }}">CV page</a>.
