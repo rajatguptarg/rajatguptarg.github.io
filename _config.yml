@@ -21,16 +21,8 @@
 title: Rajat Gupta
 email: contact@rajatgupta.work
 description: >- # this means to ignore newlines until "baseurl:"
-  I’m a senior engineering manager who cares about building dependable systems 
-  and helping teams work with clarity. My background is in platform, SRE, and 
-  security, and most of my work sits at the intersection of reliability, 
-  performance, and organizational alignment. I enjoy solving problems that 
-  span multiple teams, whether that is shaping incident response, guiding 
-  architecture choices, or driving new greenfield efforts from zero to running 
-  in production. I like direct communication, clear ownership, and practical 
-  solutions that help engineers move faster without losing safety. 
-  My interests outside tech are simple: good food, thoughtful writing, 
-  and learning how things work.
+  Engineering Manager · Open Source Enthusiast · Tech Blogger · Speaker
+  · Lifelong Learner
 baseurl: "" # the subpath of your site, e.g. /blog
 twitter_username: rajatgupta712
 github_username:  rajatguptarg
