@@ -21,5 +21,55 @@ Outside the day to day, I write about engineering leadership, platform thinking,
 - **Craft + Clarity** — high standards paired with transparent communication so teams can execute autonomously.
 - **Mentorship** — developing engineers into tech leads through pairing, design reviews, and career coaching.
 
+## Skills & Expertise
+
+<div class="card">
+  <h3>Leadership & Management</h3>
+  <div class="experience-tech-list" style="margin-top: 1rem;">
+    <span class="tech-tag">Visionary Leadership</span>
+    <span class="tech-tag">Team Management</span>
+    <span class="tech-tag">Strategic Thinking</span>
+    <span class="tech-tag">Mentoring & Coaching</span>
+    <span class="tech-tag">Hiring</span>
+    <span class="tech-tag">Delegation</span>
+    <span class="tech-tag">Change Management</span>
+    <span class="tech-tag">Stakeholder Management</span>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Communication & Collaboration</h3>
+  <div class="experience-tech-list" style="margin-top: 1rem;">
+    <span class="tech-tag">Communication</span>
+    <span class="tech-tag">Emotional Intelligence</span>
+    <span class="tech-tag">Empathy</span>
+    <span class="tech-tag">Teamwork</span>
+    <span class="tech-tag">Conflict Resolution</span>
+    <span class="tech-tag">Adaptability</span>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Operations & Execution</h3>
+  <div class="experience-tech-list" style="margin-top: 1rem;">
+    <span class="tech-tag">Operational Excellence</span>
+    <span class="tech-tag">Process Improvement</span>
+    <span class="tech-tag">Project Management</span>
+    <span class="tech-tag">Problem Solving</span>
+    <span class="tech-tag">Decision-Making</span>
+    <span class="tech-tag">Capacity Planning</span>
+    <span class="tech-tag">Emergency Response</span>
+    <span class="tech-tag">Goal Setting</span>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Personal Attributes</h3>
+  <div class="experience-tech-list" style="margin-top: 1rem;">
+    <span class="tech-tag">Growth Mindset</span>
+    <span class="tech-tag">Leadership</span>
+  </div>
+</div>
+
 ## Outside of Work
 When I am not debugging platforms, you can find me writing about leadership and open source, speaking at community events, or hiking with my camera. I am always up for collaborating on talks or mentoring emerging engineering leaders.
