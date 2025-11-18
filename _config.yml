@@ -20,16 +20,47 @@
 
 title: Rajat Gupta
 email: contact@rajatgupta.work
-description: >- # this means to ignore newlines until "baseurl:"
-  Engineering Manager · Open Source Enthusiast · Tech Blogger · Speaker
-  · Lifelong Learner
-baseurl: "" # the subpath of your site, e.g. /blog
-twitter_username: rajatgupta712
-github_username:  rajatguptarg
-url: "https://rajatguptarg.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+description: Engineering Manager · Open Source Enthusiast · Blogger · Speaker · Learner
+baseurl: ""
+url: "https://rajatguptarg.github.io"
 domain: "rajatguptarg.github.io"
+twitter_username: rajatgupta712
+github_username: rajatguptarg
 
-# Build settings
+markdown: kramdown
+permalink: pretty
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+nav_links:
+  - title: Home
+    url: /
+  - title: About
+    url: /about/
+  - title: Experience
+    url: /experience/
+  - title: Projects
+    url: /projects/
+  - title: CV
+    url: /cv/
+  - title: Posts
+    url: /posts/
+  - title: Contact
+    url: /contact/
+
+
+social_links:
+  - label: GitHub
+    url: https://github.com/rajatguptarg
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/rajatguptarg/
+  - label: Twitter
+    url: https://twitter.com/rajatgupta712
+  - label: Medium
+    url: https://pulse.rajatgupta.work
 theme: minima
 plugins:
   - jekyll-feed

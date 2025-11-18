@@ -1,0 +1,14 @@
+<footer style="background:#0f172a;color:#cbd5f5;padding:2rem 1.5rem;">
+  <div style="max-width:840px;margin:0 auto;">
+    <p>&copy; {{ site.title }} {{ 'now' | date: '%Y' }} · {{ site.description }}</p>
+    {% if site.social_links %}
+      <p>
+        {% for social in site.social_links %}
+          <a href="{{ social.url }}" style="color:#93c5fd;margin-right:1rem;">
+            {{ social.label }}
+          </a>
+        {% endfor %}
+      </p>
+    {% endif %}
+  </div>
+</footer>
