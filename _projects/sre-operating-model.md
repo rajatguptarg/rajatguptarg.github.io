@@ -25,16 +25,21 @@ As the Engineering Manager for TIDAL's SRE group I was accountable for the roadm
 - Runbooks and automated incident flows are now part of the standard definition of done, giving new teams a proven playbook from day one.
 
 ## Technologies & Tools
-**Observability & Monitoring:** DataDog
 
-**Incident Management:** PagerDuty, DataDog
-
-**Infrastructure & Orchestration:** Docker, AWS ECS, Terraform
-
-**Development:** Python, Go
-
-**Secrets Management:** AWS Secret Manager
-
-**Cloud Platform:** AWS
-
-**Methodologies:** DORA metrics, Error budgets, Service-tier classification, SLO/SLI frameworks
+<div class="experience-tech">
+  <div class="experience-tech-label">Technologies & Tools Used</div>
+  <div class="experience-tech-list">
+    <span class="tech-tag">DataDog</span>
+    <span class="tech-tag">PagerDuty</span>
+    <span class="tech-tag">Docker</span>
+    <span class="tech-tag">AWS ECS</span>
+    <span class="tech-tag">Terraform</span>
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">Go</span>
+    <span class="tech-tag">AWS Secret Manager</span>
+    <span class="tech-tag">AWS</span>
+    <span class="tech-tag">DORA Metrics</span>
+    <span class="tech-tag">Error Budgets</span>
+    <span class="tech-tag">SLO/SLI</span>
+  </div>
+</div>

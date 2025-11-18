@@ -25,14 +25,18 @@ I directed the observability roadmap, stacked-ranked investments with product le
 - Product conversations reference the same metrics and budgets, improving prioritization of resilience work.
 
 ## Technologies & Tools
-**Observability & IDP:** DataDog
 
-**Incident Management:** PagerDuty, DataDog
-
-**Infrastructure & Orchestration:** Docker, AWS ECS, Terraform
-
-**Development:** Python, Go
-
-**Secrets Management:** AWS Secret Manager
-
-**Cloud Platform:** AWS
+<div class="experience-tech">
+  <div class="experience-tech-label">Technologies & Tools Used</div>
+  <div class="experience-tech-list">
+    <span class="tech-tag">DataDog</span>
+    <span class="tech-tag">PagerDuty</span>
+    <span class="tech-tag">Docker</span>
+    <span class="tech-tag">AWS ECS</span>
+    <span class="tech-tag">Terraform</span>
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">Go</span>
+    <span class="tech-tag">AWS Secret Manager</span>
+    <span class="tech-tag">AWS</span>
+  </div>
+</div>

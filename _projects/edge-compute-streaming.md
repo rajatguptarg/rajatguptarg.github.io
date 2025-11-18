@@ -25,16 +25,20 @@ As Engineering Manager I owned the program charter, partnered with product leade
 - Product teams can roll out features without waiting on manual CDN configuration, accelerating experimentation and reinforcing SRE best practices.
 
 ## Technologies & Tools
-**CDN & Edge:** Fastly, Cloudflare, CloudFront
 
-**Infrastructure as Code:** Terraform
-
-**Observability:** DataDog
-
-**Orchestration:** Docker, AWS ECS
-
-**Development:** Python, Go
-
-**Secrets Management:** AWS Secret Manager
-
-**Cloud Platform:** AWS
+<div class="experience-tech">
+  <div class="experience-tech-label">Technologies & Tools Used</div>
+  <div class="experience-tech-list">
+    <span class="tech-tag">Fastly</span>
+    <span class="tech-tag">Cloudflare</span>
+    <span class="tech-tag">CloudFront</span>
+    <span class="tech-tag">Terraform</span>
+    <span class="tech-tag">DataDog</span>
+    <span class="tech-tag">Docker</span>
+    <span class="tech-tag">AWS ECS</span>
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">Go</span>
+    <span class="tech-tag">AWS Secret Manager</span>
+    <span class="tech-tag">AWS</span>
+  </div>
+</div>

@@ -25,14 +25,23 @@ As the Site Reliability Engineer leading both Platform Automation and Observabil
 - Automation paved the way for future hybrid-cloud expansions because provisioning workflows were fully codified.
 
 ## Technologies & Tools
-**Automation & Configuration:** Ansible, Terraform, Packer
 
-**Observability Stack:** Prometheus, Grafana, AlertManager, ELK (Elasticsearch, Logstash, Kibana)
-
-**Infrastructure:** Docker, Kubernetes
-
-**Development:** Python, Go
-
-**Cloud & Infrastructure:** AWS, Hybrid Infrastructure (20+ global data centers)
-
-**Security:** Vault
+<div class="experience-tech">
+  <div class="experience-tech-label">Technologies & Tools Used</div>
+  <div class="experience-tech-list">
+    <span class="tech-tag">Ansible</span>
+    <span class="tech-tag">Terraform</span>
+    <span class="tech-tag">Packer</span>
+    <span class="tech-tag">Prometheus</span>
+    <span class="tech-tag">Grafana</span>
+    <span class="tech-tag">AlertManager</span>
+    <span class="tech-tag">ELK</span>
+    <span class="tech-tag">Docker</span>
+    <span class="tech-tag">Kubernetes</span>
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">Go</span>
+    <span class="tech-tag">AWS</span>
+    <span class="tech-tag">Hybrid Infrastructure</span>
+    <span class="tech-tag">Vault</span>
+  </div>
+</div>

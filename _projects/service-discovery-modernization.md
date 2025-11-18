@@ -25,14 +25,21 @@ I owned the technical strategy and execution for discovery modernisation, chairi
 - Discovery data powers auto-generated topology views, giving engineers a clearer understanding of blast radius before deploying changes.
 
 ## Technologies & Tools
-**Service Discovery:** Consul, AWS App Mesh (deprecated)
 
-**Infrastructure as Code:** Terraform, Ansible
-
-**Container Orchestration:** Docker, AWS ECS
-
-**Cloud Platform:** AWS (EC2, ECS)
-
-**Security:** AWS Secret Manager, mTLS
-
-**Development:** Python, Go
+<div class="experience-tech">
+  <div class="experience-tech-label">Technologies & Tools Used</div>
+  <div class="experience-tech-list">
+    <span class="tech-tag">Consul</span>
+    <span class="tech-tag">AWS App Mesh</span>
+    <span class="tech-tag">Terraform</span>
+    <span class="tech-tag">Ansible</span>
+    <span class="tech-tag">Docker</span>
+    <span class="tech-tag">AWS ECS</span>
+    <span class="tech-tag">AWS EC2</span>
+    <span class="tech-tag">AWS Secret Manager</span>
+    <span class="tech-tag">mTLS</span>
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">Go</span>
+    <span class="tech-tag">AWS</span>
+  </div>
+</div>

@@ -413,6 +413,97 @@ img {
 }
 
 /* ===========================
+   Experience Page
+   =========================== */
+
+.experience-card {
+  background: var(--color-bg);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+}
+
+.experience-card h3 {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.experience-timeline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.experience-timeline-date {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.experience-timeline-location {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.experience-timeline-separator {
+  color: var(--color-text-secondary);
+}
+
+.experience-responsibilities {
+  margin-bottom: var(--spacing-md);
+}
+
+.experience-responsibilities ul {
+  margin: 0;
+  padding-left: var(--spacing-lg);
+}
+
+.experience-responsibilities li {
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.experience-tech {
+  background: var(--color-bg-secondary);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-top: var(--spacing-md);
+}
+
+.experience-tech-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.experience-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: var(--spacing-xs);
+}
+
+.tech-tag {
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  border: 1px solid var(--color-border);
+  font-weight: 500;
+}
+
+/* ===========================
    Utilities
    =========================== */
 
