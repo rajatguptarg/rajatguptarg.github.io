@@ -22,7 +22,7 @@ permalink: /experience/
   <h2>Engineering Manager · TIDAL (Block Inc.)</h2>
   <p>Jun 2022 — Mar 2025 · Berlin, Germany</p>
   <ul>
-    <li>Led a 7-person SRE team responsible for release, in-production, and monitoring strategies, cutting service disruptions by half.</li>
+    <li>Led a 6-person SRE team responsible for release, in-production, and monitoring strategies, cutting service disruptions by half.</li>
     <li>Scaled SRE culture with training and process optimization that improved system reliability by 80% and reduced MTTR by 50%.</li>
     <li>Partnered with Engineering and Product to revamp CI/CD and automated testing, gaining 8% uptime and 70% higher user satisfaction.</li>
     <li>Drove projects such as Edge Compute, CDN, service discovery, and IDP, achieving 12% cost savings and a 90% observability uplift.</li>

@@ -10,7 +10,8 @@ Engineering Manager focused on platform reliability, security, and developer pro
 
 <div class="pill-group">
   <span class="pill">Site Reliability</span>
-  <span class="pill">Security Engineering</span>
+  <span class="pill">Software Engineering</span>
+  <span class="pill">Security</span>
   <span class="pill">Platform</span>
   <span class="pill">Developer Experience</span>
   <span class="pill">Technical Leadership</span>
