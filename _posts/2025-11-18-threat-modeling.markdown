@@ -5,8 +5,6 @@ date: 2025-11-16 00:00:00 +0100
 categories: security threat-modeling devsecops
 ---
 
-# Threat Modeling: The Ultimate Guide for Modern Engineering Teams
-
 A proactive approach to building secure software in the DevSecOps era.
 
 This guide emphasizes the critical need for **threat modeling** as a proactive security practice integrated into modern software development, moving away from the outdated model of security as a final gate. It highlights the astronomical costs of breaches and the importance of building security into the development process, aligning with the "shift left" movement.
@@ -153,3 +151,6 @@ Predicting vulnerabilities from code patterns, suggesting mitigations, generatin
 
 ### Core principle
 Technology will augment, but not replace, the fundamental need for curious engineers to collaborate in building resilient systems. Embedding threat modeling into a team’s DNA transforms software development for the better.
+
+
+Read the full post on Medium [here](https://pulse.rajatgupta.work/threat-modeling-the-ultimate-guide-for-modern-engineering-teams-c1e95d4b1605).

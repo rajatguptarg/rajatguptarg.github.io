@@ -5,8 +5,6 @@ date: 2025-11-25 00:00:00 +0100
 categories: cloud security
 ---
 
-# Beyond the Breach: A playbook for Cloud Security
-
 Let’s focus on cloud security for engineering teams, dissecting “silent killers” (misconfigurations, IAM flaws) with real-world examples. We will cover Zero Trust, CSPM/CNAPP, DevSecOps, a practical example for secure S3 buckets, and the importance of the Shared Responsibility Model and security culture.
 
 ## The Evolving Cloud Security Landscape
@@ -149,3 +147,5 @@ This code creates a secure S3 bucket by enforcing encryption, blocking public ac
 - Make security a fundamental quality metric alongside performance and reliability.
 
 By understanding pitfalls, adopting proactive strategies, and codifying security, organizations can build faster, more resilient, and innovative products with a foundation of robust security.
+
+Read the full post on Medium [here](https://pulse.rajatgupta.work/beyond-the-breach-a-playbook-for-cloud-security-a2823317a2ff).
