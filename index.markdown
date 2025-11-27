@@ -57,4 +57,6 @@ Engineering Manager focused on platform reliability, security, and developer pro
 <section class="card">
   <h2>Get In Touch</h2>
   <p>Email me at <a href="mailto:{{ site.email }}">{{ site.email }}</a> or reach out on <a href="https://www.linkedin.com/in/rajatguptarg/">LinkedIn</a> for consulting and speaking opportunities.</p>
+
+  <p>Read more about my blog posts on <a href="https://pulse.rajatgupta.work">Medium</a>.</p>
 </section>
