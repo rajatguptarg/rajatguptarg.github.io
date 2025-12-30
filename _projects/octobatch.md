@@ -3,7 +3,7 @@ layout: project
 title: "Octobatch: Declarative Large-Scale Code Changes Across GitHub Repositories"
 role: Engineering Manager · Paymenttools (REWE)
 impact: Delivered a self-hosted tool for declaratively managing bulk code changes across thousands of GitHub repositories, enabling teams to preview, apply, and continuously reconcile pull requests at scale until merged.
-timeline: 2025 – Ongoing
+timeline: 2025 – 2026
 summary: Octobatch - a self-hosted tool for declaratively applying large-scale code changes across thousands of GitHub repos—preview, open PRs in bulk, and continuously reconcile them until merged.
 ---
 
