@@ -1,259 +1,126 @@
-# Repository Guidelines
+# Rajat Gupta Portfolio
 
-## Project Structure & Module Organization
-Content lives under `_posts/` using the standard `YYYY-MM-DD-title.md` pattern; each file needs front matter declaring `layout`, `title`, and any custom metadata used by Minima. Global settings (site metadata, navigation toggles, plugin list) sit in `_config.yml`. Pages such as `index.markdown` and `about.markdown` provide standalone sections, while generated output resides in `_site/`—do not edit that directory, it is overwritten by every build.
+Personal portfolio and writing site built with Jekyll and GitHub Pages. The site combines long-form posts, project case studies, career history, and a downloadable CV behind a lightweight custom presentation layer on top of the GitHub Pages-compatible `minima` theme.
 
-## Build, Test, and Development Commands
-Run `bundle install` after updating gems to keep the locked GitHub Pages environment consistent. `bundle exec jekyll serve --livereload` builds the site in memory, watches `_posts/` and assets, and serves on `http://localhost:4000`. Use `bundle exec jekyll build --trace` for a clean production build into `_site/`; inspect warnings before pushing. `bundle exec jekyll doctor` highlights configuration mistakes (missing front matter, invalid includes) early in review.
+## About The Project
 
-## Coding Style & Naming Conventions
-Use Markdown with fenced code blocks and prefer descriptive link text. YAML front matter and `_config.yml` should be indented with two spaces and use kebab-case keys (`permalink_style`, `social_links`). Post filenames must remain lowercase with hyphens, while collection names (e.g., `layout: post`) stay singular to match Minima defaults. When embedding assets, store them under `assets/` and reference via site-relative paths (`/assets/img/heroes.jpg`) so GitHub Pages can rewrite URLs correctly.
+This repository powers `https://rajatgupta.work` and contains:
 
-## Testing Guidelines
-Before any PR, run `bundle exec jekyll build` to ensure the content compiles without Liquid errors. For drafts, append `--drafts --future` to preview scheduled posts and verify dates render correctly. Manually review the generated `_site/` for layout regressions and broken links; capture a screenshot if visual changes are involved. Keep regressions low by testing in both default and production configuration (with `JEKYLL_ENV=production bundle exec jekyll build`) when adding plugins or config switches.
+- A homepage and static pages for about, experience, contact, posts, projects, and CV
+- Blog content under `_posts/`
+- Project case studies under `_projects/`
+- A custom layout and stylesheet layer in `_layouts/`, `_includes/`, and `assets/main.css`
+- GitHub Pages-compatible Jekyll configuration in `_config.yml`
 
-## Commit & Pull Request Guidelines
-Follow the concise, imperative style seen in `git log` (e.g., “Initial GitHub pages site with Jekyll”): start with a capital verb and stay under ~60 characters. Group related Markdown, config, and asset updates into a single commit to simplify review. Pull requests must describe the reader-facing change, list key commands used for validation, and link any tracking issue. Include screenshots or GIFs for visual tweaks, and confirm that `_site/` output is excluded from the diff.
+Code blocks use a Molokai-inspired syntax highlighting palette implemented locally in `assets/main.css` so the rest of the site can keep the existing visual design.
 
-## Security & Configuration Tips
-Avoid checking credentials or tokens into `_config.yml`; use environment variables for secrets referenced in Liquid templates. When modifying plugin lists, ensure the gems are supported by GitHub Pages or document local-only needs in the PR description. Keep `bundle update` changes scoped and mention compatibility notes so other contributors can repeat the setup reliably.
+## Architecture
 
+The site is structured as a standard Jekyll app:
 
-# Jekyll Portfolio Guide
+- `_config.yml`: Site metadata, navigation, collections, plugins, and GitHub Pages-compatible settings
+- `_layouts/`: Shared HTML layouts for pages, posts, and projects
+- `_includes/`: Reusable UI fragments such as the header and footer
+- `_posts/`: Blog posts named with the `YYYY-MM-DD-title.md` convention
+- `_projects/`: Project collection items rendered as standalone pages
+- `assets/`: CSS, PDF, and image assets
+- `docs/adr/`: Architecture Decision Records for notable project decisions
 
-This guide walks you through creating your portfolio using Jekyll and GitHub Pages. It includes setup steps, directory structure, and content layout so you can build a clean, maintainable portfolio.
+Rendering flow:
 
----
+1. Markdown content is converted by Jekyll with `kramdown`
+2. Rouge generates syntax highlighting markup for fenced code blocks
+3. Layouts and includes assemble the final pages
+4. `assets/main.css` applies the site design, including the Molokai code block theme
 
-## 1. Overview
+## Install
 
-Jekyll is a static site generator that GitHub Pages supports natively. You write Markdown, store your content in a GitHub repository, and GitHub Pages builds and hosts it for free.
+Prerequisites:
 
-Your portfolio will include:
+- Ruby and Bundler installed locally
 
-* A homepage summarizing who you are
-* About page
-* Experience page
-* Projects (with individual project pages)
-* Writing or blog (optional)
-* CV page with downloadable PDF
-* Contact page
+Install dependencies:
 
----
-
-## 2. Initial Setup
-
-### Step 1: Create the GitHub repository
-
-* Create a new repo named `rajatgupta.work`.
-* Set visibility to Public.
-* Clone it locally.
-
-### Step 2: Install Jekyll locally (optional but helpful)
-
-If you want to preview your site locally, install Ruby and Jekyll:
-
-```
-gem install jekyll bundler
+```bash
+bundle install
 ```
 
-### Step 3: Initialize a Jekyll site
+## Develop Locally
 
-Run inside the repo:
+Start the local Jekyll server with live reload:
 
-```
-jekyll new . --force
-```
-
-This creates the default Jekyll structure.
-
-### Step 4: Choose a theme
-
-GitHub Pages supports many Jekyll themes. Examples:
-
-* minima (default)
-* cayman
-* slate
-* modernist
-
-Set your theme in `_config.yml`:
-
-```
-theme: minima
+```bash
+bundle exec jekyll serve --livereload
 ```
 
-### Step 5: Push to GitHub
+Open `http://localhost:4000`.
 
-Push your files. GitHub Pages will automatically build them.
+## Run And Test
 
----
+Use these commands during development and before opening a PR:
 
-## 3. Recommended Directory Structure
-
-Your repo will look like this:
-
-```
-/
-  _config.yml
-  _layouts/
-    default.html
-    project.html
-  _includes/
-    header.html
-    footer.html
-  _projects/
-    payment-failover.md
-    sre-platform.md
-    security-program.md
-  assets/
-    cv.pdf
-    img/
-      profile.jpg
-  index.md
-  about.md
-  experience.md
-  projects.md
-  cv.md
-  contact.md
+```bash
+bundle exec jekyll doctor
+bundle exec jekyll build --trace
+JEKYLL_ENV=production bundle exec jekyll build
 ```
 
-### Key folders
+For content scheduled in the future or drafts:
 
-* `_layouts/`: HTML layouts shared across pages.
-* `_includes/`: Reusable components like header and footer.
-* `_projects/`: Each project as a Markdown file with front matter.
-* `assets/`: Images, PDFs, diagrams.
-
----
-
-## 4. Configuring `_config.yml`
-
-Add metadata so your site has a title and links:
-
-```
-title: Rajat Gupta
-description: Engineering Manager · SRE · Security · Platform
-baseurl: ""
-url: "https://rajatgupta.work"
-markdown: kramdown
-collections:
-  projects:
-    output: true
-    permalink: /projects/:name/
+```bash
+bundle exec jekyll serve --drafts --future --livereload
 ```
 
----
+Validation expectations:
 
-## 5. Page Structure
+- The site builds without Liquid or configuration errors
+- Pages render correctly in the generated `_site/` output
+- Code blocks render with the expected Molokai styling
+- Visual regressions are checked manually for layout changes
 
-### Homepage: `index.md`
+## Content And Style Conventions
 
-Keep it simple:
+- Use Markdown with descriptive headings and fenced code blocks
+- Keep YAML front matter indented with two spaces
+- Store reusable images and downloadable files under `assets/`
+- Keep post filenames lowercase with hyphens
+- Do not edit `_site/`; it is generated output
 
-* Name
-* Role
-* One paragraph summary
-* Links to projects, CV, GitHub, LinkedIn
+## Contributing
 
-### About page: `about.md`
+1. Create a branch named `<type>/<jira-ticket>-short-description`
+2. Make one logical change at a time
+3. Update documentation for the change, including `README.md` and an ADR when the change is architectural
+4. Run the local validation commands
+5. Open a PR with the required description, testing notes, and checklist items
 
-Include your story, interests, and values.
+## Commit And PR Rules
 
-### Experience page: `experience.md`
+Commits must follow:
 
-Timeline format with roles, teams, outcomes, numbers.
-
-### Projects page: `projects.md`
-
-List all your projects using:
-
-```
-{% for project in site.projects %}
-  - [{{ project.title }}]({{ project.url }})
-{% endfor %}
-```
-
-### Project pages: `_projects/*.md`
-
-Example:
-
-```
----
-title: Payment Failover and Resilience
-role: Lead, SRE and Platform
-impact: "Reduced incident impact and MTTR, improved SLO compliance"
----
-
-Describe context, what you did, and outcomes.
+```text
+type(scope?): subject [XYZ-123]
 ```
 
-### CV page: `cv.md`
+Examples:
 
-Embed PDF:
-
-```
-[Download CV](../assets/cv.pdf)
-```
-
-### Contact page: `contact.md`
-
-Include email and links.
-
----
-
-## 6. Navigation
-
-Create a header include at `_includes/header.html` and link pages:
-
-```
-<nav>
-  <a href="/">Home</a>
-  <a href="/about">About</a>
-  <a href="/experience">Experience</a>
-  <a href="/projects">Projects</a>
-  <a href="/cv">CV</a>
-  <a href="/contact">Contact</a>
-</nav>
+```text
+feat(blog): add featured post layout [BLOG-88]
+fix(styles): update code block palette [WEB-101]
+docs(readme): refresh setup guide [DOCS-12]
 ```
 
-Include it in layout:
+PRs should:
 
-```
-{% include header.html %}
-```
+- Clearly describe the reader-facing change
+- Include the Jira ticket in the title
+- State how the change was tested
+- Avoid unrelated edits in the same branch
 
----
+## ADRs
 
-## 7. Deploying to GitHub Pages
+Architecture decisions live in `docs/adr/` using the naming convention `adr-xxx-title`. The Molokai code block theme decision is documented in `docs/adr/adr-001-molokai-code-block-theme.md`.
 
-In your GitHub repository:
+## Deployment
 
-1. Go to Settings
-2. Pages
-3. Select branch: `main`, folder: `/` or `/docs` depending on your setup
-4. Save
-
-Your portfolio will be live at:
-
-```
-https://rajatgupta.work
-```
-
----
-
-## 8. Tips for a Clean Portfolio
-
-* Keep descriptions short and focused on outcomes.
-* Use metrics where possible.
-* Avoid cluttered navigation.
-* Add only high impact projects.
-* Keep CV updated and link both HTML and PDF versions.
-* Add a profile photo for personality.
-
----
-
-## 9. Continuous Steps
-
-* Add a blog using Jekyll posts (`_posts/` folder).
-* Customize styling with a theme or custom CSS.
-* Add social preview image for better link sharing.
+The site is intended for GitHub Pages deployment using the repository root as the published Jekyll source. Keep plugins and configuration compatible with GitHub Pages unless a local-only requirement is explicitly documented.

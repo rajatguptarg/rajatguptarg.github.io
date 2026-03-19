@@ -1,10 +1,10 @@
 ---
 layout: project
-title: "Octobatch: Declarative Large-Scale Code Changes Across GitHub Repositories"
+title: "Rift: Declarative Large-Scale Code Changes Across GitHub Repositories"
 role: Engineering Manager · Paymenttools (REWE)
 impact: Delivered a self-hosted tool for declaratively managing bulk code changes across thousands of GitHub repositories, enabling teams to preview, apply, and continuously reconcile pull requests at scale until merged.
 timeline: 2025 – 2026
-summary: Octobatch - a self-hosted tool for declaratively applying large-scale code changes across thousands of GitHub repos—preview, open PRs in bulk, and continuously reconcile them until merged.
+summary: Rift - a self-hosted tool for declaratively applying large-scale code changes across thousands of GitHub repos—preview, open PRs in bulk, and continuously reconcile them until merged.
 ---
 
 ***
@@ -17,7 +17,7 @@ Without a declarative approach, organizations lose track of which repositories h
 
 ## My Role
 
-I designed and built Octobatch as an open-source tool to solve the large-scale code change problem declaratively. I shaped the architecture, developed the core reconciliation logic, and created the workflow that enables teams to define changes as configuration, preview diffs before opening PRs, and continuously track merge status. I also established patterns for safe bulk operations, including dry-run capabilities, change validation, and incremental rollout strategies.
+I designed and built Rift as an open-source tool to solve the large-scale code change problem declaratively. I shaped the architecture, developed the core reconciliation logic, and created the workflow that enables teams to define changes as configuration, preview diffs before opening PRs, and continuously track merge status. I also established patterns for safe bulk operations, including dry-run capabilities, change validation, and incremental rollout strategies.
 
 ## Execution
 
