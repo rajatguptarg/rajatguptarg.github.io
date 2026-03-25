@@ -1,0 +1,242 @@
+---
+layout: post
+title: "GitOps: Beyond the Hype"
+date: 2026-03-25 12:00:00 +0530
+categories: gitops kubernetes devops argocd flux cncf cd
+---
+
+It is holiday, and your on-call engineer is staring at a production cluster that looks nothing like what is in Git. Someone ran a `kubectl apply` three weeks ago to "quickly fix" a routing issue. That fix was never committed. Now a GitOps reconciliation loop just overwrote it, and 40% of your traffic is hitting a service that no longer exists.
+
+![Image 1](/assets/img/20260325-gitops/1.png)
+
+
+I have seen this exact scenario play out at two different companies. Both had adopted GitOps. Both had Argo CD dashboards glowing green. And both learned the hard way that declaring "we do GitOps" is very different from actually doing GitOps well.
+
+The numbers suggest GitOps has crossed the chasm. According to the CNCF 2024 survey (n=689), 77% of cloud-native organizations have adopted some form of GitOps. Octopus Deploy's research (n=660) found 93% plan to continue or increase their investment. Argo CD alone commands roughly 60% market share with an NPS of 79.
+
+But here is the thing. Adoption numbers do not tell you whether teams are succeeding. And behind the impressive stats, there is a messier, more interesting story about what GitOps actually looks like in practice, where it genuinely shines, and where it quietly falls apart.
+
+
+## The Promise vs. The Reality
+
+GitOps, at its core, is a simple idea: declare your desired system state in Git, and let a controller reconcile reality to match. You get version history, pull requests as change management, and automated rollbacks. The pitch practically sells itself.
+
+And for many teams, the pitch delivers. The data backs this up. Organizations practicing GitOps consistently show improvements across all four DORA metrics. Deployment frequency goes up. Lead time drops. Change failure rates decrease. Mean time to recovery shrinks.
+
+But GitOps did not emerge in a vacuum. It evolved from infrastructure-as-code practices, configuration management, and the broader shift toward declarative systems. Weaveworks coined the term in 2017, built a company around it, and then shut down in February 2024. The fact that the company that invented GitOps could not survive as a business should tell you something about the gap between the idea and the business of selling the idea.
+
+What actually matters is not whether you "do GitOps." It is whether the principles behind it (declarative configuration, version-controlled desired state, automated reconciliation, continuous feedback loops) are solving real problems for your team. The label is far less important than the outcome.
+
+
+## Where GitOps Actually Delivers
+
+Let me be specific. Not "GitOps is great for deployments" specific, but "here is what happened at real companies with real numbers" specific.
+
+
+### Speed That Compounds
+
+Intuit runs over 2,500 services on Kubernetes. After adopting Argo CD at scale, their mean time to recovery dropped from 45 minutes to under 5 minutes. Deployments that previously took days now complete in minutes. That is not a marginal improvement. That is a fundamentally different operating model where deploying becomes so cheap that you do it constantly, which in turn makes each deployment smaller and safer.
+
+Zepto, the Indian quick-commerce company, reduced developer onboarding from 2 days to 10 minutes using GitOps-driven environment provisioning. New engineers go from "here is your laptop" to "here is your running development environment" almost immediately. When you are scaling engineering teams aggressively, that kind of friction reduction is not a nice-to-have. It is a competitive advantage.
+
+Slite went from 4 deployments per day to 20 after implementing GitOps. More interestingly, they reported that the increase was not because they forced more deployments. Developers simply started deploying more often because the process became boring and predictable. That is the real sign of a healthy deployment pipeline: when shipping code is unremarkable.
+
+### Scale Without Proportional Headcount
+
+This is where GitOps gets genuinely impressive. Deutsche Telekom manages over 200 Kubernetes clusters with a platform team of just 10 engineers using Flux. That ratio (20 clusters per engineer) would be unthinkable with imperative management approaches. The declarative model means adding cluster number 201 looks almost identical to adding cluster number 2.
+
+CERN took cluster deployment time from 3 hours down to 15 minutes. When you are running physics experiments that require spinning up and tearing down compute environments frequently, that is the difference between "we can run this experiment today" and "maybe next week."
+
+Adobe processes over 4 million containers daily using a pure-pull GitOps architecture. Their approach is worth studying because they explicitly chose pull-based reconciliation over push-based deployment pipelines. The pull model means the cluster itself decides when to converge, which eliminates an entire class of "the deploy pipeline had credentials to push but the cluster was not ready" failures.
+
+![Image 3](/assets/img/20260325-gitops/3.png)
+
+
+### The Compliance Story Nobody Talks About
+
+Tidepool, a healthcare company building diabetes management tools, uses GitOps to maintain HIPAA compliance. Every configuration change goes through a pull request. Every pull request has a review trail. Every deployment is traceable to a specific commit. Their auditors love it because the audit trail is not a separate system bolted on after the fact. It is the deployment system itself.
+
+Mettle (part of NatWest Group) saw 50% faster and 65% more frequent deployments after adopting GitOps. But the more interesting metric for a financial services company is that their compliance reviews became faster because reviewers could look at a Git diff instead of trying to understand what changed in a running system.
+
+This pattern keeps showing up in regulated industries. The version control that GitOps requires for operational reasons happens to be exactly what compliance teams need for audit reasons. It is one of the few cases in engineering where the thing that makes developers faster also makes auditors happier.
+
+## The Architecture Decision You Are Actually Making
+
+When teams say "we are adopting GitOps," they are usually making a series of smaller architectural decisions that deserve more scrutiny than they typically get.
+
+![Image 2](/assets/img/20260325-gitops/2.png)
+
+### Push vs. Pull: It Matters More Than You Think
+
+In a push model, your CI pipeline builds an artifact and pushes it to your cluster. In a pull model, an agent running inside your cluster watches a Git repository and pulls changes when it detects drift.
+
+The pull model is what most people mean when they say "GitOps." It has a meaningful security advantage: your cluster never needs to expose an API endpoint for external systems to push to. The credentials flow is simpler. The blast radius of a compromised CI system is smaller.
+
+Adobe's choice of pure-pull architecture is instructive. At their scale (4M+ containers/day), the coordination problems with push-based deployments become severe. With pull, each cluster independently converges to the desired state. There is no central orchestrator that can become a bottleneck or single point of failure.
+
+Here is what a basic Argo CD Application manifest looks like:
+
+```yaml
+# Argo CD Application - the core GitOps primitive
+# This tells Argo CD: "make the cluster look like what's in this Git repo"
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-service
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/org/gitops-config
+    targetRevision: main
+    path: services/my-service/overlays/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true        # Remove resources not in Git
+      selfHeal: true     # Revert manual changes
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        maxDuration: 3m
+        factor: 2
+```
+
+The `selfHeal: true` setting is where things get interesting and also where that 2 AM incident I described can happen. Self-healing means the controller will revert any manual changes to match Git. That is exactly what you want in production. It is also exactly what will bite you if someone made an undocumented manual change that your system depends on.
+
+### Mono-Repo vs. Multi-Repo: The Scaling Question
+
+Skyscanner processes over 10,000 deployments per month using a cell-based architecture. They learned early that a single GitOps repository becomes a bottleneck at scale. Pull request contention, merge conflicts on generated YAML, and slow Git operations on large repos all compound.
+
+The pattern that works at scale is typically: one repository per team or bounded context for application configs, with a separate repository (or set of repositories) for platform-level configuration. This mirrors how most organizations actually make decisions. Application teams own their deployment configuration, and platform teams own the infrastructure that applications run on.
+
+```yaml
+# Kustomize overlay structure - how teams customize shared bases
+# Base defines the common configuration, overlays customize per environment
+# File: services/my-service/overlays/production/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: production
+resources:
+  - ../../base
+patchesStrategicMerge:
+  - deployment-patch.yaml
+configMapGenerator:
+  - name: my-service-config
+    literals:
+      - LOG_LEVEL=warn
+      - ENABLE_PROFILING=false
+images:
+  - name: my-service
+    newTag: v2.4.1  # Updated via automated PR from CI pipeline
+```
+
+### The Secret Management Problem
+
+Here is something that every GitOps tutorial glosses over: secrets do not belong in Git. But your applications need secrets. So you end up building a parallel system for secret delivery that operates outside your GitOps workflow.
+
+The common solutions (Sealed Secrets, External Secrets Operator, SOPS, Vault integration) all work. But they all add complexity that is not captured in the "Git is your single source of truth" narrative. Your actual source of truth is Git plus Vault plus whatever secret rotation system you are running. Acknowledging this is important because it changes how you think about disaster recovery and environment reproducibility.
+
+```yaml
+# External Secrets Operator - bridging GitOps and secret management
+# The ESO definition lives in Git; the actual secret lives in Vault
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: my-service-secrets
+  namespace: production
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: vault-backend
+    kind: ClusterSecretStore
+  target:
+    name: my-service-secrets
+    creationPolicy: Owner
+  data:
+    - secretKey: DATABASE_URL
+      remoteRef:
+        key: secret/data/production/my-service
+        property: database_url
+    - secretKey: API_KEY
+      remoteRef:
+        key: secret/data/production/my-service
+        property: api_key
+```
+
+
+## The Uncomfortable Truths
+
+Not everyone is sold on GitOps, and some of the skeptics have very good points.
+
+### The "GitOps is a Placebo" Argument
+
+Steve Smith, author of *Measuring Continuous Delivery*, argues that GitOps is essentially a placebo: it gives teams the feeling of control without necessarily delivering better outcomes. His point is that the real improvements come from good deployment practices (small batches, automated testing, monitoring), and GitOps is just one possible implementation of those practices, not a requirement.
+
+There is some truth here. I have seen teams adopt Argo CD, set up beautiful GitOps workflows, and still have terrible deployment outcomes because their tests were flaky, their monitoring was nonexistent, and their services were not designed for graceful degradation. GitOps does not fix bad engineering. It just makes bad engineering more version-controlled.
+
+### The Kelsey Hightower Critique
+
+Kelsey Hightower has called GitOps a "dead end" for managing infrastructure and databases. His argument is that Git is great for tracking desired state of stateless workloads, but breaks down for stateful systems where the current state matters as much as the desired state.
+
+He is right about the edges. Try managing a database schema migration through GitOps and you will quickly discover that "desired state" for a database is not the same as "desired state" for a Kubernetes Deployment. One is declarative and convergent. The other is sequential and path-dependent. Pretending otherwise leads to tools that technically work but feel like you are fighting the abstraction.
+
+### The Hidden Tax
+
+Ádám Sándor, a platform engineering consultant, estimates that teams spend 30% or more of their development time building and maintaining automation around their GitOps repositories. The YAML generation, the PR automation, the validation webhooks, the promotion pipelines between environments. None of this is trivial, and most of it is custom to your organization.
+
+Viktor Farcic points out something even more uncomfortable: many GitOps tools violate their own principles. Argo CD, for instance, stores significant state in its own database (sync status, health checks, RBAC policies) that is not in Git. The tool that is supposed to ensure Git is the source of truth has its own source of truth that is not Git.
+
+Kaspar von Grünberg, founder of Humanitec, describes GitOps at scale as "extremely frustrating." When you have hundreds of services and multiple environments, the sheer volume of YAML that needs to be generated, validated, and promoted becomes its own engineering problem.
+
+
+## The Pitfalls I Keep Seeing
+
+After working with teams adopting GitOps across different organizations, a few failure patterns show up again and again.
+
+![Image 4](/assets/img/20260325-gitops/4.png)
+
+**The YAML Ocean.** Teams start with clean, well-organized repositories. Six months later, they have thousands of nearly identical YAML files with subtle differences between environments. Kustomize overlays help. Helm charts help. But the fundamental problem is that Kubernetes configuration is verbose, and GitOps means all of it lives in your repository. loveholidays, which runs 1,500+ deployments per month, eventually migrated from Flux to Argo CD partly because managing configuration at that scale required better tooling for visualization and multi-tenancy.
+
+**The Drift Panic.** Self-healing sounds great until it heals something you did not want healed. A common scenario: an engineer makes an emergency change during an incident. The GitOps controller reverts it. The incident gets worse. Now you are fighting both the outage and your own tooling. The fix is having clear runbook procedures for pausing reconciliation during incidents, but many teams learn this the hard way.
+
+**The Secret Sprawl.** As mentioned earlier, secrets sit outside your GitOps workflow. But teams often do not realize how many things are effectively secrets: database connection strings, API keys, TLS certificates, OAuth tokens, service account credentials. Each one needs its own lifecycle management. Each one is a potential point of failure that your GitOps dashboard will not show you.
+
+**The Multi-Environment Maze.** Promoting changes from dev to staging to production through Git branches or directory structures seems straightforward. In practice, the promotion logic becomes the most complex part of the system. Argo CD's ApplicationSets help, but they add another layer of abstraction that teams need to understand and debug.
+
+**The Observability Gap.** GitOps tells you what should be running. It does not tell you if what is running is actually working. Teams that invest heavily in GitOps tooling but underinvest in observability end up with clusters that are perfectly reconciled and completely broken. The dashboard says everything is in sync. The users say the site is down.
+
+
+## Making It Actually Work: Practical Guidance
+
+If you are adopting GitOps (or trying to fix a GitOps implementation that is not working), here is what I would focus on.
+
+![Image 5](/assets/img/20260325-gitops/5.png)
+
+**Start with one team, one repo, one cluster.** The teams that succeed with GitOps almost always start small. Get the workflow right for a single service before you try to scale it to your entire platform. Monzo, which runs 100+ daily production deployments, did not start there. They grew into it incrementally.
+
+**Invest in the developer experience around GitOps, not just the GitOps tooling.** The reconciliation controller is maybe 20% of the work. The other 80% is: how do developers create new services, how do they promote changes between environments, how do they debug when something goes wrong, and how do they make emergency changes safely. If your developers need to understand Kustomize overlays to ship a feature, you have a developer experience problem.
+
+**Build escape hatches from day one.** You need a documented, practiced process for pausing GitOps reconciliation during incidents. You need a way to make emergency manual changes that are automatically captured back into Git afterward. Pretending that you will never need to break the GitOps workflow is the fastest way to ensure that when you do break it, it will be chaotic.
+
+**Treat your GitOps repository as a product.** It needs documentation. It needs a clear structure. It needs guardrails (admission controllers, PR validation, automated testing of manifests). It needs someone who owns it. The Argo CD 2024 survey shows that 42% of users are now managing 500+ applications (up from 15% in 2023). At that scale, repo quality is the difference between a team that ships confidently and a team that is afraid to merge.
+
+**Do not GitOps everything.** Databases, stateful workloads, one-off migration jobs, infrastructure provisioning. These can be managed declaratively, but they do not always benefit from the continuous reconciliation loop that defines GitOps. Use the right tool for the job. GitOps for stateless application deployments. Terraform or Pulumi for infrastructure. Migration frameworks for database schemas.
+
+
+## Where This Is Heading
+
+The Weaveworks shutdown was a watershed moment for the GitOps community. The company that coined the term and created Flux could not sustain itself as a business. But Flux survived as a CNCF project, and Argo CD continued to grow. The tools outlived their origin story.
+
+What I see emerging is a more mature, less ideological approach to GitOps. The early days were about purity: everything in Git, always reconciling, no exceptions. The current reality is more pragmatic. Teams use GitOps where it makes sense and other approaches where it does not. They combine pull-based reconciliation with push-based deployments. They acknowledge that Git is the source of truth for some things and not for others.
+
+The 77% adoption figure from CNCF is impressive, but the more telling number might be the 93% who plan to continue or increase investment. That suggests GitOps is not a fad that teams are abandoning once the hype fades. It is a practice that delivers enough value to keep, even when teams discover its rough edges.
+
+The hype was never really about GitOps itself. It was about the promise of making infrastructure as reviewable, auditable, and reversible as application code. That promise is real. It just requires more work, more nuance, and more humility than the conference talks suggest.
+
+If your team is considering GitOps, go for it. Just go in with open eyes, a small scope to start, and the understanding that the Git repository is the beginning of the story, not the end of it.
