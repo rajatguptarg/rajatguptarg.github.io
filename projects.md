@@ -7,7 +7,8 @@ permalink: /projects/
 
 # Projects
 
-{% for project in site.projects %}
+{% assign projects = site.projects | sort: 'timeline' | reverse %}
+{% for project in projects %}
   <div class="card">
     <h3><a href="{{ project.url }}">{{ project.title }}</a></h3>
     <div class="pill-group">
