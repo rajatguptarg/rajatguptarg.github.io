@@ -6,7 +6,9 @@ permalink: /about/
 ---
 
 ## Story
-I am an engineering manager passionate about building systems aligning reliability and security goals with measurable business outcomes. Over the past decade I have led platform, SRE, and developer productivity teams across fintech and SaaS companies, growing high-performing teams while modernizing infrastructure.
+I am an engineering leader, currently AVP Engineering at the Reserve Bank Innovation Hub (RBIH) in Bengaluru. RBIH is a wholly owned subsidiary of the Reserve Bank of India, set up to speed up innovation in India's financial sector. I work on the platform, infrastructure, reliability, and security side of the platforms it builds, such as the Unified Lending Interface (ULI), MuleHunter.ai, and the Digital Payments Intelligence Platform (DPIP).
+
+Before RBIH, I spent more than nine years in Berlin. I started there as a DevOps engineer and went on to lead SRE, platform, and security teams at PlayStation, TIDAL, and Paymenttools (REWE Digital), across payments, music streaming, cloud gaming, e-commerce, and energy. In mid-2026 I moved back to India to join RBIH. The thread through all of it is the same: building systems that line up reliability and security goals with measurable business outcomes, and growing the teams that run them.
 
 I care about clarity, good systems, and work that actually moves a team forward. I manage engineering teams, and I like solving problems that sit where reliability, security, and backend engineering meet. My approach is simple: understand the system, understand the people, remove the friction, and let teams do their best work.
 
