@@ -50,7 +50,7 @@ permalink: /experience/
   <div class="experience-responsibilities">
     <ul>
       <li>Led and mentored SRE and Security engineers, fostering psychological safety, equitable processes, and individualized growth plans.</li>
-      <li>Rolled out SRE best practices (SLOs, incident and change management, and on-call rotations) across 14 product teams to raise platform reliability.</li>
+      <li>Rolled out SRE best practices (SLOs, incident and change management, and on-call rotations) across 9 product teams to raise platform reliability.</li>
       <li>Co-designed the data platform that unlocks real-time analytics on 1.5B+ annual payment transactions.</li>
       <li>Defined the long-term roadmap for SRE and Security, delivering a self-service platform with GenAI automation that eliminates manual toil.</li>
     </ul>
@@ -183,7 +183,7 @@ permalink: /experience/
     <ul>
       <li>Managed distributed systems that power real-time energy trading operations.</li>
       <li>Implemented infrastructure to remotely operate 200+ hydropower plants.</li>
-      <li>Migrated and optimized services to sustain 100% availability across multiple data centers.</li>
+      <li>Migrated and optimized services to sustain 99.99% availability across multiple data centers.</li>
     </ul>
   </div>
   <div class="experience-tech">
