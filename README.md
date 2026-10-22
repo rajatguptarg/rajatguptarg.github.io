@@ -25,6 +25,7 @@ The site is structured as a standard Jekyll app:
 - `_projects/`: Project collection items rendered as standalone pages
 - `assets/`: CSS, PDF, and image assets
 - `docs/adr/`: Architecture Decision Records for notable project decisions
+- `_latex/`: LaTeX source for the downloadable CV in `assets/cv.pdf`
 
 Rendering flow:
 
@@ -77,6 +78,19 @@ Validation expectations:
 - Pages render correctly in the generated `_site/` output
 - Code blocks render with the expected Molokai styling
 - Visual regressions are checked manually for layout changes
+
+## Update The CV
+
+The CV is written in LaTeX at `_latex/cv.tex` and published as `assets/cv.pdf`. Its content mirrors `experience.md`, `about.markdown` and `_projects/`, so update them together.
+
+Rebuild it with a TeX Live install that includes `latexmk` and the `XCharter` font (`texlive-fonts-extra` on Debian and Ubuntu):
+
+```bash
+latexmk -pdf -cd _latex/cv.tex
+cp _latex/cv.pdf assets/cv.pdf
+```
+
+Jekyll skips the `_latex/` directory because its name starts with an underscore, and Git ignores its build output.
 
 ## Content And Style Conventions
 
