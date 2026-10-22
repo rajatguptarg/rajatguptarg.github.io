@@ -11,7 +11,7 @@ summary: Designed and rolled out a clear, scalable incident management framework
 Paymenttools had grown quickly, but incident response practices remained inconsistent across teams. Different squads used their own tooling, had uneven escalation flows, and lacked shared expectations. This created confusion during high-pressure events and led to unnecessary customer impact.
 
 ## My Role
-I led the end-to-end definition and rollout of the new incident management framework. This included shaping the operating model, partnering with engineering and product leadership, running training for 14 teams, and aligning SRE, Security, and Operations stakeholders on a single standard.
+I led the end-to-end definition and rollout of the new incident management framework. This included shaping the operating model, partnering with engineering and product leadership, running training for 9 teams, and aligning SRE, Security, and Operations stakeholders on a single standard.
 
 ## Execution
 - Defined a unified incident taxonomy and severity model tailored to PSP requirements and PCI workloads.

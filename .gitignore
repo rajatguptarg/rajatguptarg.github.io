@@ -4,3 +4,11 @@ _site
 .jekyll-metadata
 vendor
 Gemfile.lock
+
+# LaTeX build output for the CV (the published copy lives at assets/cv.pdf)
+_latex/*.aux
+_latex/*.fdb_latexmk
+_latex/*.fls
+_latex/*.log
+_latex/*.out
+_latex/*.pdf
