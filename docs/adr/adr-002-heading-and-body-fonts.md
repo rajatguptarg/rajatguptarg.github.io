@@ -35,3 +35,11 @@ Trade-offs:
 - Adobe Fonts adds a request to `use.typekit.net`, and web projects are tied to an allowed-domain list, so local previews show the fallback unless `localhost` is allowed.
 - The Perfectly Nineties files are publicly downloadable from the site, as with any web font. The owner's license must cover web use.
 - Headings that need italics or a weight other than 600 or 700 will be synthesized by the browser until the matching WOFF2 file is added.
+
+## Amendment (2026-10-23): Figtree is the body font
+
+No Adobe Fonts kit ID was ever set, so every reader saw Figtree. The site was tuned for a font it did not show. As part of the editorial redesign ([ADR-004](adr-004-editorial-redesign.md)), Figtree is now the deliberate body font:
+
+- Figtree (SIL Open Font License 1.1) is self-hosted as two variable WOFF2 files, normal and italic, Latin subset, about 20 KB each, in `assets/fonts/figtree/` with its license in `OFL.txt`. The request to Google Fonts is gone, along with its extra DNS and TLS connection. The normal style is preloaded.
+- The body stack is now `proxima-nova`, `Figtree`, then system fonts. The local name `Proxima Nova` was removed, so a reader who happens to have Proxima Nova installed sees the same font as everyone else.
+- The Adobe Fonts switch still works: setting `adobe_fonts_kit_id` loads the kit, and `proxima-nova` takes over the body text. The type sizes were measured with Figtree, so re-check line lengths if you switch.

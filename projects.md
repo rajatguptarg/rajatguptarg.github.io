@@ -1,20 +1,18 @@
 ---
-layout: default
+layout: page
 title: Projects
-description: Portfolio projects from Rajat Gupta.
+description: Case studies from Rajat Gupta's work at RBIH, Paymenttools, TIDAL and PlayStation, with the role he played and the result.
+intro: Case studies from RBIH, Paymenttools, TIDAL and PlayStation, with the role I played and the result.
 permalink: /projects/
 ---
 
-# Projects
-
-{% assign projects = site.projects | sort: 'timeline' | reverse %}
-{% for project in projects %}
-  <div class="card">
-    <h2><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h2>
-    <div class="pill-group">
-      <span class="pill">{{ project.role }}</span>
-    </div>
-    <p>{{ project.summary | default: project.impact }}</p>
-    <p><a href="{{ project.url | relative_url }}">Read the full case study →</a></p>
-  </div>
-{% endfor %}
+<ol class="entry-list">
+  {% assign projects = site.projects | sort: 'timeline' | reverse %}
+  {% for project in projects %}
+    <li class="entry">
+      <p class="entry-meta">{{ project.role }} · {{ project.timeline }}</p>
+      <h2 class="entry-title"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h2>
+      <p class="entry-summary">{{ project.summary | default: project.impact }}</p>
+    </li>
+  {% endfor %}
+</ol>

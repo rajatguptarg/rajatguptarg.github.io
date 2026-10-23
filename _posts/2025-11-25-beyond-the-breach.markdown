@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "Beyond the Breach: A playbook for Cloud Security"
+description: "A playbook for the misconfigurations and IAM flaws behind most cloud breaches, covering Zero Trust, CSPM, DevSecOps, a secure S3 bucket in Terraform, and security culture."
 date: 2025-11-25 00:00:00 +0100
 categories: cloud security
+redirect_from:
+  - /cloud/security/2025/11/24/beyond-the-breach/
 ---
 
 Let’s focus on cloud security for engineering teams, dissecting “silent killers” (misconfigurations, IAM flaws) with real-world examples. We will cover Zero Trust, CSPM/CNAPP, DevSecOps, a practical example for secure S3 buckets, and the importance of the Shared Responsibility Model and security culture.
@@ -122,7 +125,7 @@ resource "aws_s3_bucket_policy" "secure_bucket_policy" {
 
 This code creates a secure S3 bucket by enforcing encryption, blocking public access, and enabling versioning before data is uploaded.
 
-## The Elephant in the Room: The Shared Responsibility Model￼
+## The Elephant in the Room: The Shared Responsibility Model
 
 - A critical myth to dispel is that “the cloud provider handles security.”
 

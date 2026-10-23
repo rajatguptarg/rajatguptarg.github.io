@@ -1,21 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ site.lang | default: 'en' | replace: '_', '-' }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>document.documentElement.classList.add('js');</script>
     {% seo %}
+    {% feed_meta %}
+    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon-32.png' | relative_url }}" />
     <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}" />
     {% if page.profile_page %}{% include profile-jsonld.html %}{% endif %}
+    <link rel="preload" href="{{ '/assets/fonts/figtree/figtree-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="{{ '/assets/fonts/perfectly-nineties/perfectly-nineties-bold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="{{ '/assets/fonts/perfectly-nineties/perfectly-nineties-semibold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
     {% assign adobe_fonts_kit_id = site.adobe_fonts_kit_id | strip %}
     {% if adobe_fonts_kit_id != "" %}
       <link rel="stylesheet" href="https://use.typekit.net/{{ adobe_fonts_kit_id }}.css" />
-    {% else %}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" />
     {% endif %}
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}" />
     {% include analytics.html %}
@@ -28,6 +29,16 @@
     </main>
     {% include footer.html %}
     <script>
+      // Phones: the Menu button shows and hides the navigation.
+      (function () {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.getElementById('site-nav');
+        if (!toggle || !nav) return;
+        toggle.addEventListener('click', function () {
+          var open = nav.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      })();
       // Code blocks that scroll sideways need keyboard focus so they can be scrolled without a mouse.
       document.querySelectorAll('.site-content pre').forEach(function (pre) {
         if (pre.scrollWidth > pre.clientWidth) pre.tabIndex = 0;

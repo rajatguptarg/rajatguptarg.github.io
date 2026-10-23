@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: page
 title: Contact
 description: Contact information for Rajat Gupta.
 permalink: /contact/
 ---
 
-# Contact
 
 - **Email:** <a href="mailto:{{ site.email }}">{{ site.email }}</a>
 - **Location:** Bengaluru, India

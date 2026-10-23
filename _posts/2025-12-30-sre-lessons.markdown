@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "SRE & Security Lessons from the 2025 Trenches"
+description: "What broke at hyperscale in 2025, why zonal redundancy was an illusion, and the code patterns that help when a configuration change, not hardware, takes systems down."
 date: 2025-12-30 00:00:00 +0100
-categories: cloud security sre ai devops distributed-systems
+categories: sre security cloud
+redirect_from:
+  - /cloud/security/sre/ai/devops/distributed-systems/2025/12/29/sre-lessons/
 ---
 
 If you look back at the engineering landscape of 2025, it wasn't just another year of iteration. It was a phase shift. We saw a collision between two massive tectonic forces: the chaotic complexity of hyperscale systems and the ungoverned integration of AI agents.

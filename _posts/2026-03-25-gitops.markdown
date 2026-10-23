@@ -1,13 +1,16 @@
 ---
 layout: post
 title: "GitOps: Beyond the Hype"
+description: "What GitOps looks like in practice: where it delivers, with numbers from Intuit, Deutsche Telekom and Adobe, where it quietly falls apart, and how to make it work."
 date: 2026-03-25 12:00:00 +0530
-categories: gitops kubernetes devops argocd flux cncf cd
+categories: gitops kubernetes devops
+redirect_from:
+  - /gitops/kubernetes/devops/argocd/flux/cncf/cd/2026/03/25/gitops/
 ---
 
 It is holiday, and your on-call engineer is staring at a production cluster that looks nothing like what is in Git. Someone ran a `kubectl apply` three weeks ago to "quickly fix" a routing issue. That fix was never committed. Now a GitOps reconciliation loop just overwrote it, and 40% of your traffic is hitting a service that no longer exists.
 
-![Image 1](/assets/img/20260325-gitops/1.png)
+{% include figure.html src="/assets/img/20260325-gitops/1.webp" alt="Two illustrations side by side. Left: Git branches, main, two feature branches and a hotfix, flowing cleanly into a Kubernetes cluster. Right: an engineer with head in hands at a desk of monitors showing errors, surrounded by broken YAML files." caption="GitOps as pitched, and GitOps after a fix that never made it into Git." eager=true %}
 
 
 I have seen this exact scenario play out at two different companies. Both had adopted GitOps. Both had Argo CD dashboards glowing green. And both learned the hard way that declaring "we do GitOps" is very different from actually doing GitOps well.
@@ -49,7 +52,7 @@ CERN took cluster deployment time from 3 hours down to 15 minutes. When you are 
 
 Adobe processes over 4 million containers daily using a pure-pull GitOps architecture. Their approach is worth studying because they explicitly chose pull-based reconciliation over push-based deployment pipelines. The pull model means the cluster itself decides when to converge, which eliminates an entire class of "the deploy pipeline had credentials to push but the cluster was not ready" failures.
 
-![Image 3](/assets/img/20260325-gitops/3.png)
+{% include figure.html src="/assets/img/20260325-gitops/3.webp" alt="GitOps at scale, case-study metrics from production teams. Deutsche Telekom: 200 Kubernetes clusters managed by 10 engineers. Adobe: 4 million containers a day on a pure-pull GitOps architecture. Intuit: MTTR down from 45 minutes to under 5 across 2,500+ services. Zepto: developer onboarding down from 2 days to 10 minutes with GitOps-driven environments." caption="Four of the production results described above." %}
 
 
 ### The Compliance Story Nobody Talks About
@@ -64,7 +67,7 @@ This pattern keeps showing up in regulated industries. The version control that 
 
 When teams say "we are adopting GitOps," they are usually making a series of smaller architectural decisions that deserve more scrutiny than they typically get.
 
-![Image 2](/assets/img/20260325-gitops/2.png)
+{% include figure.html src="/assets/img/20260325-gitops/2.webp" alt="Push and pull deployment compared. Push-based CI/CD: the CI pipeline holds credentials and pushes from the container registry into the Kubernetes cluster, a wider blast radius. Pull-based GitOps: an agent such as Argo CD or Flux runs inside the cluster, pulls desired state from the Git repo and reconciles, so credentials stay inside the cluster and the blast radius is reduced." caption="Push gives your CI system credentials to the cluster. Pull keeps them inside it." %}
 
 ### Push vs. Pull: It Matters More Than You Think
 
@@ -199,7 +202,7 @@ Kaspar von Grünberg, founder of Humanitec, describes GitOps at scale as "extrem
 
 After working with teams adopting GitOps across different organizations, a few failure patterns show up again and again.
 
-![Image 4](/assets/img/20260325-gitops/4.png)
+{% include figure.html src="/assets/img/20260325-gitops/4.webp" alt="A road from GitOps adoption to GitOps maturity with five warning signs along it: YAML Ocean, Secret Sprawl, Drift Panic, Multi-Environment Maze and Observability Gap." caption="The five pitfalls covered in this section." %}
 
 **The YAML Ocean.** Teams start with clean, well-organized repositories. Six months later, they have thousands of nearly identical YAML files with subtle differences between environments. Kustomize overlays help. Helm charts help. But the fundamental problem is that Kubernetes configuration is verbose, and GitOps means all of it lives in your repository. loveholidays, which runs 1,500+ deployments per month, eventually migrated from Flux to Argo CD partly because managing configuration at that scale required better tooling for visualization and multi-tenancy.
 
@@ -216,7 +219,7 @@ After working with teams adopting GitOps across different organizations, a few f
 
 If you are adopting GitOps (or trying to fix a GitOps implementation that is not working), here is what I would focus on.
 
-![Image 5](/assets/img/20260325-gitops/5.png)
+{% include figure.html src="/assets/img/20260325-gitops/5.webp" alt="A winding road from a GitOps Adoption signpost to a GitOps Maturity marker, passing the same five hazards: YAML Ocean, Drift Panic, Secret Sprawl, Multi-Environment Maze and Observability Gap." caption="The road from adoption to maturity passes the same five pitfalls." %}
 
 **Start with one team, one repo, one cluster.** The teams that succeed with GitOps almost always start small. Get the workflow right for a single service before you try to scale it to your entire platform. Monzo, which runs 100+ daily production deployments, did not start there. They grew into it incrementally.
 

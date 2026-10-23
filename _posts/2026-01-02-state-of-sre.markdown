@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "SRE in 2026: What's Changed and What's Next"
+description: "SRE was not automated away. What changed by 2026: rising toil, slow as the new down, the limits of the autonomous SRE, Rust and eBPF, and GreenOps."
 date: 2026-01-02 00:00:00 +0100
-categories: sre genai swe greenops
+categories: sre genai greenops
+redirect_from:
+  - /sre/genai/swe/greenops/2026/01/01/state-of-sre/
 ---
 
 Remember the panicked LinkedIn threads from early 2023? The ones predicting that by 2026, Site Reliability Engineering would be automated out of existence?

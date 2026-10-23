@@ -1,11 +1,9 @@
 ---
-layout: default
+layout: page
 title: About
 description: Background and philosophy of Rajat Gupta.
 permalink: /about/
 ---
-
-# About
 
 ## Story
 I am an engineering leader, currently AVP Engineering at the Reserve Bank Innovation Hub (RBIH) in Bengaluru. RBIH is a wholly owned subsidiary of the Reserve Bank of India, set up to speed up innovation in India's financial sector. I work on the platform, infrastructure, reliability, and security side of the platforms it builds, such as the Unified Lending Interface (ULI), MuleHunter.AI, and the Digital Payments Intelligence Platform (DPIP).
@@ -25,55 +23,27 @@ Outside the day to day, I write about engineering leadership, platform thinking,
 - **Craft + Clarity**: high standards paired with transparent communication so teams can execute autonomously.
 - **Mentorship**: developing engineers into tech leads through pairing, design reviews, and career coaching.
 
-## Skills & Expertise
+## Strengths, with evidence
 
-<div class="card">
-  <h3>Leadership & Management</h3>
-  <div class="experience-tech-list" style="margin-top: 1rem;">
-    <span class="tech-tag">Visionary Leadership</span>
-    <span class="tech-tag">Team Management</span>
-    <span class="tech-tag">Strategic Thinking</span>
-    <span class="tech-tag">Mentoring & Coaching</span>
-    <span class="tech-tag">Hiring</span>
-    <span class="tech-tag">Delegation</span>
-    <span class="tech-tag">Change Management</span>
-    <span class="tech-tag">Stakeholder Management</span>
-  </div>
-</div>
+<dl class="evidence">
+  <dt>Reliability and incident management</dt>
+  <dd>Rolled out an <a href="{{ '/projects/sre-operating-model/' | relative_url }}">SRE operating model at TIDAL</a> that reduced MTTR by 50% and lifted reliability scores by 80% across 14 product teams. Designed the incident management practice at <a href="{{ '/projects/incident-management-process/' | relative_url }}">Paymenttools</a> and now at <a href="{{ '/projects/rbih-incident-management/' | relative_url }}">RBIH</a>.</dd>
 
-<div class="card">
-  <h3>Communication & Collaboration</h3>
-  <div class="experience-tech-list" style="margin-top: 1rem;">
-    <span class="tech-tag">Communication</span>
-    <span class="tech-tag">Emotional Intelligence</span>
-    <span class="tech-tag">Empathy</span>
-    <span class="tech-tag">Teamwork</span>
-    <span class="tech-tag">Conflict Resolution</span>
-    <span class="tech-tag">Adaptability</span>
-  </div>
-</div>
+  <dt>Platform engineering and automation</dt>
+  <dd>Automated provisioning across 20+ data centers at <a href="{{ '/projects/platform-automation-observability/' | relative_url }}">PlayStation</a>. At Paymenttools, built <a href="{{ '/projects/rift/' | relative_url }}">Rift</a> for declarative code changes across thousands of GitHub repositories, and a <a href="{{ '/projects/actionable-runbooks/' | relative_url }}">runbook runner</a> that turns static operational docs into guided, auditable workflows.</dd>
 
-<div class="card">
-  <h3>Operations & Execution</h3>
-  <div class="experience-tech-list" style="margin-top: 1rem;">
-    <span class="tech-tag">Operational Excellence</span>
-    <span class="tech-tag">Process Improvement</span>
-    <span class="tech-tag">Project Management</span>
-    <span class="tech-tag">Problem Solving</span>
-    <span class="tech-tag">Decision-Making</span>
-    <span class="tech-tag">Capacity Planning</span>
-    <span class="tech-tag">Emergency Response</span>
-    <span class="tech-tag">Goal Setting</span>
-  </div>
-</div>
+  <dt>Observability and cost</dt>
+  <dd>Cut log spend by 30% and total observability cost by 12% through <a href="{{ '/projects/observability-governance-idp/' | relative_url }}">observability governance at TIDAL</a>. Built an observability stack at PlayStation ingesting 300+ GB/day of metrics for 100K+ servers.</dd>
 
-<div class="card">
-  <h3>Personal Attributes</h3>
-  <div class="experience-tech-list" style="margin-top: 1rem;">
-    <span class="tech-tag">Growth Mindset</span>
-    <span class="tech-tag">Leadership</span>
-  </div>
-</div>
+  <dt>Edge and networking</dt>
+  <dd>Delivered <a href="{{ '/projects/edge-compute-streaming/' | relative_url }}">multi-CDN edge compute</a> across Fastly, Cloudflare, and CloudFront, cutting CDN costs by 12%, and <a href="{{ '/projects/service-discovery-modernization/' | relative_url }}">replaced AWS App Mesh with Consul</a> for service discovery.</dd>
+
+  <dt>Security and compliance</dt>
+  <dd>At RBIH, I drive engineering-side security and compliance readiness: security audits, vulnerability assessments, and Digital Personal Data Protection (DPDP) Act obligations. See the <a href="{{ '/experience/' | relative_url }}">experience timeline</a>.</dd>
+
+  <dt>Leading teams</dt>
+  <dd>Led a 6-person SRE team at TIDAL, led and mentored SRE and Security engineers at Paymenttools, and rolled out SRE practices across 9 product teams there. At RBIH I am part of the CTO's engineering leadership team and hire for DevOps and MLOps roles.</dd>
+</dl>
 
 ## Outside of Work
 When I am not debugging platforms, you can find me writing about leadership and open source, speaking at community events, or hiking with my camera. I am always up for collaborating on talks or mentoring emerging engineering leaders.

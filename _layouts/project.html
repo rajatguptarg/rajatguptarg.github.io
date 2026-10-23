@@ -2,19 +2,24 @@
 layout: default
 ---
 <article class="post">
-  <header class="post-header">
-    <div class="pill-group">
-      <span class="pill">{{ page.role }}</span>
-    </div>
+  <header class="page-header">
+    {% if page.role %}
+      <p class="kicker">{{ page.role }}</p>
+    {% endif %}
     <h1>{{ page.title }}</h1>
     {% if page.impact %}
-      <p class="post-description">{{ page.impact }}</p>
+      <p class="dek">{{ page.impact }}</p>
     {% endif %}
     {% if page.timeline %}
-      <p class="post-meta">{{ page.timeline }}</p>
+      <p class="meta">{{ page.timeline }}</p>
     {% endif %}
   </header>
-  <section class="post-content">
+
+  <div class="post-content">
     {{ content }}
-  </section>
+  </div>
+
+  <footer class="post-end">
+    <p><a href="{{ '/projects/' | relative_url }}">All case studies</a> · <a href="{{ '/experience/' | relative_url }}">Full experience</a> · <a href="mailto:{{ site.email }}">Email me</a></p>
+  </footer>
 </article>

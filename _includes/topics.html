@@ -1,0 +1,6 @@
+{%- comment -%} Post categories as readable labels from _data/topics.yml. Usage: include topics.html categories=page.categories {%- endcomment -%}
+{%- for category in include.categories -%}
+  {%- assign label = site.data.topics[category] -%}
+  {%- unless label -%}{%- assign label = category | capitalize -%}{%- endunless -%}
+  {{- label -}}{%- unless forloop.last %} · {% endunless -%}
+{%- endfor -%}

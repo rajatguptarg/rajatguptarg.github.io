@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: page
 title: Experience
 description: Experience timeline for Rajat Gupta.
 permalink: /experience/
 ---
 
-# Experience
 
 <div class="experience-card">
   <h2>AVP Engineering · Reserve Bank Innovation Hub (RBIH)</h2>

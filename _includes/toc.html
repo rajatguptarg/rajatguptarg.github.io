@@ -1,0 +1,17 @@
+{%- comment -%}
+  Contents list built from the h2 headings kramdown renders with ids (<h2 id="...">).
+  Usage: include toc.html html=content
+{%- endcomment -%}
+{%- assign toc_sections = include.html | split: '<h2 id="' -%}
+{%- if toc_sections.size > 2 -%}
+<nav class="toc" aria-labelledby="toc-title">
+  <p class="toc-title" id="toc-title">In this post</p>
+  <ol>
+    {%- for toc_section in toc_sections offset: 1 %}
+      {%- assign toc_id = toc_section | split: '"' | first -%}
+      {%- assign toc_text = toc_section | split: '</h2>' | first | remove_first: toc_id | remove_first: '">' | strip_html | strip %}
+    <li><a href="#{{ toc_id }}">{{ toc_text }}</a></li>
+    {%- endfor %}
+  </ol>
+</nav>
+{%- endif -%}

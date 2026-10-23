@@ -1,16 +1,16 @@
 ---
-layout: default
+layout: page
 title: CV
+heading: Curriculum Vitae
 description: Download the latest CV for Rajat Gupta.
 permalink: /cv/
 ---
 
-# Curriculum Vitae
 
 Download the latest CV:
 
 - [View PDF](/assets/cv.pdf)
-- [Save a copy](../assets/cv.pdf)
+- [Save a copy](/assets/cv.pdf){: download="rajat-gupta-cv.pdf"}
 
 ## Snapshot
 - AVP Engineering at the Reserve Bank Innovation Hub (RBIH), Bengaluru, since June 2026.
