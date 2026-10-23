@@ -2,7 +2,7 @@
 layout: project
 title: "Edge Compute for Low-Latency Streaming"
 role: Engineering Manager · TIDAL (Block Inc.)
-impact: Delivered multi-CDN edge compute, yielding 8% uptime gains, 12% cost savings, and a 70% boost in user satisfaction.
+impact: Delivered multi-CDN edge compute across Fastly, Cloudflare, and CloudFront, cutting CDN costs by 12% and removing the dependency on a single CDN.
 timeline: 2022 – 2024
 summary: Built edge infrastructure across Fastly, Cloudflare, and CloudFront to keep music streaming responsive worldwide.
 ---

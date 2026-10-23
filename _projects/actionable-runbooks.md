@@ -1,9 +1,9 @@
 ---
 layout: project
 title: "Runbook Runner: Turning Static Docs into Actionable Automation"
-role: Engineering Manager · Paymenttools (REWE)
+role: Senior Engineering Manager · Paymenttools (REWE Digital)
 impact: Delivered an automated runbook execution system that reduced manual toil, improved operator confidence, and created a single reliable path for executing high risk operational tasks.
-timeline: 2025-2026
+timeline: 2025 – 2026
 summary: Designed and shipped a lightweight automation platform that transformed static operational documentation into guided, safe, and auditable workflows used across SRE, Security, and Product teams.
 ---
 

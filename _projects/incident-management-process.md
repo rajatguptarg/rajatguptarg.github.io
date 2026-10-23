@@ -1,7 +1,7 @@
 ---
 layout: project
 title: "Rolling Out a Modern Incident Management Process"
-role: Engineering Manager · Paymenttools (REWE)
+role: Senior Engineering Manager · Paymenttools (REWE Digital)
 impact: Established a unified, reliable incident response process adopted across all product teams, reducing ambiguity, accelerating response, and elevating operational maturity.
 timeline: "2025"
 summary: Designed and rolled out a clear, scalable incident management framework that strengthened cross-team coordination and measurably improved reliability across the platform.

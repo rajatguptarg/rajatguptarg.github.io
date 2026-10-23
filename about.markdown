@@ -5,8 +5,10 @@ description: Background and philosophy of Rajat Gupta.
 permalink: /about/
 ---
 
+# About
+
 ## Story
-I am an engineering leader, currently AVP Engineering at the Reserve Bank Innovation Hub (RBIH) in Bengaluru. RBIH is a wholly owned subsidiary of the Reserve Bank of India, set up to speed up innovation in India's financial sector. I work on the platform, infrastructure, reliability, and security side of the platforms it builds, such as the Unified Lending Interface (ULI), MuleHunter.ai, and the Digital Payments Intelligence Platform (DPIP).
+I am an engineering leader, currently AVP Engineering at the Reserve Bank Innovation Hub (RBIH) in Bengaluru. RBIH is a wholly owned subsidiary of the Reserve Bank of India, set up to speed up innovation in India's financial sector. I work on the platform, infrastructure, reliability, and security side of the platforms it builds, such as the Unified Lending Interface (ULI), MuleHunter.AI, and the Digital Payments Intelligence Platform (DPIP).
 
 Before RBIH, I spent more than nine years in Berlin. I started there as a DevOps engineer and went on to lead SRE, platform, and security teams at PlayStation, TIDAL, and Paymenttools (REWE Digital), across payments, music streaming, cloud gaming, e-commerce, and energy. In mid-2026 I moved back to India to join RBIH. The thread through all of it is the same: building systems that line up reliability and security goals with measurable business outcomes, and growing the teams that run them.
 
@@ -18,10 +20,10 @@ Outside the day to day, I write about engineering leadership, platform thinking,
 
 
 ## Principles I Lead With
-- **Reliability with empathy** — healthy SLOs, compassionate incident reviews, and tight feedback loops with product teams.
-- **Secure-by-default platforms** — paved roads, dependency governance, and threat modeling as part of delivery.
-- **Craft + Clarity** — high standards paired with transparent communication so teams can execute autonomously.
-- **Mentorship** — developing engineers into tech leads through pairing, design reviews, and career coaching.
+- **Reliability with empathy**: healthy SLOs, compassionate incident reviews, and tight feedback loops with product teams.
+- **Secure-by-default platforms**: paved roads, dependency governance, and threat modeling as part of delivery.
+- **Craft + Clarity**: high standards paired with transparent communication so teams can execute autonomously.
+- **Mentorship**: developing engineers into tech leads through pairing, design reviews, and career coaching.
 
 ## Skills & Expertise
 

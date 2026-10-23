@@ -8,7 +8,7 @@ permalink: /experience/
 # Experience
 
 <div class="experience-card">
-  <h3>AVP Engineering · Reserve Bank Innovation Hub (RBIH)</h3>
+  <h2>AVP Engineering · Reserve Bank Innovation Hub (RBIH)</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Jun 2026 – Present</span>
     <span class="experience-timeline-separator">·</span>
@@ -19,7 +19,7 @@ permalink: /experience/
       <li>Lead platform engineering, infrastructure, CI/CD, and DevOps across RBIH's platforms as part of the CTO's engineering leadership team, and hire for DevOps and MLOps roles.</li>
       <li>Drive production reliability and incident response for the Unified Lending Interface (ULI), the credit digital public infrastructure that connects lenders with data service providers.</li>
       <li>Designed RBIH's incident management process (severity model, incident roles, escalation paths, on-call rotations, and postmortems) and lead its rollout, starting with ULI.</li>
-      <li>Shape infrastructure, capacity, and disaster recovery planning for RBIH's fraud-prevention platforms, MuleHunter.ai and the Digital Payments Intelligence Platform (DPIP).</li>
+      <li>Shape infrastructure, capacity, and disaster recovery planning for RBIH's fraud-prevention platforms, MuleHunter.AI and the Digital Payments Intelligence Platform (DPIP).</li>
       <li>Drive engineering-side security and compliance readiness, including security audits, vulnerability assessments, and Digital Personal Data Protection (DPDP) Act obligations.</li>
       <li>Lead AI adoption in engineering, from agent-ready interfaces for RBIH platforms to evaluating GPU compute for AI/ML workloads.</li>
     </ul>
@@ -41,7 +41,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>Sr. Engineering Manager · Paymenttools (REWE Digital)</h3>
+  <h2>Sr. Engineering Manager · Paymenttools (REWE Digital)</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">May 2025 – May 2026</span>
     <span class="experience-timeline-separator">·</span>
@@ -76,7 +76,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>Engineering Manager · TIDAL (Block Inc.)</h3>
+  <h2>Engineering Manager · TIDAL (Block Inc.)</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Jun 2022 – Mar 2025</span>
     <span class="experience-timeline-separator">·</span>
@@ -111,7 +111,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>Site Reliability Engineer · PlayStation (Sony Interactive Entertainment)</h3>
+  <h2>Site Reliability Engineer · PlayStation (Sony Interactive Entertainment)</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Feb 2020 – May 2022</span>
     <span class="experience-timeline-separator">·</span>
@@ -146,7 +146,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>Senior DevOps Engineer · Private Sale GmbH (eBay)</h3>
+  <h2>Senior DevOps Engineer · Private Sale GmbH (eBay)</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Aug 2019 – Jan 2020</span>
     <span class="experience-timeline-separator">·</span>
@@ -173,7 +173,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>Senior DevOps Engineer · Entelios (Agder Energi)</h3>
+  <h2>Senior DevOps Engineer · Entelios (Agder Energi)</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Dec 2017 – Jul 2019</span>
     <span class="experience-timeline-separator">·</span>
@@ -200,7 +200,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>DevOps Engineer · SuitePad GmbH</h3>
+  <h2>DevOps Engineer · SuitePad GmbH</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Feb 2017 – Nov 2017</span>
     <span class="experience-timeline-separator">·</span>
@@ -227,7 +227,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>Application Developer · ThoughtWorks</h3>
+  <h2>Application Developer · ThoughtWorks</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Jul 2015 – Jan 2017</span>
     <span class="experience-timeline-separator">·</span>
@@ -255,7 +255,7 @@ permalink: /experience/
 </div>
 
 <div class="experience-card">
-  <h3>Software Developer · Openlabs Technologies</h3>
+  <h2>Software Developer · Openlabs Technologies</h2>
   <div class="experience-timeline">
     <span class="experience-timeline-date">Jan 2015 – Apr 2015</span>
     <span class="experience-timeline-separator">·</span>

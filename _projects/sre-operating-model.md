@@ -4,6 +4,7 @@ title: "SRE Operating Model Rollout"
 role: Engineering Manager · TIDAL (Block Inc.)
 impact: Reduced MTTR by 50% and lifted reliability scores by 80% across 14 product teams.
 timeline: 2022 – 2024
+featured: 2
 summary: Codified SLOs, runbooks, and service tiers while coaching teams into an SRE mindset.
 ---
 

@@ -1,12 +1,13 @@
 ---
 layout: default
-title: Rajat Gupta · AVP Engineering at RBIH
-description: Portfolio homepage for Rajat Gupta, AVP Engineering at the Reserve Bank Innovation Hub, covering platform, SRE, security, and engineering leadership.
+title: Rajat Gupta
+description: Rajat Gupta, AVP Engineering at the Reserve Bank Innovation Hub (RBIH), leads platform, reliability, and security engineering for systems where downtime has a real cost.
 permalink: /
+profile_page: true
 ---
 
 # Rajat Gupta
-AVP Engineering at the Reserve Bank Innovation Hub (RBIH) in Bengaluru. I lead platform, infrastructure, reliability, and security engineering for digital public infrastructure in India's financial sector.
+I lead platform, reliability, and security engineering for systems where downtime has a real cost. Today that means credit and fraud-prevention infrastructure for India's financial sector, as AVP Engineering at the Reserve Bank Innovation Hub (RBIH) in Bengaluru. Before that, I spent more than nine years in Berlin, where I grew from DevOps engineer to leading SRE, platform, and security teams for cloud gaming, music streaming, and payments at PlayStation, TIDAL, and Paymenttools.
 
 <div class="pill-group">
   <span class="pill">Platform Engineering</span>
@@ -18,30 +19,26 @@ AVP Engineering at the Reserve Bank Innovation Hub (RBIH) in Bengaluru. I lead p
 </div>
 
 <section class="card">
-  <h2>What I Do</h2>
-  <p>
-    I lead engineering teams that keep platforms reliable, secure, and ready to scale. Today that work happens at RBIH, a wholly owned subsidiary of the Reserve Bank of India. My remit covers platform engineering, infrastructure, CI/CD, reliability, and AI adoption across the platforms RBIH builds for the financial sector, including the Unified Lending Interface (ULI), MuleHunter.ai, and the Digital Payments Intelligence Platform (DPIP). These systems serve lenders, banks, and through them their customers, so reliability, security, and regulatory compliance are part of the engineering work from day one.<br><br>
-
-    Before RBIH, I spent more than nine years in Berlin, first building and then leading SRE, platform, and security work at companies like PlayStation, TIDAL, and Paymenttools (REWE Digital). My work sits at the intersection of SRE, Security, and backend systems, where clarity and ownership matter as much as technical depth. I guide teams through complex problems, help them make decisions with data, and build processes that reduce noise instead of adding more of it.<br><br>
-
-    I spend a lot of time shaping cross-functional work so that people know who owns what and why. When something critical needs to be delivered, I bring structure, alignment, and a clear path forward. I also enjoy driving green-field initiatives, especially the ones that need both technical judgment and steady leadership to get from idea to production.<br><br>
-
-    Along the way, I write about the lessons I learn. My goal is to share practical insights with other engineers and leaders, not theory for its own sake. I like turning complicated systems into simple explanations that help others think more clearly.
-  </p>
-  <p><a href="{{ '/experience/' | relative_url }}">See the detailed experience timeline →</a></p>
-</section>
-
-<section class="card">
-  <h2>Featured Work</h2>
+  <h2>Selected Work</h2>
   <ul>
-    {% assign featured_projects = site.projects | sort: 'timeline' | reverse %}
-    {% for project in featured_projects limit:3 %}
+    {% assign featured_projects = site.projects | where_exp: "project", "project.featured" | sort: "featured" %}
+    {% for project in featured_projects %}
       <li>
-        <strong><a href="{{ project.url }}">{{ project.title }}</a></strong> — {{ project.impact }}
+        <strong><a href="{{ project.url | relative_url }}">{{ project.title }}</a></strong>: {{ project.impact }}
       </li>
     {% endfor %}
   </ul>
   <p><a href="{{ '/projects/' | relative_url }}">Browse all projects →</a></p>
+</section>
+
+<section class="card">
+  <h2>What I Do</h2>
+  <p>
+    RBIH is a wholly owned subsidiary of the Reserve Bank of India. There I lead platform engineering, infrastructure, CI/CD, reliability, and AI adoption across the platforms RBIH builds for the financial sector, including the Unified Lending Interface (ULI), MuleHunter.AI, and the Digital Payments Intelligence Platform (DPIP). These systems serve lenders and banks, and through them their customers, so reliability, security, and regulatory compliance are part of the engineering work from day one.<br><br>
+
+    The thread through all of my work is the same: make ownership clear, help teams decide with data, and build processes that reduce noise instead of adding more of it. I also enjoy green-field work that needs both technical judgment and steady leadership to get from idea to production.
+  </p>
+  <p><a href="{{ '/experience/' | relative_url }}">See the detailed experience timeline →</a></p>
 </section>
 
 <section class="card">
