@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "The Three Pillars of Observability: Logs, Metrics, Traces Done Right"
+description: "Monitoring tells you when something breaks; observability tells you why. How to get logs, metrics and traces right, with OpenTelemetry, smarter sampling and a checklist."
 date: 2026-02-05 00:00:00 +0100
-categories: observability sre devops platform
+categories: observability sre platform
+redirect_from:
+  - /observability/sre/devops/platform/2026/02/04/three-pillars-of-observability/
 ---
 
 Monitoring tells you when something breaks. Observability tells you why, even when you did not know the failure mode existed. In modern microservice systems, that difference is the line between a fast fix and an all-hands war room.

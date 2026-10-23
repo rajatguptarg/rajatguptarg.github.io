@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "Terraform at Scale: Patterns and Anti-Patterns"
+description: "What separates teams that run Terraform smoothly at scale from those fighting state corruption, slow plans and drift, drawn from Cloudflare, Stripe, Uber and Benchling."
 date: 2026-03-19 14:00:00 +0530
-categories: sre terraform iac devops cloud
+categories: terraform iac sre
+redirect_from:
+  - /sre/terraform/iac/devops/cloud/2026/03/19/terraform-at-scale/
 ---
 
 Only 6% of organizations have achieved full cloud codification. That means 94% of companies running Terraform are still managing significant chunks of their infrastructure by clicking around in a console. And according to the Firefly State of IaC 2025 report, 65% of respondents say cloud complexity has actually *increased* over the last two years, despite better tooling. Terraform is not the problem. How we use it is.
@@ -13,7 +16,7 @@ This post is about what separates teams that run Terraform smoothly at scale fro
 
 ## The Problem with "Just Use Terraform"
 
-![Image 1](/assets/img/terraform-at-scale/01.png)
+{% include figure.html src="/assets/img/terraform-at-scale/01.webp" alt="Timeline of four eras of Terraform use. Laptop era, 2014 to 2017: engineers run Terraform from their laptops with shared state and manual changes. CI/CD era, 2018 to 2020: plans and applies run in CI pipelines. Platform abstraction era, 2021 to 2022: internal platforms and self-service tools generate Terraform behind the scenes. AI and scale era, 2024 to 2026: context-aware AI with guardrails runs large-scale, governed Terraform." caption="How Terraform use moved from laptops to governed platforms." %}
 
 Terraform holds roughly 34% of the configuration management market. The AWS provider alone has crossed 5 billion historical downloads. It is, by any measure, the dominant IaC tool.
 
@@ -52,7 +55,7 @@ The second critical design principle is aligning module boundaries with resource
 
 Shopify demonstrates what good module design enables at scale. They built highly abstracted modules for DNS routing and Snowflake data pipelines. Application owners can now update complex, traffic-managed domains by adjusting lightweight `domain.tf` files, which automatically triggers failover logic underneath. The developer does not need deep infrastructure expertise. The module encapsulates it. This, combined with a hybrid AI-human automation model (LLMs trained on company-specific patterns, with mandatory human oversight for critical infrastructure), allowed Shopify to reach a 90% automation rate for standard deployments.
 
-![Image 2](/assets/img/terraform-at-scale/02.png)
+{% include figure.html src="/assets/img/terraform-at-scale/02.webp" alt="Two module designs side by side. Left, labelled anti-pattern: one God module with dozens of input variables. Right, labelled pattern: right-sized network, compute, database and monitoring modules, each with a few inputs, passing outputs such as vpc_id, subnet_ids and endpoint to the next." caption="One module that does everything, against small modules wired together through their outputs." %}
 
 ### Policy-as-Code is No Longer Optional
 
@@ -72,7 +75,7 @@ What this actually means in practice is that generic AI (pointing ChatGPT at you
 
 But the DORA data should give everyone pause. The 7.2% drop in delivery stability correlated with AI adoption is not a minor footnote. As RedMonk analyst R. Stephens framed it through the Theory of Constraints: "Writing code isn't the bottleneck to deploying reliable applications." Generating Terraform faster via AI solves a problem that was not the actual constraint, while actively worsening the real bottlenecks of security review, state management, and integration testing.
 
-![Image 3](/assets/img/terraform-at-scale/03.png)
+{% include figure.html src="/assets/img/terraform-at-scale/03.webp" alt="AI in Terraform and infrastructure automation, promise versus risk. Company results: Stripe, 70% reduction in provisioning time. Uber, 85% reduction in configuration errors. Shopify, 90% automation rate for standard deployments. Industry average, 55% productivity boost from AI-assisted IaC. Below, DORA 2024 industry-wide impact of AI adoption: delivery stability down 7.2%, throughput down 1.5%." caption="Company wins next to the DORA 2024 industry numbers. AI helps most when guardrails, policies and tests are in place." %}
 
 
 ## The Pitfalls You Will Recognize
@@ -112,7 +115,7 @@ What to do instead: Always use `for_each` with a map or set of strings. Resource
 
 ## What You Can Do Next Week
 
-![Image 4](/assets/img/terraform-at-scale/04.png)
+{% include figure.html src="/assets/img/terraform-at-scale/04.webp" alt="Terraform execution at scale, as a flow: a developer writes Terraform code and opens a GitHub pull request. Atlantis or CI runs terraform plan. Policy as code checks it with OPA and Sentinel. A human reviews and approves. A CI runner runs terraform apply, assuming a role in the target account. State lives in a remote S3 backend with a DynamoDB lock. Manual console changes are crossed out." caption="Every change goes through a pull request, a policy check and a CI runner. Nobody applies from a laptop or the console." %}
 
 Here is a concrete checklist, ordered by impact:
 

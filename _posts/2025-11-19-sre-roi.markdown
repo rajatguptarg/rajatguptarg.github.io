@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "Proving the ROI of Your SRE Program"
+description: "How to translate availability, SLOs and MTTR into revenue, churn and operating cost, so leadership can see the return on an SRE program."
 date: 2025-11-18 00:00:00 +0100
 categories: sre roi management
+redirect_from:
+  - /sre/roi/management/2025/11/17/sre-roi/
 ---
 
 Leading the SRE Teams, one of the hardest challenges is how to prove the Return on Investment (ROI) of a Site Reliability Engineering (SRE) program, addressing the “translation gap” between technical metrics and business outcomes.

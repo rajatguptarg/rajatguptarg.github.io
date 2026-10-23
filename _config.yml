@@ -49,6 +49,14 @@ defaults:
       path: ""
     values:
       image: /assets/img/social-card.png
+  # Short, stable post URLs. The old category-based URLs redirect through
+  # redirect_from in each post's front matter (jekyll-redirect-from).
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      permalink: /posts/:title/
   - scope:
       path: ""
       type: projects
@@ -77,6 +85,9 @@ profile:
 
 markdown: kramdown
 permalink: pretty
+# Post dates are written in Indian Standard Time; without this the build runs in UTC
+# and a post dated 00:00 +0100 shows the previous day.
+timezone: Asia/Kolkata
 
 collections:
   projects:
@@ -84,18 +95,16 @@ collections:
     permalink: /projects/:name/
 
 nav_links:
-  - title: Home
-    url: /
-  - title: About
-    url: /about/
-  - title: Experience
-    url: /experience/
+  - title: Writing
+    url: /posts/
   - title: Projects
     url: /projects/
+  - title: Experience
+    url: /experience/
+  - title: About
+    url: /about/
   - title: CV
     url: /cv/
-  - title: Posts
-    url: /posts/
   - title: Contact
     url: /contact/
 
@@ -110,10 +119,10 @@ social_links:
   - label: Medium
     url: https://pulse.rajatgupta.work
 
-# Body text uses Proxima Nova served by Adobe Fonts. Set this to the ID of an
-# Adobe Fonts web project (the part before ".css" in its embed link) that
-# includes Proxima Nova and allows this domain. While it is empty, the site
-# loads Figtree from Google Fonts as a stand-in.
+# Body text is Figtree, self-hosted from assets/fonts/figtree/. To use Proxima
+# Nova from Adobe Fonts instead, set this to the ID of an Adobe Fonts web
+# project (the part before ".css" in its embed link) that includes Proxima Nova
+# and allows this domain. See ADR-002 and ADR-004.
 adobe_fonts_kit_id: ""
 
 # Privacy-friendly page view counts from GoatCounter (no cookies). Set this to the
@@ -127,6 +136,7 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-redirect-from
   - jekyll-seo-tag
   - jekyll-sitemap
 

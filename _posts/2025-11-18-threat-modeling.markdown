@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "Threat Modeling: The Ultimate Guide"
+description: "Why threat modeling belongs inside delivery instead of at the end: the main methodologies, threat modeling as code, and the pitfalls engineering managers should avoid."
 date: 2025-11-16 00:00:00 +0100
 categories: security threat-modeling devsecops
+redirect_from:
+  - /security/threat-modeling/devsecops/2025/11/15/threat-modeling/
 ---
 
 A proactive approach to building secure software in the DevSecOps era.

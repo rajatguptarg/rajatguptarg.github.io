@@ -1,0 +1,17 @@
+# Display labels for post categories. Categories without an entry are shown capitalised.
+cloud: Cloud
+devops: DevOps
+devsecops: DevSecOps
+genai: GenAI
+gitops: GitOps
+greenops: GreenOps
+iac: IaC
+kubernetes: Kubernetes
+management: Management
+observability: Observability
+platform: Platform engineering
+roi: ROI
+security: Security
+sre: SRE
+terraform: Terraform
+threat-modeling: Threat modeling

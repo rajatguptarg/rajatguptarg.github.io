@@ -1,0 +1,11 @@
+{%- comment -%}
+  Image with alt text, caption and fixed dimensions (no layout shift).
+  Usage: include figure.html src="/assets/img/x.webp" alt="..." caption="..." width=1376 height=768 eager=true
+  Only the first figure near the top of a post should be eager; the rest load lazily.
+{%- endcomment -%}
+<figure class="figure">
+  <img src="{{ include.src | relative_url }}" alt="{{ include.alt | escape }}" width="{{ include.width | default: 1376 }}" height="{{ include.height | default: 768 }}"{% if include.eager %} fetchpriority="high"{% else %} loading="lazy" decoding="async"{% endif %} />
+  {%- if include.caption %}
+  <figcaption>{{ include.caption | escape }}</figcaption>
+  {%- endif %}
+</figure>

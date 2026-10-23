@@ -1,18 +1,44 @@
 ---
 layout: default
 ---
-
+{%- assign words = content | strip_html | number_of_words -%}
 <article class="post">
-  <header class="post-header">
-    {% if page.date %}
-      <p class="post-meta">{{ page.date | date: '%B %d, %Y' }}{% if page.categories %} · {{ page.categories | array_to_sentence_string }}{% endif %}</p>
+  <header class="page-header">
+    {% if page.categories.size > 0 %}
+      <p class="kicker">{% include topics.html categories=page.categories %}</p>
     {% endif %}
     <h1>{{ page.title }}</h1>
     {% if page.description %}
-      <p class="post-description">{{ page.description }}</p>
+      <p class="dek">{{ page.description }}</p>
     {% endif %}
+    <p class="meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%-d %B %Y' }}</time> · {% include reading-time.html content=content %}</p>
   </header>
-  <section class="post-content">
+
+  {% if words > 1500 and page.toc != false %}
+    {% include toc.html html=content %}
+  {% endif %}
+
+  <div class="post-content">
     {{ content }}
-  </section>
+  </div>
+
+  <footer class="post-end">
+    <p>Written by <a href="{{ '/about/' | relative_url }}">Rajat Gupta</a>, AVP Engineering at the Reserve Bank Innovation Hub. For questions or a different view, <a href="mailto:{{ site.email }}">email me</a>.</p>
+    {% if page.previous or page.next %}
+      <nav class="post-nav" aria-label="More posts">
+        {% if page.previous %}
+          <a class="post-nav-prev" href="{{ page.previous.url | relative_url }}">
+            <span class="post-nav-label">Older</span>
+            <span class="post-nav-title">{{ page.previous.title }}</span>
+          </a>
+        {% endif %}
+        {% if page.next %}
+          <a class="post-nav-next" href="{{ page.next.url | relative_url }}">
+            <span class="post-nav-label">Newer</span>
+            <span class="post-nav-title">{{ page.next.title }}</span>
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </footer>
 </article>
