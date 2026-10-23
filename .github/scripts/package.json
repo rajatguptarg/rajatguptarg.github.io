@@ -1,0 +1,14 @@
+{
+  "name": "rajatgupta-work-site-checks",
+  "private": true,
+  "description": "Accessibility checks and social card rendering for rajatgupta.work",
+  "type": "module",
+  "scripts": {
+    "axe": "node axe-scan.mjs ../../_site http://localhost:4000",
+    "social-card": "node render-social-card.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "playwright": "1.56.1"
+  }
+}

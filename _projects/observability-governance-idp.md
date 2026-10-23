@@ -4,6 +4,7 @@ title: "Observability Governance & Internal Developer Portal"
 role: Engineering Manager · TIDAL (Block Inc.)
 impact: Cut log spend by 30% and total observability cost by 12% while making telemetry actionable inside the IDP.
 timeline: 2023 – 2024
+featured: 1
 summary: Blended log governance, cost-per-service reporting, and IDP integrations so teams own their telemetry budgets and insights.
 ---
 

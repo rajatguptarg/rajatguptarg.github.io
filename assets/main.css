@@ -30,6 +30,7 @@
   --color-text: #1a1a1a;
   --color-text-secondary: #6b7280;
   --color-accent: #2563eb;
+  --color-accent-strong: #1d4ed8;
   --color-accent-light: #dbeafe;
   --color-border: #e5e7eb;
   --color-header-bg: #ffffff;
@@ -59,6 +60,11 @@
 
 * {
   box-sizing: border-box;
+}
+
+/* Keep in-page targets and keyboard focus clear of the sticky header. */
+html {
+  scroll-padding-top: 6rem;
 }
 
 body {
@@ -117,6 +123,32 @@ a:hover {
 
 strong {
   font-weight: 600;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-strong);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: -3rem;
+  z-index: 200;
+  background: var(--color-bg);
+  color: var(--color-accent-strong);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.skip-link:focus {
+  top: var(--spacing-sm);
+}
+
+/* The skip link moves focus to <main>; no outline around the whole page. */
+#main-content:focus {
+  outline: none;
 }
 
 ul, ol {
@@ -215,7 +247,8 @@ img {
 
 .pill {
   background: var(--color-accent-light);
-  color: var(--color-accent);
+  /* The base accent is 4.2:1 on the pill background; the stronger blue passes AA. */
+  color: var(--color-accent-strong);
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
   font-size: 0.875rem;
@@ -347,7 +380,9 @@ img {
 .site-content .highlight .cm,
 .site-content .highlight .cp,
 .site-content .highlight .cs {
-  color: #75715e;
+  /* Molokai's #75715e is only 3:1 on the code background; this keeps the hue
+     and meets the WCAG AA 4.5:1 minimum. */
+  color: #9a957c;
   font-style: italic;
 }
 
@@ -371,7 +406,8 @@ img {
 .site-content .highlight .kt,
 .site-content .highlight .nt,
 .site-content .highlight .o {
-  color: #f92672;
+  /* Molokai's #f92672 is 3.9:1 on the code background; this lighter pink meets 4.5:1. */
+  color: #ff4b8b;
 }
 
 .site-content .highlight .gd,
@@ -554,7 +590,7 @@ img {
   border: 1px solid var(--color-border);
 }
 
-.experience-card h3 {
+.experience-card h2 {
   margin: 0 0 var(--spacing-xs) 0;
   font-size: 1.35rem;
   font-weight: 600;

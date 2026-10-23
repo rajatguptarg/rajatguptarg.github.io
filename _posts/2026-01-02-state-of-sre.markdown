@@ -17,7 +17,7 @@ Here is the reality of SRE in 2026.
 
 ***
 
-### The “Trust Paradox” and Rising Toil
+## The “Trust Paradox” and Rising Toil
 
 We were promised that AI would handle the grunt work. The theory was that Generative AI would eliminate toil, freeing us up for “high-value creative work.”
 
@@ -33,7 +33,7 @@ AI accelerates creation, but human verification creates a new bottleneck.
 
 ***
 
-### Slow is the New Down
+## Slow is the New Down
 
 The binary definition of reliability (Up vs. Down) is dead. In 2026, **Slow is the New Down**.
 
@@ -45,7 +45,7 @@ This shift kills traditional monitoring. You cannot rely on 1-minute averages an
 
 ***
 
-### The Myth of the “Autonomous SRE”
+## The Myth of the “Autonomous SRE”
 
 Let’s talk about the elephant in the room. Why isn’t AI fixing incidents for us yet?
 
@@ -64,7 +64,7 @@ The AI only succeeded when a human operator acted as the investigator, feeding i
 
 ***
 
-### The New Stack: Rust, eBPF, and the Kernel
+## The New Stack: Rust, eBPF, and the Kernel
 
 Because we can’t touch the application code for every legacy service, we have moved our observability and security down to the kernel using **eBPF** (Extended Berkeley Packet Filter).
 
@@ -151,7 +151,7 @@ eBPF allows us to filter noise and attacks at the hardware level, saving CPU for
 
 ***
 
-### GreenOps: The Regulatory Mandate
+## GreenOps: The Regulatory Mandate
 
 Finally, we have a new boss: The environment.
 
@@ -165,7 +165,7 @@ We connect our Kubernetes Horizontal Pod Autoscalers to grid data APIs. If the g
 
 ***
 
-### The Road Ahead
+## The Road Ahead
 
 If you are an Engineering Manager or a Lead SRE, your strategy needs to shift.
 

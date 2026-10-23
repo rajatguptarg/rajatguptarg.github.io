@@ -12,3 +12,6 @@ _latex/*.fls
 _latex/*.log
 _latex/*.out
 _latex/*.pdf
+
+# Node packages for the check scripts in .github/scripts
+node_modules/

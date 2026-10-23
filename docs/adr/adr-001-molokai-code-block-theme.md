@@ -29,3 +29,14 @@ Trade-offs:
 
 - Syntax highlighting colors are maintained locally in CSS rather than imported from an external theme package
 - Future theme changes need to preserve the Rouge class mappings in `assets/main.css`
+
+## Amendment (2026-10-23): contrast
+
+Two Molokai colours failed the WCAG 2.2 AA minimum of 4.5:1 on the `#272822` code background, found by an axe-core scan of the built site. They were adjusted within the same hue so code stays recognisably Molokai:
+
+| Tokens | Molokai | Now | Contrast on `#272822` |
+| --- | --- | --- | --- |
+| Comments (`.c`, `.c1`, `.cm`, `.cp`, `.cs`) | `#75715e` (3.0:1) | `#9a957c` | 4.9:1 |
+| Keywords and operators (`.k*`, `.nt`, `.o`) | `#f92672` (3.9:1) | `#ff4b8b` | 4.7:1 |
+
+Keep any future palette change at or above 4.5:1; the `Site checks` workflow fails on contrast violations. See [ADR-003](adr-003-metadata-and-site-checks.md).

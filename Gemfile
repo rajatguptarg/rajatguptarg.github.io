@@ -37,3 +37,8 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 gem "webrick", "~> 1.9"
 
 gem "github-pages", "~> 232", group: :jekyll_plugins
+
+# Checks the built site for broken links, missing alt text and metadata (see .github/workflows/site-checks.yml).
+group :test do
+  gem "html-proofer", "~> 5.0"
+end

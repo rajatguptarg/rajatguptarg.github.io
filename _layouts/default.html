@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ page.title | default: site.title }}</title>
-    <meta name="description" content="{{ page.description | default: site.description }}" />
+    {% seo %}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon-32.png' | relative_url }}" />
+    <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}" />
+    {% if page.profile_page %}{% include profile-jsonld.html %}{% endif %}
     <link rel="preload" href="{{ '/assets/fonts/perfectly-nineties/perfectly-nineties-bold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="{{ '/assets/fonts/perfectly-nineties/perfectly-nineties-semibold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
     {% assign adobe_fonts_kit_id = site.adobe_fonts_kit_id | strip %}
@@ -16,12 +18,20 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" />
     {% endif %}
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}" />
+    {% include analytics.html %}
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     {% include header.html %}
-    <main class="site-content">
+    <main id="main-content" class="site-content" tabindex="-1">
       {{ content }}
     </main>
     {% include footer.html %}
+    <script>
+      // Code blocks that scroll sideways need keyboard focus so they can be scrolled without a mouse.
+      document.querySelectorAll('.site-content pre').forEach(function (pre) {
+        if (pre.scrollWidth > pre.clientWidth) pre.tabIndex = 0;
+      });
+    </script>
   </body>
 </html>
