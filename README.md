@@ -14,6 +14,8 @@ This repository powers `https://rajatgupta.work` and contains:
 
 Code blocks use a Molokai-inspired syntax highlighting palette implemented locally in `assets/main.css` so the rest of the site can keep the existing visual design.
 
+Headings and the site title use Perfectly Nineties, self-hosted from `assets/fonts/`. Body text uses Proxima Nova from Adobe Fonts, with Figtree from Google Fonts as a stand-in until an Adobe Fonts kit ID is configured. See [Fonts](#fonts).
+
 ## Architecture
 
 The site is structured as a standard Jekyll app:
@@ -23,7 +25,7 @@ The site is structured as a standard Jekyll app:
 - `_includes/`: Reusable UI fragments such as the header and footer
 - `_posts/`: Blog posts named with the `YYYY-MM-DD-title.md` convention
 - `_projects/`: Project collection items rendered as standalone pages
-- `assets/`: CSS, PDF, and image assets
+- `assets/`: CSS, font, PDF, and image assets
 - `docs/adr/`: Architecture Decision Records for notable project decisions
 - `_latex/`: LaTeX source for the downloadable CV in `assets/cv.pdf`
 
@@ -32,7 +34,7 @@ Rendering flow:
 1. Markdown content is converted by Jekyll with `kramdown`
 2. Rouge generates syntax highlighting markup for fenced code blocks
 3. Layouts and includes assemble the final pages
-4. `assets/main.css` applies the site design, including the Molokai code block theme
+4. `assets/main.css` applies the site design, including the fonts and the Molokai code block theme
 
 ## Install
 
@@ -92,6 +94,26 @@ cp _latex/cv.pdf assets/cv.pdf
 
 Jekyll skips the `_latex/` directory because its name starts with an underscore, and Git ignores its build output.
 
+## Fonts
+
+| Use | Font | Source |
+| --- | --- | --- |
+| Headings (`h1` to `h6`) and site title | Perfectly Nineties (Jen Wagner Co.), weights 600 and 700 | Self-hosted WOFF2 in `assets/fonts/perfectly-nineties/` |
+| Body text | Proxima Nova (Mark Simonson Studio) | Adobe Fonts web project |
+| Body text fallback | Figtree | Google Fonts, loaded only while no Adobe Fonts kit ID is set |
+
+The font stacks live in the `--font-heading` and `--font-body` variables in `assets/main.css`.
+
+To turn on Proxima Nova:
+
+1. In Adobe Fonts, create a web project that includes Proxima Nova at weights 400, 500, 600 and 700, and add `rajatgupta.work` (and `localhost` if you want it locally) to its allowed domains.
+2. Copy the project ID, the part before `.css` in `https://use.typekit.net/<id>.css`.
+3. Set `adobe_fonts_kit_id` in `_config.yml` to that ID.
+
+When the ID is set, the layout loads the Adobe Fonts stylesheet and skips Figtree. Do not self-host Proxima Nova: the Adobe Fonts license only covers its embed code, and self-hosting needs a separate web license from Mark Simonson Studio.
+
+To add another Perfectly Nineties weight, convert the licensed `.ttf` to WOFF2 (for example with `fontTools`), place it in `assets/fonts/perfectly-nineties/`, and add a matching `@font-face` rule. Only commit WOFF2 files, never the desktop `.ttf` or `.otf` files.
+
 ## Content And Style Conventions
 
 - Use Markdown with descriptive headings and fenced code blocks
@@ -133,7 +155,7 @@ PRs should:
 
 ## ADRs
 
-Architecture decisions live in `docs/adr/` using the naming convention `adr-xxx-title`. The Molokai code block theme decision is documented in `docs/adr/adr-001-molokai-code-block-theme.md`.
+Architecture decisions live in `docs/adr/` using the naming convention `adr-xxx-title`. The Molokai code block theme decision is documented in `docs/adr/adr-001-molokai-code-block-theme.md`, and the font choices in `docs/adr/adr-002-heading-and-body-fonts.md`.
 
 ## Deployment
 

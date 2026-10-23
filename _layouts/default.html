@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ page.title | default: site.title }}</title>
     <meta name="description" content="{{ page.description | default: site.description }}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="preload" href="{{ '/assets/fonts/perfectly-nineties/perfectly-nineties-bold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="{{ '/assets/fonts/perfectly-nineties/perfectly-nineties-semibold.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin />
+    {% assign adobe_fonts_kit_id = site.adobe_fonts_kit_id | strip %}
+    {% if adobe_fonts_kit_id != "" %}
+      <link rel="stylesheet" href="https://use.typekit.net/{{ adobe_fonts_kit_id }}.css" />
+    {% else %}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" />
+    {% endif %}
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}" />
   </head>
   <body>

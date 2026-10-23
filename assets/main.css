@@ -2,6 +2,27 @@
    Clean Minimalist Portfolio
    =========================== */
 
+/* ===========================
+   Fonts
+   =========================== */
+
+/* Headings: Perfectly Nineties by Jen Wagner Co., self-hosted */
+@font-face {
+  font-family: 'Perfectly Nineties';
+  src: url('fonts/perfectly-nineties/perfectly-nineties-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Perfectly Nineties';
+  src: url('fonts/perfectly-nineties/perfectly-nineties-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Colors - Minimal palette */
   --color-bg: #ffffff;
@@ -15,7 +36,8 @@
   --color-footer-bg: #f8f9fa;
 
   /* Typography */
-  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Perfectly Nineties', Georgia, 'Times New Roman', serif;
+  --font-body: 'proxima-nova', 'Proxima Nova', 'Figtree', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-size-base: 16px;
   --line-height-base: 1.7;
 
@@ -57,6 +79,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-text);
+  font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.3;
   margin: 0 0 var(--spacing-md) 0;
@@ -137,6 +160,7 @@ img {
 }
 
 .site-title {
+  font-family: var(--font-heading);
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--color-text);
