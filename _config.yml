@@ -62,6 +62,12 @@ social_links:
   - label: Medium
     url: https://pulse.rajatgupta.work
 
+# Body text uses Proxima Nova served by Adobe Fonts. Set this to the ID of an
+# Adobe Fonts web project (the part before ".css" in its embed link) that
+# includes Proxima Nova and allows this domain. While it is empty, the site
+# loads Figtree from Google Fonts as a stand-in.
+adobe_fonts_kit_id: ""
+
 
 # Use the default GitHub Pages theme so builds don't require external gems.
 theme: minima
