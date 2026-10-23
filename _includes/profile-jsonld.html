@@ -1,0 +1,26 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": {{ page.url | absolute_url | jsonify }},
+  "mainEntity": {
+    "@type": "Person",
+    "name": {{ site.author.name | jsonify }},
+    "url": {{ site.url | jsonify }},
+    "description": {{ page.description | default: site.description | jsonify }},
+    "jobTitle": {{ site.profile.job_title | jsonify }},
+    "worksFor": {
+      "@type": "Organization",
+      "name": {{ site.profile.works_for | jsonify }},
+      "url": {{ site.profile.works_for_url | jsonify }}
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": {{ site.profile.locality | jsonify }},
+      "addressCountry": {{ site.profile.country | jsonify }}
+    },
+    "knowsAbout": {{ site.profile.knows_about | jsonify }},
+    "sameAs": {{ site.social.links | jsonify }}
+  }
+}
+</script>

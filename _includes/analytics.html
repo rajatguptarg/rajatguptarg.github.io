@@ -1,0 +1,4 @@
+{% assign goatcounter_code = site.goatcounter_code | strip %}
+{% if goatcounter_code != "" and jekyll.environment == "production" %}
+  <script data-goatcounter="https://{{ goatcounter_code }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+{% endif %}

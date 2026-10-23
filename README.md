@@ -26,15 +26,20 @@ The site is structured as a standard Jekyll app:
 - `_posts/`: Blog posts named with the `YYYY-MM-DD-title.md` convention
 - `_projects/`: Project collection items rendered as standalone pages
 - `assets/`: CSS, font, PDF, and image assets
-- `docs/adr/`: Architecture Decision Records for notable project decisions
+- `docs/adr/`: Architecture Decision Records for notable project decisions (not published on the site)
 - `_latex/`: LaTeX source for the downloadable CV in `assets/cv.pdf`
+- `.github/workflows/site-checks.yml`: CI that builds the site and checks links, metadata and accessibility
+- `.github/scripts/`: The axe-core accessibility scan and the source for the social preview image and favicons
 
 Rendering flow:
 
 1. Markdown content is converted by Jekyll with `kramdown`
 2. Rouge generates syntax highlighting markup for fenced code blocks
 3. Layouts and includes assemble the final pages
-4. `assets/main.css` applies the site design, including the fonts and the Molokai code block theme
+4. `jekyll-seo-tag` adds the page title, description, canonical URL, Open Graph, Twitter card and JSON-LD; `jekyll-sitemap` writes `sitemap.xml` and `robots.txt`
+5. `assets/main.css` applies the site design, including the fonts and the Molokai code block theme
+
+`AGENTS.md`, `README.md` and `docs/` are listed under `exclude:` in `_config.yml` so they are not published as pages.
 
 ## Install
 
@@ -68,6 +73,18 @@ bundle exec jekyll build --trace
 JEKYLL_ENV=production bundle exec jekyll build
 ```
 
+Check the built site the same way CI does. Node.js 22 is needed for the accessibility scan:
+
+```bash
+LC_ALL=C.UTF-8 bundle exec htmlproofer ./_site --disable-external --checks Links,Images,Scripts,OpenGraph,Favicon
+
+cd .github/scripts && npm ci && npx playwright install chromium && cd ../..
+python3 -m http.server 4000 -d _site &
+node .github/scripts/axe-scan.mjs _site http://localhost:4000
+```
+
+The axe scan covers WCAG 2.2 AA plus best practices on every page and fails on serious or critical violations. Text needs a contrast of at least 4.5:1 against its background.
+
 For content scheduled in the future or drafts:
 
 ```bash
@@ -79,7 +96,16 @@ Validation expectations:
 - The site builds without Liquid or configuration errors
 - Pages render correctly in the generated `_site/` output
 - Code blocks render with the expected Molokai styling
+- `html-proofer` and the axe scan pass
 - Visual regressions are checked manually for layout changes
+
+## Search, Sharing And Analytics
+
+- Page titles, descriptions, canonical URLs, Open Graph and Twitter card tags come from `jekyll-seo-tag`. Site-wide values (`tagline`, `description`, `author`, `twitter`, `social`) live in `_config.yml`; a page overrides them with its own `title`, `description` or `image`.
+- Every page falls back to `assets/img/social-card.png` as its preview image. To change the card or the favicons, edit `.github/scripts/social-card.html` and run `npm run social-card` in `.github/scripts/`.
+- The homepage carries `ProfilePage` structured data (`_includes/profile-jsonld.html`), filled from `profile:` in `_config.yml`. Validate it with Google's Rich Results Test after changes.
+- To verify the site in Google Search Console, uncomment `webmaster_verifications` in `_config.yml` and paste the verification code.
+- Analytics is off by default. To turn on cookieless page view counts, create a GoatCounter site and set `goatcounter_code` in `_config.yml`. The script loads only in production builds.
 
 ## Update The CV
 
@@ -120,6 +146,8 @@ To add another Perfectly Nineties weight, convert the licensed `.ttf` to WOFF2 (
 - Keep YAML front matter indented with two spaces
 - Store reusable images and downloadable files under `assets/`
 - Keep post filenames lowercase with hyphens
+- Choose homepage "Selected Work" with `featured: <order>` in a project's front matter (1 shows first); projects without the key are only listed on `/projects/`
+- Give every number in a case study a baseline, a period and a source you could show if asked, and keep it the same on the site, the CV and LinkedIn
 - Do not edit `_site/`; it is generated output
 
 ## Contributing
@@ -155,7 +183,7 @@ PRs should:
 
 ## ADRs
 
-Architecture decisions live in `docs/adr/` using the naming convention `adr-xxx-title`. The Molokai code block theme decision is documented in `docs/adr/adr-001-molokai-code-block-theme.md`, and the font choices in `docs/adr/adr-002-heading-and-body-fonts.md`.
+Architecture decisions live in `docs/adr/` using the naming convention `adr-xxx-title`. The Molokai code block theme decision is documented in `docs/adr/adr-001-molokai-code-block-theme.md`, the font choices in `docs/adr/adr-002-heading-and-body-fonts.md`, and the search metadata, accessibility fixes and CI checks in `docs/adr/adr-003-metadata-and-site-checks.md`.
 
 ## Deployment
 

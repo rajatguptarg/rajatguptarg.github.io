@@ -1,0 +1,48 @@
+name: Site checks
+
+on:
+  pull_request:
+  push:
+    branches: [gh-pages]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      JEKYLL_ENV: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Build the site
+        run: bundle exec jekyll build --trace
+
+      - name: Check links, images, Open Graph tags and favicon
+        run: bundle exec htmlproofer ./_site --disable-external --checks Links,Images,Scripts,OpenGraph,Favicon
+        env:
+          LC_ALL: C.UTF-8
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .github/scripts/package-lock.json
+
+      - name: Install accessibility tooling
+        working-directory: .github/scripts
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Check accessibility with axe
+        run: |
+          python3 -m http.server 4000 -d _site &
+          sleep 2
+          node .github/scripts/axe-scan.mjs _site http://localhost:4000
