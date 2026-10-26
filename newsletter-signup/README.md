@@ -42,7 +42,7 @@ Everything else has a default in `DEFAULTS` in `lib/handler.js`, and any of them
 | `SITE_URL` | `https://rajatgupta.work` |
 | `SITE_NAME` | `Rajat Gupta` |
 | `ALLOWED_ORIGINS` | `https://rajatgupta.work` (comma-separated; other origins get 403) |
-| `FROM_ADDRESS` | `Rajat Gupta <newsletter@rajatgupta.work>` (must be on a domain verified in Resend) |
+| `NEWSLETTER_FROM` | `Rajat Gupta <newsletter@rajatgupta.work>` (must be on a domain verified in Resend; the same name as the GitHub Actions variable) |
 | `REPLY_TO` | `contact@rajatgupta.work` |
 | `TOKEN_SECRET` | Not set. Confirmation links are then signed with a key derived from `RESEND_API_KEY`, so rotating the API key also invalidates links already sent. Set it only if you want link signing independent of the key. |
 
@@ -54,7 +54,7 @@ Everything else has a default in `DEFAULTS` in `lib/handler.js`, and any of them
 
 ## Deploy
 
-The project was created and first deployed through the Vercel connector, from this folder on the `feat/wizardly-curie-x3eif3` branch. It is not connected to Git, so changes here do not deploy on their own. To deploy a change:
+The project was created and first deployed through the Vercel connector, from this folder on the `feat/wizardly-curie-x3eif3` branch. It is not connected to Git, so changes here do not deploy on their own. The project's **Root Directory** is set to `newsletter-signup`; without it, a dashboard **Redeploy** builds the whole website repository instead of this function. After changing an environment variable, use **Redeploy** on the latest production deployment. To deploy a code change:
 
 ```bash
 cd newsletter-signup

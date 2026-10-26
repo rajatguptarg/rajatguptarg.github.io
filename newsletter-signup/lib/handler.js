@@ -15,14 +15,14 @@
 const TOKEN_TTL_HOURS = 48;
 const MAX_BODY_BYTES = 10_000;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const REQUIRED_SETTINGS = ['RESEND_API_KEY', 'RESEND_SEGMENT_ID', 'FROM_ADDRESS', 'SITE_URL'];
+const REQUIRED_SETTINGS = ['RESEND_API_KEY', 'RESEND_SEGMENT_ID', 'NEWSLETTER_FROM', 'SITE_URL'];
 
 // Settings that are not secret live here, in the repository. Environment variables override them.
 export const DEFAULTS = {
   SITE_URL: 'https://rajatgupta.work',
   SITE_NAME: 'Rajat Gupta',
   ALLOWED_ORIGINS: 'https://rajatgupta.work',
-  FROM_ADDRESS: 'Rajat Gupta <newsletter@rajatgupta.work>',
+  NEWSLETTER_FROM: 'Rajat Gupta <newsletter@rajatgupta.work>',
   REPLY_TO: 'contact@rajatgupta.work',
 };
 
@@ -97,7 +97,7 @@ async function sendConfirmation(email, workerOrigin, env) {
   const host = new URL(env.SITE_URL).host;
 
   const response = await resend(env, 'POST', '/emails', {
-    from: env.FROM_ADDRESS,
+    from: env.NEWSLETTER_FROM,
     to: [email],
     ...(env.REPLY_TO ? { reply_to: env.REPLY_TO } : {}),
     subject: `Confirm your subscription to ${siteName}`,
