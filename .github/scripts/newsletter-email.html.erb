@@ -1,0 +1,41 @@
+<%# Email sent to subscribers for a new post. Rendered by newsletter.rb. Inline styles, because many mail apps drop <style>. -%>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title><%= h(post[:title]) %></title>
+<style>
+  code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.9em; background: #f1eee8; padding: 0.1em 0.3em; border-radius: 3px; }
+  a { color: #b23a1c; }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#fbfaf7;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;"><%= h(post[:description]) %></div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fbfaf7;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:17px;line-height:1.6;color:#1b1a17;">
+<tr><td style="padding-bottom:28px;border-bottom:1px solid #e4dfd5;">
+  <a href="<%= h(site[:url]) %>/" style="color:#1b1a17;text-decoration:none;font-family:Georgia,'Times New Roman',serif;font-weight:bold;font-size:18px;"><%= h(site[:title]) %></a>
+</td></tr>
+<tr><td style="padding-top:28px;">
+  <p style="margin:0 0 8px;font-size:14px;color:#6b665e;"><%= h(post[:date]) %> · <%= post[:minutes] %> min read</p>
+  <h1 style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:30px;line-height:1.2;font-weight:bold;color:#1b1a17;"><a href="<%= h(post[:url]) %>" style="color:#1b1a17;text-decoration:none;"><%= h(post[:title]) %></a></h1>
+<% if post[:description] -%>
+  <p style="margin:0 0 20px;font-size:19px;line-height:1.5;color:#54504a;"><%= h(post[:description]) %></p>
+<% end -%>
+<% if post[:excerpt_html] -%>
+  <div style="margin:0 0 24px;"><%= post[:excerpt_html] %></div>
+<% end -%>
+  <p style="margin:0 0 32px;"><a href="<%= h(post[:url]) %>" style="display:inline-block;background:#b23a1c;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 22px;border-radius:6px;">Read the post</a></p>
+</td></tr>
+<tr><td style="padding-top:20px;border-top:1px solid #e4dfd5;font-size:14px;line-height:1.5;color:#6b665e;">
+  <p style="margin:0 0 8px;">You get this email because you subscribed to new posts at <a href="<%= h(site[:url]) %>/" style="color:#6b665e;"><%= h(site[:host]) %></a>.<% if reply_to %> Reply to this email to reach me.<% end %></p>
+  <p style="margin:0;"><a href="<%= unsubscribe_url %>" style="color:#6b665e;">Unsubscribe</a></p>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>

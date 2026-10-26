@@ -1,0 +1,49 @@
+{%- comment -%}
+  Comments through giscus (GitHub Discussions). Renders nothing until site.giscus.repo_id and
+  site.giscus.category_id are set, or when the page sets comments: false.
+  giscus loads only when the reader scrolls near the comments, so readers who stop earlier download nothing from it.
+{%- endcomment -%}
+{%- assign giscus_repo_id = site.giscus.repo_id | strip -%}
+{%- assign giscus_category_id = site.giscus.category_id | strip -%}
+{%- if giscus_repo_id != "" and giscus_category_id != "" and page.comments != false -%}
+<section class="comments" id="comments" aria-labelledby="comments-title">
+  <h2 class="comments-title" id="comments-title">Comments</h2>
+  <p class="comments-note">Comments are stored in this site's <a href="https://github.com/{{ site.giscus.repo }}/discussions">GitHub Discussions</a> through <a href="https://giscus.app" rel="noopener noreferrer">giscus</a>. Sign in with GitHub to comment or react.</p>
+  <div class="giscus"></div>
+  <noscript><p class="comments-note">Comments need JavaScript. You can read and reply on <a href="https://github.com/{{ site.giscus.repo }}/discussions">GitHub Discussions</a> instead.</p></noscript>
+</section>
+<script>
+  (function () {
+    var section = document.getElementById('comments');
+    var attributes = {
+      'data-repo': {{ site.giscus.repo | jsonify }},
+      'data-repo-id': {{ giscus_repo_id | jsonify }},
+      'data-category': {{ site.giscus.category | jsonify }},
+      'data-category-id': {{ giscus_category_id | jsonify }},
+      // Each post's discussion is found by its path. Strict matching stops /posts/sre/ from matching /posts/sre-lessons/.
+      'data-mapping': 'pathname',
+      'data-strict': '1',
+      'data-reactions-enabled': '1',
+      'data-emit-metadata': '0',
+      'data-input-position': 'bottom',
+      'data-theme': {{ site.giscus.theme | default: 'preferred_color_scheme' | jsonify }},
+      'data-lang': 'en'
+    };
+    function load() {
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      for (var name in attributes) script.setAttribute(name, attributes[name]);
+      section.appendChild(script);
+    }
+    if (!('IntersectionObserver' in window)) return load();
+    var observer = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      observer.disconnect();
+      load();
+    }, { rootMargin: '800px 0px' });
+    observer.observe(section);
+  })();
+</script>
+{%- endif -%}

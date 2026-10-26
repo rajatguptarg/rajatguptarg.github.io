@@ -29,11 +29,18 @@ jobs:
         env:
           LC_ALL: C.UTF-8
 
+      - name: Test the new-post email script
+        run: bundle exec ruby .github/scripts/test/newsletter_test.rb
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: .github/scripts/package-lock.json
+
+      - name: Test the sign-up function
+        working-directory: newsletter-signup
+        run: npm test
 
       - name: Install accessibility tooling
         working-directory: .github/scripts

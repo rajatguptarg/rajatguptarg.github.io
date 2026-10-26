@@ -6,6 +6,8 @@
         <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer">{{ social.label }}</a>
       {% endfor %}
       <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      {% assign subscribe_endpoint = site.newsletter.endpoint | strip %}
+      {% if subscribe_endpoint != "" %}<a href="{{ '/subscribe/' | relative_url }}">Subscribe</a>{% endif %}
     </nav>
     <p>&copy; {{ 'now' | date: '%Y' }} {{ site.title }} · {{ site.tagline }}</p>
   </div>

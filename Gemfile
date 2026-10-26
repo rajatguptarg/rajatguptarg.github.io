@@ -41,4 +41,6 @@ gem "github-pages", "~> 232", group: :jekyll_plugins
 # Checks the built site for broken links, missing alt text and metadata (see .github/workflows/site-checks.yml).
 group :test do
   gem "html-proofer", "~> 5.0"
+  # Tests for .github/scripts/newsletter.rb
+  gem "minitest", ">= 5.1"
 end

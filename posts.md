@@ -23,3 +23,5 @@ permalink: /posts/
   {% endfor %}
 </ol>
 {% endfor %}
+
+{% include subscribe.html id="archive" %}

@@ -24,6 +24,7 @@ layout: default
 
   <footer class="post-end">
     <p>Written by <a href="{{ '/about/' | relative_url }}">Rajat Gupta</a>, AVP Engineering at the Reserve Bank Innovation Hub. For questions or a different view, <a href="mailto:{{ site.email }}">email me</a>.</p>
+    {% include subscribe.html id="post" %}
     {% if page.previous or page.next %}
       <nav class="post-nav" aria-label="More posts">
         {% if page.previous %}
@@ -41,4 +42,6 @@ layout: default
       </nav>
     {% endif %}
   </footer>
+
+  {% include comments.html %}
 </article>

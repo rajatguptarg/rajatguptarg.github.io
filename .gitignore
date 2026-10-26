@@ -15,3 +15,10 @@ _latex/*.pdf
 
 # Node packages for the check scripts in .github/scripts
 node_modules/
+
+# Local settings for the sign-up function in newsletter-signup (vercel link / vercel env pull)
+.vercel/
+.env*.local
+
+# Email previews from .github/scripts/newsletter.rb --mode preview
+newsletter-preview/
