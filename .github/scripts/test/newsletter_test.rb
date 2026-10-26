@@ -164,6 +164,14 @@ class NewsletterTest < Minitest::Test
     assert_empty run.calls
   end
 
+  def test_automatic_runs_skip_quietly_until_configured
+    run = FakeNewsletter.new(mode: "send", skip_if_unconfigured: true, env: { "RESEND_API_KEY" => "re_test" })
+    exit_error = assert_raises(SystemExit) { run.run }
+    assert_equal 0, exit_error.status
+    assert(run.lines.any? { |l| l.include?("not set up yet") })
+    assert_empty run.calls
+  end
+
   def test_test_mode_sends_one_email_to_the_given_address
     run = newsletter(mode: "test", post: GITOPS, test_email: "me@example.com")
     run.run

@@ -158,8 +158,8 @@ Each post gets its own discussion the first time someone comments. Moderate in G
    | Name | Type | Value |
    | --- | --- | --- |
    | `RESEND_API_KEY` | Secret | The second Resend key |
-   | `RESEND_SEGMENT_ID` | Variable | The segment ID |
-   | `NEWSLETTER_FROM` | Variable | For example `Rajat Gupta <newsletter@rajatgupta.work>` |
+   | `RESEND_SEGMENT_ID` | Variable (a secret also works) | The segment ID |
+   | `NEWSLETTER_FROM` | Variable (a secret also works) | For example `Rajat Gupta <newsletter@rajatgupta.work>` |
    | `NEWSLETTER_REPLY_TO` | Variable, optional | For example `contact@rajatgupta.work` |
    | `RESEND_TOPIC_ID` | Variable, optional | Only if you use Resend Topics for email preferences |
 

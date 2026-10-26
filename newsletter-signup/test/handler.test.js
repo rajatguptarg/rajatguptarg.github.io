@@ -97,7 +97,7 @@ test('subscribe sends a confirmation email with a signed link', async () => {
   assert.deepEqual(body.to, ['reader@example.com']);
   assert.equal(body.from, 'Rajat Gupta <newsletter@rajatgupta.work>');
   assert.match(body.subject, /Confirm your subscription to Rajat Gupta/);
-  assert.match(headers['Idempotency-Key'], /^confirm\/\d+\/[0-9a-f]{64}$/);
+  assert.match(headers['Idempotency-Key'], /^confirm\/[0-9a-f]{64}$/);
   assert.equal(headers.Authorization, 'Bearer re_test');
 
   const link = body.text.match(/https:\/\/\S+/)[0];
@@ -105,6 +105,16 @@ test('subscribe sends a confirmation email with a signed link', async () => {
   const token = new URL(link).searchParams.get('token');
   assert.equal(await readToken(token, await secret()), 'reader@example.com');
   assert.ok(body.html.includes('Confirm subscription'));
+});
+
+test('repeat sign-ups in the same hour reuse one idempotency key, but a new API key gets a new one', async () => {
+  routes['POST /emails'] = () => [200, { id: 'email_1' }];
+  await handle(subscribeRequest({ email: 'reader@example.com' }), env());
+  await handle(subscribeRequest({ email: 'reader@example.com' }), env());
+  await handle(subscribeRequest({ email: 'reader@example.com' }), { ...env(), RESEND_API_KEY: 're_rotated' });
+  const [first, repeat, afterRotation] = calls.map((c) => c.headers['Idempotency-Key']);
+  assert.equal(first, repeat, 'the same email in the same hour is sent once');
+  assert.notEqual(first, afterRotation, 'a rotated key changes the link, so the new email must go out');
 });
 
 test('subscribe without JavaScript redirects to the check-email page', async () => {

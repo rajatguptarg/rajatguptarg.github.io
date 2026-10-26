@@ -125,17 +125,19 @@ async function sendConfirmation(email, workerOrigin, env) {
   const siteName = env.SITE_NAME || new URL(env.SITE_URL).host;
   const host = new URL(env.SITE_URL).host;
 
-  const response = await resend(env, 'POST', '/emails', {
+  const message = {
     from: env.NEWSLETTER_FROM,
     to: [email],
     ...(env.REPLY_TO ? { reply_to: env.REPLY_TO } : {}),
     subject: `Confirm your subscription to ${siteName}`,
     html: confirmationHtml({ link, host, siteName }),
     text: confirmationText({ link, host, siteName }),
-  }, {
-    // The token expiry is rounded to the hour, so repeat sign-ups for the same address
-    // within an hour send an identical request and Resend delivers only one email.
-    'Idempotency-Key': `confirm/${Math.floor(now / 3_600_000)}/${await sha256Hex(email)}`,
+  };
+  const response = await resend(env, 'POST', '/emails', message, {
+    // Keyed on the exact email. The link's expiry is rounded to the hour, so repeat sign-ups for
+    // an address within an hour produce the same email and Resend delivers it once. Anything that
+    // changes the email (a new hour, a rotated key, a new sender) gets a new key and is sent.
+    'Idempotency-Key': `confirm/${await sha256Hex(JSON.stringify(message))}`,
   });
 
   // 409 means the same request is already sent or in flight.
