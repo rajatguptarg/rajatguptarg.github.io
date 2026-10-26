@@ -29,17 +29,18 @@ Use [giscus](https://giscus.app), which stores comments in this repository's Git
 - The built-in `preferred_color_scheme` theme follows the reader's light or dark setting, like the site. A custom theme in the site's colours is possible later, but it could not be checked against the live widget when this was built.
 - Nothing renders until `giscus.repo_id` and `giscus.category_id` are set in `_config.yml`. A post can set `comments: false`.
 
-### Sign-up: a Cloudflare Worker with double opt-in
+### Sign-up: a Vercel Function with double opt-in
 
-The form posts to a small Cloudflare Worker (`workers/newsletter`) that holds the Resend key.
+The form posts to a small Vercel Function (`newsletter-signup`) that holds the Resend key.
 
-- **Double opt-in.** The Worker emails a confirmation link; only after the reader confirms is the contact added to the segment. This proves consent, stops anyone signing up someone else, and keeps the list clean for deliverability.
+- **Double opt-in.** The function emails a confirmation link; only after the reader confirms is the contact added to the segment. This proves consent, stops anyone signing up someone else, and keeps the list clean for deliverability.
 - **A button, not just a link.** Opening the confirmation link shows a Confirm button; pressing it subscribes. Company mail scanners open links in incoming email but do not submit forms, so a scanner cannot confirm on the reader's behalf.
-- **No database.** The link carries the address and an expiry, signed with HMAC-SHA256 using a secret only the Worker knows. Links expire after 48 hours.
-- **Abuse limits.** Only listed origins may post the form; a hidden honeypot field catches simple bots; Cloudflare's rate limiting binding allows 10 attempts a minute per IP and per address; and the confirmation email uses a Resend idempotency key per address per hour, so one address gets at most one confirmation email an hour however often the form is sent.
-- **Works without JavaScript.** With JavaScript the form shows the result in place. Without it the Worker redirects to `/subscribe/check-email/` or `/subscribe/error/`.
-- **Returning readers.** If the address is already a contact (for example, someone who unsubscribed), the Worker sets it back to subscribed and adds it to the segment.
-- Cloudflare Workers was chosen over Vercel or Netlify functions for the built-in rate limiter and secrets, and because the free plan covers this volume. The code only uses standard web APIs (`fetch`, Web Crypto), so it can move to another edge runtime with small changes.
+- **No database.** The link carries the address and an expiry, signed with HMAC-SHA256. The signing key is derived from the Resend API key (or `TOKEN_SECRET` if set), so there is only one secret to manage. Links expire after 48 hours.
+- **Abuse limits.** Only listed origins may post the form; a hidden honeypot field catches simple bots; an in-memory limiter allows 10 attempts a minute per IP in each running instance; and the confirmation email uses a Resend idempotency key per address per hour, so one address gets at most one confirmation email an hour however often the form is sent. A Vercel Firewall rule can add a hard per-IP limit across instances.
+- **Works without JavaScript.** With JavaScript the form shows the result in place. Without it the function redirects to `/subscribe/check-email/` or `/subscribe/error/`.
+- **Returning readers.** If the address is already a contact (for example, someone who unsubscribed), the function sets it back to subscribed and adds it to the segment.
+- **Vercel**, because the owner already has a Vercel account, so there is no new provider to sign up for. A Cloudflare Worker was built first (it has a built-in rate limiter); the owner chose Vercel instead. The handler only uses standard web APIs (`fetch`, Web Crypto), so it can move to another platform with a small entry file.
+- Non-secret settings (site URL, sender, allowed origins) live in the code; only `RESEND_API_KEY` and `RESEND_SEGMENT_ID` are set in Vercel. `/health` reports whether they are present without revealing them.
 - The form renders only when `newsletter.endpoint` is set in `_config.yml`.
 
 ### New-post emails: a GitHub Actions workflow
@@ -62,12 +63,12 @@ Benefits:
 - Readers can comment and subscribe with no server to maintain and no ads or analytics scripts added to pages.
 - Consent is provable, the key never reaches the browser, and a link scanner or a stranger cannot subscribe someone.
 - Publishing stays the same: merge a post into `gh-pages` and the email follows once it is live.
-- The Worker and the email script have tests that run in the `Site checks` workflow.
+- The sign-up function and the email script have tests that run in the `Site checks` workflow.
 
 Trade-offs:
 
 - Commenting needs a GitHub account. That suits most readers of an engineering site, but some leaders will not have one; they can still reply by email.
 - The comment box loads a script from giscus.app. It is open source and loads only near the comments, but it is a third party on the page.
-- Two services to look after: the Cloudflare Worker and the Resend account, plus two full-access Resend keys (one for the Worker, one for GitHub Actions). Use separate keys so either can be revoked alone, and rotate them if one leaks. A leaked key exposes the contact list.
+- Two services to look after: the Vercel project and the Resend account, plus two full-access Resend keys (one for the function, one for GitHub Actions). Use separate keys so either can be revoked alone, and rotate them if one leaks. A leaked key exposes the contact list.
 - A post backdated by more than 7 days is not sent automatically; send it with a manual run. A post renamed after sending is recognised only if its old URL is in `redirect_from`, which the README already requires.
 - Comments and the form stay hidden until the owner completes the set-up steps in the README.

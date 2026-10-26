@@ -1,5 +1,5 @@
 // Sends the subscribe form (_includes/subscribe.html) without leaving the page.
-// Without JavaScript the form posts normally and the Worker redirects to a /subscribe/ status page.
+// Without JavaScript the form posts normally and the sign-up function redirects to a /subscribe/ status page.
 (function () {
   var messages = {
     sending: 'Sending…',

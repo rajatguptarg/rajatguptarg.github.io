@@ -80,8 +80,11 @@ async function subscribe(request, env) {
   const email = normalizeEmail(fields.email);
   if (!email) return reply(false, 'invalid_email', 400);
 
-  // Requests per IP are limited by a Vercel Firewall rule (README.md); per address, by the
-  // idempotency key in sendConfirmation.
+  // Per IP: SUBSCRIBE_LIMITER (lib/rate-limit.js). Per address: the idempotency key in sendConfirmation.
+  // x-real-ip is set by Vercel to the client's address.
+  const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+  if (env.SUBSCRIBE_LIMITER && !env.SUBSCRIBE_LIMITER(ip)) return reply(false, 'rate_limited', 429);
+
   await sendConfirmation(email, new URL(request.url).origin, env);
   return reply(true, null, 200);
 }

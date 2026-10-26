@@ -3,6 +3,7 @@
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { handle, createToken, readToken, normalizeEmail, signingSecret, DEFAULTS } from '../lib/handler.js';
+import { createRateLimiter } from '../lib/rate-limit.js';
 
 const WORKER = 'https://newsletter.example.vercel.app';
 const SITE = 'https://rajatgupta.work';
@@ -40,7 +41,7 @@ function subscribeRequest(fields, { origin = SITE, json = true, ip = '203.0.113.
       'Content-Type': 'application/x-www-form-urlencoded',
       ...(json ? { Accept: 'application/json' } : {}),
       ...(origin ? { Origin: origin } : {}),
-      'CF-Connecting-IP': ip,
+      'x-real-ip': ip,
     },
     body: new URLSearchParams(fields),
   });
@@ -136,6 +137,33 @@ test('a filled honeypot looks like success but sends nothing', async () => {
   assert.equal(response.status, 200);
   assert.deepEqual(await response.json(), { ok: true });
   assert.equal(calls.length, 0);
+});
+
+test('the rate limiter blocks sign-ups from an IP when it says no', async () => {
+  const keys = [];
+  const limited = { ...env(), SUBSCRIBE_LIMITER: (key) => (keys.push(key), false) };
+  const response = await handle(subscribeRequest({ email: 'reader@example.com' }), limited);
+  assert.equal(response.status, 429);
+  assert.deepEqual(await response.json(), { ok: false, error: 'rate_limited' });
+  assert.deepEqual(keys, ['203.0.113.7']);
+  assert.equal(calls.length, 0);
+});
+
+test('the in-memory limiter allows 10 a minute per key', () => {
+  const allow = createRateLimiter({ requests: 10, windowMs: 60_000 });
+  const start = 1_000_000;
+  for (let i = 0; i < 10; i++) assert.equal(allow('a', start + i), true);
+  assert.equal(allow('a', start + 10), false, 'the 11th in the same minute is refused');
+  assert.equal(allow('b', start + 10), true, 'other addresses are unaffected');
+  assert.equal(allow('a', start + 60_001), true, 'allowed again once the oldest hit is a minute old');
+});
+
+test('the in-memory limiter keeps its memory bounded', () => {
+  const allow = createRateLimiter({ requests: 1, windowMs: 60_000, maxKeys: 3 });
+  for (const key of ['a', 'b', 'c']) allow(key, 0);
+  assert.equal(allow('a', 1), false);
+  allow('d', 2);
+  assert.equal(allow('a', 3), true, 'counts restart after the table fills');
 });
 
 test('a Resend failure on sign-up returns a server error', async () => {

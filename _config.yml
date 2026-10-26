@@ -130,13 +130,13 @@ adobe_fonts_kit_id: ""
 # is empty, no analytics script loads.
 goatcounter_code: ""
 
-# New posts by email. The subscribe form posts to the Cloudflare Worker in
-# workers/newsletter, which adds readers to a Resend segment once they confirm by
+# New posts by email. The subscribe form posts to the Vercel Function in
+# newsletter-signup, which adds readers to a Resend segment once they confirm by
 # email; .github/workflows/newsletter.yml emails that segment when a post goes live.
-# Set endpoint to the Worker's URL (no trailing slash). While it is empty, no form
-# is shown. See workers/newsletter/README.md.
+# endpoint is the function's URL (no trailing slash). While it is empty, no form is
+# shown. See newsletter-signup/README.md.
 newsletter:
-  endpoint: ""
+  endpoint: "https://rajatgupta-newsletter.vercel.app"
 
 # Comments on posts through giscus, stored in this repository's GitHub Discussions.
 # Get repo_id and category_id from https://giscus.app after turning on Discussions

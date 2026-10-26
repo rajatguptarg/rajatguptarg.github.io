@@ -35,7 +35,7 @@ The site is structured as a standard Jekyll app:
 - `.github/workflows/newsletter.yml`: Emails each new post to subscribers once it is live
 - `.github/scripts/`: The axe-core accessibility scan, the source for the social preview image and favicons, and `newsletter.rb` with its email template and tests
 - `subscribe/`: The subscribe page and the pages readers land on after signing up
-- `workers/newsletter/`: Cloudflare Worker that handles sign-ups (not published on the site)
+- `newsletter-signup/`: Vercel Function that handles sign-ups (not published on the site)
 - `giscus.json`: Which sites may load this repository's discussions as comments
 
 Rendering flow:
@@ -47,7 +47,7 @@ Rendering flow:
 5. `jekyll-seo-tag` adds the page title, description, canonical URL, Open Graph, Twitter card and JSON-LD; `jekyll-sitemap` writes `sitemap.xml` and `robots.txt`
 6. `assets/main.css` applies the site design, including the fonts, the light and dark palettes and the Molokai code block theme
 
-`AGENTS.md`, `README.md`, `docs/`, `giscus.json` and `workers/` are listed under `exclude:` in `_config.yml` so they are not published as pages.
+`AGENTS.md`, `README.md`, `docs/`, `giscus.json` and `newsletter-signup/` are listed under `exclude:` in `_config.yml` so they are not published as pages.
 
 ## Install
 
@@ -97,7 +97,7 @@ Test the newsletter code:
 
 ```bash
 JEKYLL_ENV=production bundle exec ruby .github/scripts/test/newsletter_test.rb
-cd workers/newsletter && npm test && cd ../..
+cd newsletter-signup && npm test && cd ..
 ```
 
 For content scheduled in the future or drafts:
@@ -129,10 +129,10 @@ Posts can show a comment box and a subscribe form. Readers who subscribe get an 
 
 ```mermaid
 flowchart LR
-  form["Subscribe form<br>on a post"] -->|email| worker["Cloudflare Worker<br>workers/newsletter"]
-  worker -->|confirmation link| inbox["Reader's inbox"]
-  inbox -->|Confirm button| worker
-  worker -->|add contact| segment[("Resend segment")]
+  form["Subscribe form<br>on a post"] -->|email| fn["Vercel Function<br>newsletter-signup"]
+  fn -->|confirmation link| inbox["Reader's inbox"]
+  inbox -->|Confirm button| fn
+  fn -->|add contact| segment[("Resend segment")]
   push["Push to gh-pages"] --> action["Newsletter workflow"]
   action -->|post is live and not sent yet| broadcast["Resend broadcast"]
   segment --> broadcast
@@ -151,8 +151,8 @@ Each post gets its own discussion the first time someone comments. Moderate in G
 
 ### Set Up Email Updates (Resend)
 
-1. **Resend.** Make sure `rajatgupta.work` (or the subdomain you send from) is a verified domain. Create a segment for blog subscribers and note its ID. Create two API keys with **Full access**, one for the Worker and one for GitHub Actions, so each can be revoked on its own.
-2. **Worker.** Deploy `workers/newsletter` with the steps in [its README](workers/newsletter/README.md), then set `newsletter.endpoint` in `_config.yml` to the Worker's URL and push. The form now appears under every post, on `/posts/` and on `/subscribe/`.
+1. **Resend.** Make sure `rajatgupta.work` (or the subdomain you send from) is a verified domain. Create a segment for blog subscribers and note its ID. Create two API keys with **Full access**, one for the sign-up function and one for GitHub Actions, so each can be revoked on its own.
+2. **Sign-up function.** It is already deployed to Vercel at `https://rajatgupta-newsletter.vercel.app` (project `rajatgupta-newsletter`), and `newsletter.endpoint` in `_config.yml` points at it. In that Vercel project, add `RESEND_API_KEY` (the first key, marked Sensitive) and `RESEND_SEGMENT_ID` as Production environment variables, then redeploy. `https://rajatgupta-newsletter.vercel.app/health` shows `"ok":true` once both are set. Details are in [its README](newsletter-signup/README.md).
 3. **GitHub Actions.** Under **Settings > Secrets and variables > Actions**, add:
 
    | Name | Type | Value |
