@@ -17,6 +17,9 @@
 # Modes: send emails the segment; preview writes the email to newsletter-preview/ without
 # any network calls; test sends the email only to --test-email.
 #
+# With --skip-if-unconfigured (used by automatic runs), missing settings end the run quietly
+# instead of failing it.
+#
 # Settings come from the environment: RESEND_API_KEY, RESEND_SEGMENT_ID, NEWSLETTER_FROM,
 # and optionally NEWSLETTER_REPLY_TO, RESEND_TOPIC_ID, NEWSLETTER_LOOKBACK_DAYS and
 # NEWSLETTER_MAX_PER_RUN (default 2; more candidates than this stops the run unsent).
@@ -39,8 +42,9 @@ class Newsletter
   UNSUBSCRIBE_PLACEHOLDER = "{{{RESEND_UNSUBSCRIBE_URL}}}"
   RECHECK_SECONDS = 30
 
-  def initialize(mode:, post: nil, test_email: nil, wait: 0, env: ENV)
+  def initialize(mode:, post: nil, test_email: nil, wait: 0, skip_if_unconfigured: false, env: ENV)
     @mode = mode
+    @skip_if_unconfigured = skip_if_unconfigured
     @post_path = post&.sub(%r{\A\./}, "")
     @test_email = test_email
     @wait = wait
@@ -299,6 +303,10 @@ class Newsletter
   def check_settings
     required = { "send" => %w[RESEND_API_KEY RESEND_SEGMENT_ID NEWSLETTER_FROM], "test" => %w[RESEND_API_KEY NEWSLETTER_FROM], "preview" => [] }
     missing = required.fetch(@mode).select { |name| @env[name].to_s.strip.empty? }
+    if missing.any? && @skip_if_unconfigured
+      log "::notice::Newsletter is not set up yet (missing #{missing.join(", ")}), so nothing was sent."
+      exit 0
+    end
     fail_with "Missing settings: #{missing.join(", ")}. See README.md, \"Comments And Email Updates\"." if missing.any?
     fail_with "--test-email is required with --mode test" if @mode == "test" && @test_email.to_s.strip.empty?
   end
@@ -334,12 +342,13 @@ class Newsletter
 end
 
 if $PROGRAM_NAME == __FILE__
-  options = { mode: "send", post: nil, test_email: nil, wait: 0 }
+  options = { mode: "send", post: nil, test_email: nil, wait: 0, skip_if_unconfigured: false }
   OptionParser.new do |parser|
     parser.on("--mode MODE", %w[send preview test]) { |v| options[:mode] = v }
     parser.on("--post PATH") { |v| options[:post] = v }
     parser.on("--test-email ADDRESS") { |v| options[:test_email] = v }
     parser.on("--wait SECONDS", Integer) { |v| options[:wait] = v }
+    parser.on("--skip-if-unconfigured") { options[:skip_if_unconfigured] = true }
   end.parse!
   Newsletter.new(**options).run
 end

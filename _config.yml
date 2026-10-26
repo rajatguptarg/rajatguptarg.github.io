@@ -144,9 +144,9 @@ newsletter:
 # comment box is shown. A post can turn comments off with `comments: false`.
 giscus:
   repo: rajatguptarg/rajatguptarg.github.io
-  repo_id: ""
+  repo_id: "R_kgDOPhuTMg"
   category: Comments
-  category_id: ""
+  category_id: "DIC_kwDOPhuTMs4DJo0H"
   # Any giscus theme name. preferred_color_scheme follows the reader's light or dark setting, like the site.
   theme: preferred_color_scheme
 

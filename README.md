@@ -151,15 +151,15 @@ Each post gets its own discussion the first time someone comments. Moderate in G
 
 ### Set Up Email Updates (Resend)
 
-1. **Resend.** Make sure `rajatgupta.work` (or the subdomain you send from) is a verified domain. Create a segment for blog subscribers and note its ID. Create two API keys with **Full access**, one for the sign-up function and one for GitHub Actions, so each can be revoked on its own.
+1. **Resend.** Make sure `rajatgupta.work` (or the subdomain you send from) is a verified domain. Create a segment for blog subscribers and note its ID. Create two API keys with **Full access**, one for the sign-up function and one for GitHub Actions, so each can be revoked on its own. A **Sending access** key is not enough: it cannot add contacts or send broadcasts.
 2. **Sign-up function.** It is already deployed to Vercel at `https://rajatgupta-newsletter.vercel.app` (project `rajatgupta-newsletter`), and `newsletter.endpoint` in `_config.yml` points at it. In that Vercel project, add `RESEND_API_KEY` (the first key, marked Sensitive) and `RESEND_SEGMENT_ID` as Production environment variables, then redeploy. `https://rajatgupta-newsletter.vercel.app/health` shows `"ok":true` once both are set. Details are in [its README](newsletter-signup/README.md).
-3. **GitHub Actions.** Under **Settings > Secrets and variables > Actions**, add:
+3. **GitHub Actions.** Under **Settings > Secrets and variables > Actions**, add these at repository level, on the **Secrets** and **Variables** tabs (not under an Environment, and not on the Codespaces or Dependabot pages, which the workflow cannot read):
 
    | Name | Type | Value |
    | --- | --- | --- |
    | `RESEND_API_KEY` | Secret | The second Resend key |
-   | `RESEND_SEGMENT_ID` | Variable | The segment ID |
-   | `NEWSLETTER_FROM` | Variable | For example `Rajat Gupta <newsletter@rajatgupta.work>` |
+   | `RESEND_SEGMENT_ID` | Variable (a secret also works) | The segment ID |
+   | `NEWSLETTER_FROM` | Variable (a secret also works) | For example `Rajat Gupta <newsletter@rajatgupta.work>` |
    | `NEWSLETTER_REPLY_TO` | Variable, optional | For example `contact@rajatgupta.work` |
    | `RESEND_TOPIC_ID` | Variable, optional | Only if you use Resend Topics for email preferences |
 

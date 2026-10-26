@@ -34,17 +34,16 @@ concurrency:
 
 jobs:
   newsletter:
-    # Push and scheduled runs start once the segment is configured; manual runs always can.
-    if: github.event_name == 'workflow_dispatch' || vars.RESEND_SEGMENT_ID != ''
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       JEKYLL_ENV: production
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-      RESEND_SEGMENT_ID: ${{ vars.RESEND_SEGMENT_ID }}
-      RESEND_TOPIC_ID: ${{ vars.RESEND_TOPIC_ID }}
-      NEWSLETTER_FROM: ${{ vars.NEWSLETTER_FROM }}
-      NEWSLETTER_REPLY_TO: ${{ vars.NEWSLETTER_REPLY_TO }}
+      # Repository variables, or secrets of the same name.
+      RESEND_SEGMENT_ID: ${{ vars.RESEND_SEGMENT_ID || secrets.RESEND_SEGMENT_ID }}
+      RESEND_TOPIC_ID: ${{ vars.RESEND_TOPIC_ID || secrets.RESEND_TOPIC_ID }}
+      NEWSLETTER_FROM: ${{ vars.NEWSLETTER_FROM || secrets.NEWSLETTER_FROM }}
+      NEWSLETTER_REPLY_TO: ${{ vars.NEWSLETTER_REPLY_TO || secrets.NEWSLETTER_REPLY_TO }}
     steps:
       - uses: actions/checkout@v4
 
@@ -60,8 +59,11 @@ jobs:
           TEST_EMAIL: ${{ inputs.test_email }}
           # After a push, give GitHub Pages up to 15 minutes to publish the post.
           WAIT_SECONDS: ${{ github.event_name == 'push' && '900' || '0' }}
+          EVENT: ${{ github.event_name }}
         run: |
           args=(--mode "$MODE" --wait "$WAIT_SECONDS")
+          # Automatic runs skip quietly until Resend is set up; manual runs fail loudly instead.
+          if [ "$EVENT" != "workflow_dispatch" ]; then args+=(--skip-if-unconfigured); fi
           if [ -n "$POST" ]; then args+=(--post "$POST"); fi
           if [ -n "$TEST_EMAIL" ]; then args+=(--test-email "$TEST_EMAIL"); fi
           bundle exec ruby .github/scripts/newsletter.rb "${args[@]}"
