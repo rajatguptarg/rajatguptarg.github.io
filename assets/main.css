@@ -59,6 +59,7 @@
   --color-text-muted: #6b665e;
   --color-accent: #b23a1c;
   --color-accent-soft: rgba(178, 58, 28, 0.35);
+  --color-on-accent: #ffffff;
   --color-selection: rgba(178, 58, 28, 0.16);
   --color-rule: #e4dfd5;
   --color-rule-strong: #cfc8bb;
@@ -89,6 +90,7 @@
     --color-text-muted: #9d978b;
     --color-accent: #f2835f;
     --color-accent-soft: rgba(242, 131, 95, 0.4);
+    --color-on-accent: #141311;
     --color-selection: rgba(242, 131, 95, 0.22);
     --color-rule: #2e2b27;
     --color-rule-strong: #45413b;
@@ -911,6 +913,117 @@ hr {
   border: 1px solid var(--color-rule-strong);
   border-radius: 4px;
   padding: 0.1rem 0.5rem;
+}
+
+/* ===========================
+   Subscribe form and comments
+   =========================== */
+
+.subscribe {
+  margin-top: 2.5rem;
+}
+
+.subscribe-title,
+.comments-title {
+  font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.45rem);
+  margin: 0 0 0.4rem;
+}
+
+.subscribe-intro {
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.subscribe-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.35rem;
+}
+
+.subscribe-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* The border is --color-text-muted so the field edge meets the 3:1 contrast WCAG asks of form controls. */
+.subscribe-input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-text-muted);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.8rem;
+}
+
+.subscribe-input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.subscribe-button {
+  flex: 0 0 auto;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  padding: 0.6rem 1.25rem;
+  cursor: pointer;
+}
+
+.subscribe-button:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.subscribe-button:disabled {
+  cursor: progress;
+}
+
+.subscribe-status {
+  margin: 0.6rem 0 0;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+/* Not display: none, so screen readers already track the live region when a message arrives. */
+.subscribe-status:empty {
+  margin: 0;
+}
+
+.subscribe-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Honeypot field for bots. Off screen rather than display: none, which some bots skip. */
+.subscribe-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.comments {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.comments-note {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
 }
 
 /* ===========================

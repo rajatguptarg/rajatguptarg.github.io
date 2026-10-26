@@ -1,0 +1,30 @@
+# Cloudflare Worker for newsletter sign-ups on rajatgupta.work.
+# Set-up steps are in README.md next to this file.
+name = "rajatgupta-newsletter"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+# Secrets are not stored here. Add them with:
+#   npx wrangler secret put RESEND_API_KEY
+#   npx wrangler secret put TOKEN_SECRET
+[vars]
+SITE_URL = "https://rajatgupta.work"
+SITE_NAME = "Rajat Gupta"
+# Comma-separated origins allowed to post the sign-up form.
+ALLOWED_ORIGINS = "https://rajatgupta.work"
+# Must be on a domain verified in Resend.
+FROM_ADDRESS = "Rajat Gupta <newsletter@rajatgupta.work>"
+REPLY_TO = "contact@rajatgupta.work"
+# The ID of the Resend segment that new-post broadcasts go to.
+RESEND_SEGMENT_ID = ""
+
+# At most 10 sign-up attempts a minute per IP address and per email address, per Cloudflare location.
+# Resend also delivers at most one confirmation email an hour to the same address (see src/index.js).
+[[ratelimits]]
+name = "SUBSCRIBE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60

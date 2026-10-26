@@ -24,15 +24,19 @@ The site is structured as a standard Jekyll app:
 
 - `_config.yml`: Site metadata, navigation, collections, plugins, and GitHub Pages-compatible settings
 - `_layouts/`: Shared HTML layouts for pages, posts, and projects
-- `_includes/`: Reusable fragments: header, footer, `figure.html` (post images), `toc.html` (contents list for long posts), `reading-time.html` and `topics.html`
+- `_includes/`: Reusable fragments: header, footer, `figure.html` (post images), `toc.html` (contents list for long posts), `reading-time.html`, `topics.html`, `subscribe.html` (email sign-up form) and `comments.html` (giscus comments)
 - `_data/topics.yml`: Display labels for post categories
 - `_posts/`: Blog posts named with the `YYYY-MM-DD-title.md` convention
 - `_projects/`: Project collection items rendered as standalone pages
 - `assets/`: CSS, font, PDF, and image assets
 - `docs/adr/`: Architecture Decision Records for notable project decisions (not published on the site)
 - `_latex/`: LaTeX source for the downloadable CV in `assets/cv.pdf`
-- `.github/workflows/site-checks.yml`: CI that builds the site and checks links, metadata and accessibility
-- `.github/scripts/`: The axe-core accessibility scan and the source for the social preview image and favicons
+- `.github/workflows/site-checks.yml`: CI that builds the site, checks links, metadata and accessibility, and tests the newsletter code
+- `.github/workflows/newsletter.yml`: Emails each new post to subscribers once it is live
+- `.github/scripts/`: The axe-core accessibility scan, the source for the social preview image and favicons, and `newsletter.rb` with its email template and tests
+- `subscribe/`: The subscribe page and the pages readers land on after signing up
+- `workers/newsletter/`: Cloudflare Worker that handles sign-ups (not published on the site)
+- `giscus.json`: Which sites may load this repository's discussions as comments
 
 Rendering flow:
 
@@ -43,7 +47,7 @@ Rendering flow:
 5. `jekyll-seo-tag` adds the page title, description, canonical URL, Open Graph, Twitter card and JSON-LD; `jekyll-sitemap` writes `sitemap.xml` and `robots.txt`
 6. `assets/main.css` applies the site design, including the fonts, the light and dark palettes and the Molokai code block theme
 
-`AGENTS.md`, `README.md` and `docs/` are listed under `exclude:` in `_config.yml` so they are not published as pages.
+`AGENTS.md`, `README.md`, `docs/`, `giscus.json` and `workers/` are listed under `exclude:` in `_config.yml` so they are not published as pages.
 
 ## Install
 
@@ -89,6 +93,13 @@ node .github/scripts/axe-scan.mjs _site http://localhost:4000
 
 The axe scan covers WCAG 2.2 AA plus best practices on every page, once in the light colour scheme and once in the dark one, and fails on serious or critical violations. Redirect pages are skipped. Text needs a contrast of at least 4.5:1 against its background in both themes.
 
+Test the newsletter code:
+
+```bash
+JEKYLL_ENV=production bundle exec ruby .github/scripts/test/newsletter_test.rb
+cd workers/newsletter && npm test && cd ../..
+```
+
 For content scheduled in the future or drafts:
 
 ```bash
@@ -111,6 +122,59 @@ Validation expectations:
 - The homepage carries `ProfilePage` structured data (`_includes/profile-jsonld.html`), filled from `profile:` in `_config.yml`. Validate it with Google's Rich Results Test after changes.
 - To verify the site in Google Search Console, uncomment `webmaster_verifications` in `_config.yml` and paste the verification code.
 - Analytics is off by default. To turn on cookieless page view counts, create a GoatCounter site and set `goatcounter_code` in `_config.yml`. The script loads only in production builds.
+
+## Comments And Email Updates
+
+Posts can show a comment box and a subscribe form. Readers who subscribe get an email when a new post is published. Both stay hidden until they are set up, so the site works the same without them. Why it is built this way is in [ADR-005](docs/adr/adr-005-comments-and-email-updates.md).
+
+```mermaid
+flowchart LR
+  form["Subscribe form<br>on a post"] -->|email| worker["Cloudflare Worker<br>workers/newsletter"]
+  worker -->|confirmation link| inbox["Reader's inbox"]
+  inbox -->|Confirm button| worker
+  worker -->|add contact| segment[("Resend segment")]
+  push["Push to gh-pages"] --> action["Newsletter workflow"]
+  action -->|post is live and not sent yet| broadcast["Resend broadcast"]
+  segment --> broadcast
+  broadcast --> readers["Subscribers"]
+```
+
+### Set Up Comments (giscus)
+
+1. In the repository settings, under **General > Features**, turn on **Discussions**.
+2. In Discussions, create a category named `Comments`. The **Announcement** format is best: only you and giscus can start discussions, readers can reply.
+3. Install the [giscus app](https://github.com/apps/giscus) on this repository only.
+4. On [giscus.app](https://giscus.app), enter `rajatguptarg/rajatguptarg.github.io` and choose the `Comments` category. Copy the `data-repo-id` and `data-category-id` values from the generated script.
+5. Paste them into `repo_id` and `category_id` under `giscus:` in `_config.yml`, and push.
+
+Each post gets its own discussion the first time someone comments. Moderate in GitHub Discussions: edit, hide or delete comments, lock a discussion, or block a user. To turn comments off on one post, add `comments: false` to its front matter.
+
+### Set Up Email Updates (Resend)
+
+1. **Resend.** Make sure `rajatgupta.work` (or the subdomain you send from) is a verified domain. Create a segment for blog subscribers and note its ID. Create two API keys with **Full access**, one for the Worker and one for GitHub Actions, so each can be revoked on its own.
+2. **Worker.** Deploy `workers/newsletter` with the steps in [its README](workers/newsletter/README.md), then set `newsletter.endpoint` in `_config.yml` to the Worker's URL and push. The form now appears under every post, on `/posts/` and on `/subscribe/`.
+3. **GitHub Actions.** Under **Settings > Secrets and variables > Actions**, add:
+
+   | Name | Type | Value |
+   | --- | --- | --- |
+   | `RESEND_API_KEY` | Secret | The second Resend key |
+   | `RESEND_SEGMENT_ID` | Variable | The segment ID |
+   | `NEWSLETTER_FROM` | Variable | For example `Rajat Gupta <newsletter@rajatgupta.work>` |
+   | `NEWSLETTER_REPLY_TO` | Variable, optional | For example `contact@rajatgupta.work` |
+   | `RESEND_TOPIC_ID` | Variable, optional | Only if you use Resend Topics for email preferences |
+
+4. **Try it.** Subscribe on the site with your own address and confirm. Then in **Actions > Newsletter > Run workflow**, pick mode `test`, enter a post path and your address, and check the email in your inbox. Mode `preview` saves the email as a downloadable artifact without sending anything.
+
+### How A New Post Is Emailed
+
+When a push to `gh-pages` adds a post, the Newsletter workflow waits up to 15 minutes for it to go live, then sends it to the segment as a Resend broadcast named `Post: <path>`. It also runs once a day as a backstop.
+
+- Only posts dated in the last 7 days are considered, so old posts are never sent by accident. If more than 2 qualify at once, the run stops and sends nothing.
+- A post is sent once. Editing it later, re-running the workflow or renaming it (with the old URL in `redirect_from`) does not send it again.
+- To publish a post without emailing it, add `newsletter: false` to its front matter.
+- To send a post the automatic rules skip, such as one dated more than 7 days back, run the workflow manually with mode `send` and the post's path.
+- A future-dated post goes out after it is live, which on GitHub Pages means after the first push on or after its date.
+- Every email has Resend's unsubscribe link. Unsubscribed readers are not emailed again unless they subscribe again.
 
 ## Update The CV
 
@@ -191,7 +255,7 @@ PRs should:
 
 ## ADRs
 
-Architecture decisions live in `docs/adr/` using the naming convention `adr-xxx-title`. The Molokai code block theme decision is documented in `docs/adr/adr-001-molokai-code-block-theme.md`, the font choices in `docs/adr/adr-002-heading-and-body-fonts.md`, the search metadata, accessibility fixes and CI checks in `docs/adr/adr-003-metadata-and-site-checks.md`, and the editorial redesign in `docs/adr/adr-004-editorial-redesign.md`.
+Architecture decisions live in `docs/adr/` using the naming convention `adr-xxx-title`. The Molokai code block theme decision is documented in `docs/adr/adr-001-molokai-code-block-theme.md`, the font choices in `docs/adr/adr-002-heading-and-body-fonts.md`, the search metadata, accessibility fixes and CI checks in `docs/adr/adr-003-metadata-and-site-checks.md`, the editorial redesign in `docs/adr/adr-004-editorial-redesign.md`, and comments and email updates in `docs/adr/adr-005-comments-and-email-updates.md`.
 
 ## Deployment
 

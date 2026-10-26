@@ -1,0 +1,29 @@
+{%- comment -%}
+  Email sign-up form. Posts to the newsletter Worker (workers/newsletter); renders nothing until
+  site.newsletter.endpoint is set. Usage: include subscribe.html id="post"
+  Options: id (unique on the page), heading=false (when the page title already says it).
+{%- endcomment -%}
+{%- assign subscribe_endpoint = site.newsletter.endpoint | strip -%}
+{%- if subscribe_endpoint != "" -%}
+{%- assign subscribe_id = include.id | default: "main" -%}
+<section class="subscribe"{% if include.heading != false %} aria-labelledby="subscribe-title-{{ subscribe_id }}"{% endif %}>
+  {%- if include.heading != false %}
+  <h2 class="subscribe-title" id="subscribe-title-{{ subscribe_id }}">Get new posts by email</h2>
+  <p class="subscribe-intro">One email when a new post is published, and nothing else. Every email has an unsubscribe link.</p>
+  {%- endif %}
+  <form class="subscribe-form" method="post" action="{{ subscribe_endpoint }}/subscribe" data-subscribe>
+    <label class="subscribe-label" for="subscribe-email-{{ subscribe_id }}">Email address</label>
+    <div class="subscribe-row">
+      <input class="subscribe-input" id="subscribe-email-{{ subscribe_id }}" type="email" name="email" required maxlength="254" autocomplete="email" spellcheck="false" placeholder="you@example.com" />
+      <button class="subscribe-button" type="submit">Subscribe</button>
+    </div>
+    <div class="subscribe-trap" aria-hidden="true">
+      <label for="subscribe-website-{{ subscribe_id }}">Leave this field empty</label>
+      <input id="subscribe-website-{{ subscribe_id }}" type="text" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <p class="subscribe-status" role="status" aria-live="polite"></p>
+    <p class="subscribe-note">You will get a link to confirm first. Your address is kept with <a href="https://resend.com" rel="noopener noreferrer">Resend</a>, the email service, and used only for this.</p>
+  </form>
+</section>
+<script src="{{ '/assets/subscribe.js' | relative_url }}" defer></script>
+{%- endif -%}

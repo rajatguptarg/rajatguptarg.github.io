@@ -1,0 +1,74 @@
+name: Newsletter
+
+# Emails each new post to subscribers (a Resend segment) once it is live on the site.
+# The rules for what gets sent are at the top of .github/scripts/newsletter.rb.
+# Set-up: README.md, "Comments And Email Updates".
+
+on:
+  push:
+    branches: [gh-pages]
+  # Backstop for a post that went live after the push run stopped waiting (09:07 IST).
+  schedule:
+    - cron: "37 3 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "preview: save the email as an artifact. test: send it only to the test address. send: email subscribers."
+        type: choice
+        options: [preview, test, send]
+        default: preview
+      post:
+        description: "One post by path, for example _posts/2026-11-02-my-post.markdown. Empty: posts from the last 7 days."
+        required: false
+      test_email:
+        description: "Address for test mode"
+        required: false
+
+permissions:
+  contents: read
+
+# Runs one at a time, so two runs can never send the same post.
+concurrency:
+  group: newsletter
+  cancel-in-progress: false
+
+jobs:
+  newsletter:
+    # Push and scheduled runs start once the segment is configured; manual runs always can.
+    if: github.event_name == 'workflow_dispatch' || vars.RESEND_SEGMENT_ID != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      JEKYLL_ENV: production
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      RESEND_SEGMENT_ID: ${{ vars.RESEND_SEGMENT_ID }}
+      RESEND_TOPIC_ID: ${{ vars.RESEND_TOPIC_ID }}
+      NEWSLETTER_FROM: ${{ vars.NEWSLETTER_FROM }}
+      NEWSLETTER_REPLY_TO: ${{ vars.NEWSLETTER_REPLY_TO }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Email new posts
+        env:
+          MODE: ${{ inputs.mode || 'send' }}
+          POST: ${{ inputs.post }}
+          TEST_EMAIL: ${{ inputs.test_email }}
+          # After a push, give GitHub Pages up to 15 minutes to publish the post.
+          WAIT_SECONDS: ${{ github.event_name == 'push' && '900' || '0' }}
+        run: |
+          args=(--mode "$MODE" --wait "$WAIT_SECONDS")
+          if [ -n "$POST" ]; then args+=(--post "$POST"); fi
+          if [ -n "$TEST_EMAIL" ]; then args+=(--test-email "$TEST_EMAIL"); fi
+          bundle exec ruby .github/scripts/newsletter.rb "${args[@]}"
+
+      - name: Save email preview
+        if: always() && hashFiles('newsletter-preview/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsletter-preview
+          path: newsletter-preview/

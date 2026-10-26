@@ -130,6 +130,26 @@ adobe_fonts_kit_id: ""
 # is empty, no analytics script loads.
 goatcounter_code: ""
 
+# New posts by email. The subscribe form posts to the Cloudflare Worker in
+# workers/newsletter, which adds readers to a Resend segment once they confirm by
+# email; .github/workflows/newsletter.yml emails that segment when a post goes live.
+# Set endpoint to the Worker's URL (no trailing slash). While it is empty, no form
+# is shown. See workers/newsletter/README.md.
+newsletter:
+  endpoint: ""
+
+# Comments on posts through giscus, stored in this repository's GitHub Discussions.
+# Get repo_id and category_id from https://giscus.app after turning on Discussions
+# and installing the giscus app on the repository. While either is empty, no
+# comment box is shown. A post can turn comments off with `comments: false`.
+giscus:
+  repo: rajatguptarg/rajatguptarg.github.io
+  repo_id: ""
+  category: Comments
+  category_id: ""
+  # Any giscus theme name. preferred_color_scheme follows the reader's light or dark setting, like the site.
+  theme: preferred_color_scheme
+
 
 # Use the default GitHub Pages theme so builds don't require external gems.
 theme: minima
@@ -146,6 +166,9 @@ exclude:
   - AGENTS.md
   - README.md
   - docs/
+  - giscus.json
+  - newsletter-preview/
+  - workers/
   - Gemfile
   - Gemfile.lock
   - node_modules/

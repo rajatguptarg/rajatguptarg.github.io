@@ -15,3 +15,10 @@ _latex/*.pdf
 
 # Node packages for the check scripts in .github/scripts
 node_modules/
+
+# Local secrets and state for the newsletter Worker in workers/newsletter
+.dev.vars
+.wrangler/
+
+# Email previews from .github/scripts/newsletter.rb --mode preview
+newsletter-preview/
