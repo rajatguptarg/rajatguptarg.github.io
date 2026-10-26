@@ -2,18 +2,9 @@
   Image with alt text, caption and fixed dimensions (no layout shift).
   Usage: include figure.html src="/assets/img/x.webp" alt="..." caption="..." width=1376 height=768 eager=true
   Only the first figure near the top of a post should be eager; the rest load lazily.
-  Optional: src_narrow="/assets/img/x-narrow.svg" narrow_width=480 narrow_height=1372 serves a taller,
-  narrower version of a diagram on screens up to 40rem wide, so its labels stay legible on phones.
 {%- endcomment -%}
 <figure class="figure">
-  {%- if include.src_narrow %}
-  <picture>
-    <source media="(max-width: 40rem)" srcset="{{ include.src_narrow | relative_url }}" width="{{ include.narrow_width }}" height="{{ include.narrow_height }}" />
-  {%- endif %}
   <img src="{{ include.src | relative_url }}" alt="{{ include.alt | escape }}" width="{{ include.width | default: 1376 }}" height="{{ include.height | default: 768 }}"{% if include.eager %} fetchpriority="high"{% else %} loading="lazy" decoding="async"{% endif %} />
-  {%- if include.src_narrow %}
-  </picture>
-  {%- endif %}
   {%- if include.caption %}
   <figcaption>{{ include.caption | escape }}</figcaption>
   {%- endif %}
