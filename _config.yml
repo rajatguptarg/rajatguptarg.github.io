@@ -168,7 +168,7 @@ exclude:
   - docs/
   - giscus.json
   - newsletter-preview/
-  - workers/
+  - newsletter-signup/
   - Gemfile
   - Gemfile.lock
   - node_modules/

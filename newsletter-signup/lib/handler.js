@@ -1,49 +1,64 @@
-// Newsletter sign-up for rajatgupta.work, running on Cloudflare Workers.
+// Newsletter sign-up for rajatgupta.work, deployed as a Vercel Function (see api/).
 //
 //   POST /subscribe  The site's form. Sends a confirmation email (double opt-in).
 //   GET  /confirm    The link in that email. Shows a Confirm button, because corporate
 //                    link scanners open links but do not press buttons.
 //   POST /confirm    The button. Adds the reader to the Resend segment and sends them
 //                    back to the site.
+//   GET  /health     Says whether the Resend settings are present. No secrets.
 //
 // The Resend API key stays here and never reaches the browser. Confirmation links are
-// signed with TOKEN_SECRET and expire, so the Worker needs no database.
-// Configuration and deployment: workers/newsletter/README.md.
+// signed and expire, so no database is needed. Only standard web APIs are used, so the
+// same handler runs on other platforms that accept a fetch(request) handler.
+// Configuration and deployment: newsletter-signup/README.md.
 
 const TOKEN_TTL_HOURS = 48;
 const MAX_BODY_BYTES = 10_000;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const REQUIRED_SETTINGS = ['RESEND_API_KEY', 'RESEND_SEGMENT_ID', 'TOKEN_SECRET', 'FROM_ADDRESS', 'SITE_URL'];
+const REQUIRED_SETTINGS = ['RESEND_API_KEY', 'RESEND_SEGMENT_ID', 'FROM_ADDRESS', 'SITE_URL'];
 
-export default {
-  async fetch(request, env) {
-    // Tolerates an endpoint configured with a trailing slash ("//subscribe") or a trailing slash on the path.
-    const pathname = new URL(request.url).pathname.replace(/\/{2,}/g, '/').replace(/(.)\/$/, '$1');
-    const missing = REQUIRED_SETTINGS.filter((name) => !env[name]);
-    if (missing.length) {
-      console.error(`Missing settings: ${missing.join(', ')}`);
-      return new Response('Newsletter sign-up is not configured.', { status: 500 });
-    }
-
-    try {
-      if (pathname === '/subscribe') {
-        if (request.method === 'OPTIONS') return preflight(request, env);
-        if (request.method === 'POST') return await subscribe(request, env);
-      }
-      if (pathname === '/confirm') {
-        if (request.method === 'GET') return await confirmPage(request, env);
-        if (request.method === 'POST') return await confirm(request, env);
-      }
-      return new Response('Not found', { status: 404 });
-    } catch (error) {
-      console.error(error);
-      if (pathname === '/subscribe' && wantsJson(request)) {
-        return json({ ok: false, error: 'server_error' }, 502, corsHeaders(request, env));
-      }
-      return redirect(sitePage(env, 'error'));
-    }
-  },
+// Settings that are not secret live here, in the repository. Environment variables override them.
+export const DEFAULTS = {
+  SITE_URL: 'https://rajatgupta.work',
+  SITE_NAME: 'Rajat Gupta',
+  ALLOWED_ORIGINS: 'https://rajatgupta.work',
+  FROM_ADDRESS: 'Rajat Gupta <newsletter@rajatgupta.work>',
+  REPLY_TO: 'contact@rajatgupta.work',
 };
+
+export async function handle(request, env) {
+  // Matches on the last path segment, so /subscribe and /api/subscribe both work, and tolerates
+  // an endpoint configured with a trailing slash ("//subscribe").
+  const pathname = new URL(request.url).pathname.replace(/\/{2,}/g, '/').replace(/(.)\/$/, '$1');
+  const route = pathname.slice(pathname.lastIndexOf('/'));
+  const missing = REQUIRED_SETTINGS.filter((name) => !env[name]);
+
+  if (route === '/health' && request.method === 'GET') {
+    return json({ ok: missing.length === 0, missing }, 200, { 'Access-Control-Allow-Origin': '*' });
+  }
+  if (missing.length) {
+    console.error(`Missing settings: ${missing.join(', ')}`);
+    return new Response('Newsletter sign-up is not configured.', { status: 500 });
+  }
+
+  try {
+    if (route === '/subscribe') {
+      if (request.method === 'OPTIONS') return preflight(request, env);
+      if (request.method === 'POST') return await subscribe(request, env);
+    }
+    if (route === '/confirm') {
+      if (request.method === 'GET') return await confirmPage(request, env);
+      if (request.method === 'POST') return await confirm(request, env);
+    }
+    return new Response('Not found', { status: 404 });
+  } catch (error) {
+    console.error(error);
+    if (route === '/subscribe' && wantsJson(request)) {
+      return json({ ok: false, error: 'server_error' }, 502, corsHeaders(request, env));
+    }
+    return redirect(sitePage(env, 'error'));
+  }
+}
 
 // ---------- Sign-up ----------
 
@@ -65,21 +80,15 @@ async function subscribe(request, env) {
   const email = normalizeEmail(fields.email);
   if (!email) return reply(false, 'invalid_email', 400);
 
-  if (env.SUBSCRIBE_LIMITER) {
-    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-    for (const key of [`ip:${ip}`, `email:${email}`]) {
-      const { success } = await env.SUBSCRIBE_LIMITER.limit({ key });
-      if (!success) return reply(false, 'rate_limited', 429);
-    }
-  }
-
+  // Requests per IP are limited by a Vercel Firewall rule (README.md); per address, by the
+  // idempotency key in sendConfirmation.
   await sendConfirmation(email, new URL(request.url).origin, env);
   return reply(true, null, 200);
 }
 
 async function sendConfirmation(email, workerOrigin, env) {
   const now = Date.now();
-  const token = await createToken(email, env.TOKEN_SECRET, now);
+  const token = await createToken(email, await signingSecret(env), now);
   const link = `${workerOrigin}/confirm?token=${encodeURIComponent(token)}`;
   const siteName = env.SITE_NAME || new URL(env.SITE_URL).host;
   const host = new URL(env.SITE_URL).host;
@@ -107,7 +116,7 @@ async function sendConfirmation(email, workerOrigin, env) {
 
 async function confirmPage(request, env) {
   const token = new URL(request.url).searchParams.get('token') || '';
-  const email = await readToken(token, env.TOKEN_SECRET);
+  const email = await readToken(token, await signingSecret(env));
   if (!email) return redirect(sitePage(env, 'error'));
 
   const siteOrigin = new URL(env.SITE_URL).origin;
@@ -125,7 +134,7 @@ async function confirmPage(request, env) {
 
 async function confirm(request, env) {
   const fields = await readFields(request);
-  const email = await readToken(fields.token, env.TOKEN_SECRET);
+  const email = await readToken(fields.token, await signingSecret(env));
   if (!email) return redirect(sitePage(env, 'error'));
 
   await addToSegment(email, env);
@@ -156,6 +165,14 @@ async function addToSegment(email, env) {
 
 // ---------- Signed tokens ----------
 // A token is base64url(JSON {e: email, x: expiry in seconds}) + "." + base64url(HMAC-SHA256).
+
+// TOKEN_SECRET if set; otherwise a key derived from the Resend API key, so there is one secret
+// fewer to manage. Rotating the API key then also invalidates confirmation links already sent.
+export async function signingSecret(env) {
+  if (env.TOKEN_SECRET) return env.TOKEN_SECRET;
+  const derived = await crypto.subtle.sign('HMAC', await hmacKey(env.RESEND_API_KEY), new TextEncoder().encode('newsletter confirmation links v1'));
+  return base64url(new Uint8Array(derived));
+}
 
 export async function createToken(email, secret, now = Date.now()) {
   const hour = Math.floor(now / 3_600_000);

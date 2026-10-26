@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/subscribe", "destination": "/api/subscribe" },
+    { "source": "/confirm", "destination": "/api/confirm" },
+    { "source": "/health", "destination": "/api/health" }
+  ]
+}

@@ -38,8 +38,8 @@ jobs:
           cache: npm
           cache-dependency-path: .github/scripts/package-lock.json
 
-      - name: Test the sign-up Worker
-        working-directory: workers/newsletter
+      - name: Test the sign-up function
+        working-directory: newsletter-signup
         run: npm test
 
       - name: Install accessibility tooling

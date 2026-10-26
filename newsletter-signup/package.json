@@ -1,0 +1,12 @@
+{
+  "name": "rajatgupta-newsletter-signup",
+  "private": true,
+  "description": "Vercel Function for newsletter sign-ups on rajatgupta.work (double opt-in, Resend)",
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}
