@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 844" width="960" height="844" role="img" aria-labelledby="t d">
+  <title id="t">ULI MCP server architecture</title>
+  <desc id="d">Three callers (developer IDEs, a reference identity agent and a voice agent for personal loans) connect to the ULI MCP server. Five read-only discovery tools need no credentials. Four execution tools run against the ULI sandbox and send encrypted, signed requests through the ULI gateway to data service providers. All ULI credentials stay inside the server.</desc>
+  <style>
+    .bg { fill: #fbfaf7; }
+    .box { fill: #f1eee8; stroke: #cfc8bb; stroke-width: 1.5; }
+    .server { fill: none; stroke: #b23a1c; stroke-width: 2.5; }
+    .inner { fill: #fbfaf7; stroke: #cfc8bb; stroke-width: 1.5; }
+    .boundary { fill: none; stroke: #b23a1c; stroke-width: 1.5; stroke-dasharray: 7 5; }
+    .arrow { stroke: #54504a; stroke-width: 2; fill: none; }
+    .head { fill: #54504a; }
+    text { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #1b1a17; }
+    .title { font-size: 24px; font-weight: 700; }
+    .h { font-size: 20px; font-weight: 700; }
+    .body { font-size: 18px; fill: #1b1a17; }
+    .sub { font-size: 17px; fill: #54504a; }
+    .note { font-size: 16px; fill: #6b665e; }
+    .accent { fill: #b23a1c; font-weight: 700; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #141311; }
+      .box { fill: #201e1b; stroke: #45413b; }
+      .server { stroke: #f2835f; }
+      .inner { fill: #141311; stroke: #45413b; }
+      .boundary { stroke: #f2835f; }
+      .arrow { stroke: #b9b3a8; }
+      .head { fill: #b9b3a8; }
+      text, .body { fill: #ece8e0; }
+      .sub { fill: #b9b3a8; }
+      .note { fill: #9d978b; }
+      .accent { fill: #f2835f; }
+    }
+  </style>
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path class="head" d="M0 0 L10 5 L0 10 z"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="960" height="844"/>
+
+  <!-- Callers -->
+  <rect class="box" x="24" y="24" width="288" height="110" rx="6"/>
+  <text class="h" x="44" y="60">Developer IDE</text>
+  <text class="sub" x="44" y="88">Claude Code, VS Code, Cursor</text>
+  <text class="note" x="44" y="114">asks what ULI can do</text>
+
+  <rect class="box" x="336" y="24" width="288" height="110" rx="6"/>
+  <text class="h" x="356" y="60">Identity agent</text>
+  <text class="sub" x="356" y="88">PAN and voter ID checks</text>
+  <text class="note" x="356" y="114">reference build, 2 tools only</text>
+
+  <rect class="box" x="648" y="24" width="288" height="110" rx="6"/>
+  <text class="h" x="668" y="60">Voice agent</text>
+  <text class="sub" x="668" y="88">personal loan over a phone call</text>
+  <text class="note" x="668" y="114">every ULI call goes via MCP</text>
+
+  <line class="arrow" x1="168" y1="134" x2="168" y2="186" marker-end="url(#arrowhead)"/>
+  <line class="arrow" x1="480" y1="134" x2="480" y2="186" marker-end="url(#arrowhead)"/>
+  <line class="arrow" x1="792" y1="134" x2="792" y2="186" marker-end="url(#arrowhead)"/>
+  <text class="note" x="492" y="166">MCP over HTTP</text>
+
+  <!-- ULI MCP server -->
+  <rect class="server" x="24" y="190" width="912" height="362" rx="8"/>
+  <text class="title" x="48" y="228">ULI MCP server</text>
+  <text class="sub" x="250" y="228">Python and FastMCP, one shared container</text>
+
+  <rect class="inner" x="48" y="248" width="420" height="214" rx="6"/>
+  <text class="h" x="68" y="282">Discovery tools · read-only</text>
+  <text class="body" x="68" y="314">list categories</text>
+  <text class="body" x="68" y="340">list services</text>
+  <text class="body" x="68" y="366">get service contract (max 8 KB)</text>
+  <text class="body" x="68" y="392">how-to playbooks</text>
+  <text class="body" x="68" y="418">OAuth2 auth flow</text>
+  <text class="note" x="68" y="448">no credentials, no PII, no gateway calls</text>
+
+  <rect class="inner" x="492" y="248" width="420" height="214" rx="6"/>
+  <text class="h" x="512" y="282">Execution tools · sandbox only</text>
+  <text class="body" x="512" y="314">bank account verification</text>
+  <text class="body" x="512" y="340">PAN verification</text>
+  <text class="body" x="512" y="366">credit bureau check</text>
+  <text class="body" x="512" y="392">voter ID verification</text>
+  <text class="note" x="512" y="448">added one at a time, behind a security gate</text>
+
+  <rect class="boundary" x="48" y="476" width="864" height="62" rx="6"/>
+  <text class="body" x="68" y="502"><tspan class="accent">Credential boundary.</tspan> ULI token, client ID, platform certificate and</text>
+  <text class="body" x="68" y="526">lender key stay inside the server. Personal data is never written to logs.</text>
+
+  <!-- Gateway and providers -->
+  <line class="arrow" x1="702" y1="552" x2="702" y2="596" marker-end="url(#arrowhead)"/>
+  <text class="note" x="716" y="580">encrypted, signed requests</text>
+
+  <rect class="box" x="24" y="600" width="912" height="90" rx="6"/>
+  <text class="h" x="48" y="636">ULI gateway</text>
+  <text class="sub" x="48" y="666">OAuth2 · AES-GCM and RSA envelope · HMAC request signing</text>
+
+  <line class="arrow" x1="702" y1="690" x2="702" y2="726" marker-end="url(#arrowhead)"/>
+
+  <rect class="box" x="24" y="730" width="912" height="90" rx="6"/>
+  <text class="h" x="48" y="766">Data service providers: 160+ APIs in 7 categories</text>
+  <text class="sub" x="48" y="796">identity · credit bureaus · income · assets · e-sign · value-added services</text>
+</svg>
