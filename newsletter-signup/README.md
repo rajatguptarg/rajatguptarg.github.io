@@ -5,7 +5,7 @@ A Vercel Function that takes email addresses from the subscribe form on rajatgup
 The site is static, so this function exists to keep the Resend API key off the page. It has no database: confirmation links are signed and expire after 48 hours.
 
 - Live at `https://rajatgupta-newsletter.vercel.app` (Vercel project `rajatgupta-newsletter`, team "rajatguptarg's projects").
-- `https://rajatgupta-newsletter.vercel.app/health` says whether the settings below are present. It never shows their values.
+- `https://rajatgupta-newsletter.vercel.app/health` checks the settings below by reading the segment from Resend, so it catches a missing value, a send-only key and a wrong segment ID. It answers `{"ok":true,...}` when sign-ups will work, or names the problem. It never shows the values. The answer is cached for five minutes per key and segment.
 
 ## How a sign-up works
 
@@ -32,7 +32,7 @@ Set these two in Vercel (**Project > Settings > Environment Variables**, environ
 
 | Name | What |
 | --- | --- |
-| `RESEND_API_KEY` | A Resend API key with **Full access**; contacts can only be managed with full access. Use a key just for this function so you can revoke it on its own. Mark it **Sensitive**. |
+| `RESEND_API_KEY` | A Resend API key with **Full access**. A **Sending access** key sends the confirmation email but fails when the reader confirms, because contacts need full access. Use a key just for this function so you can revoke it on its own. Mark it **Sensitive**. |
 | `RESEND_SEGMENT_ID` | The ID of the Resend segment that new posts are sent to. |
 
 Everything else has a default in `DEFAULTS` in `lib/handler.js`, and any of them can be overridden with an environment variable of the same name:
@@ -75,4 +75,4 @@ For `vercel dev`, `npx vercel env pull .env.local` copies the project's settings
 
 ## Logs
 
-Vercel shows the function's logs under **Project > Logs**. Failed Resend calls are logged with the status code and Resend's error message as Resend returned it. The function's own log lines do not include email addresses.
+Vercel shows the function's logs under **Project > Logs**. Each confirmation email sent and each confirmed subscription writes one line (for example `Confirmed: added a new contact to the segment`). Failed Resend calls are logged with the status code and Resend's error message as Resend returned it. The function's own log lines do not include email addresses.

@@ -281,13 +281,55 @@ test('the Vercel function path /api/subscribe works too', async () => {
   assert.ok(link.startsWith(`${WORKER}/confirm?token=`), 'the link uses the short /confirm path');
 });
 
-test('health says whether settings are present, without revealing them', async () => {
-  const ready = await handle(new Request(`${WORKER}/health`), env());
-  assert.deepEqual(await ready.json(), { ok: true, missing: [] });
-  const notReady = await handle(new Request(`${WORKER}/api/health`), { ...DEFAULTS });
-  const body = await notReady.json();
-  assert.deepEqual(body, { ok: false, missing: ['RESEND_API_KEY', 'RESEND_SEGMENT_ID'] });
+test('health reports missing settings without calling Resend', async () => {
+  const response = await handle(new Request(`${WORKER}/api/health`), { ...DEFAULTS });
+  assert.deepEqual(await response.json(), {
+    ok: false,
+    missing: ['RESEND_API_KEY', 'RESEND_SEGMENT_ID'],
+    problem: 'Missing settings: RESEND_API_KEY, RESEND_SEGMENT_ID',
+  });
   assert.equal(calls.length, 0);
+});
+
+// Each health test uses its own API key, because results are cached per key and segment.
+test('health reads the segment to prove the key and segment work, and caches the answer', async () => {
+  routes['GET /segments/seg_1'] = () => [200, { object: 'segment', id: 'seg_1', name: 'Blog' }];
+  const settings = { ...env(), RESEND_API_KEY: 're_health_ok' };
+  const first = await handle(new Request(`${WORKER}/health`), settings);
+  assert.deepEqual(await first.json(), { ok: true, missing: [], problem: null });
+  assert.equal(calls[0].headers.Authorization, 'Bearer re_health_ok');
+  await handle(new Request(`${WORKER}/health`), settings);
+  assert.equal(calls.length, 1, 'the second check within five minutes uses the cached answer');
+});
+
+test('health explains a send-only API key', async () => {
+  routes['GET /segments/seg_1'] = () => [401, { statusCode: 401, name: 'restricted_api_key', message: 'This API key is restricted to only send emails' }];
+  const response = await handle(new Request(`${WORKER}/health`), { ...env(), RESEND_API_KEY: 're_send_only' });
+  const body = await response.json();
+  assert.equal(body.ok, false);
+  assert.match(body.problem, /can only send emails.*Full access/);
+});
+
+test('health explains a segment ID that does not exist', async () => {
+  routes['GET /segments/seg_1'] = () => [404, { name: 'not_found' }];
+  const body = await (await handle(new Request(`${WORKER}/health`), { ...env(), RESEND_API_KEY: 're_wrong_segment' })).json();
+  assert.equal(body.ok, false);
+  assert.match(body.problem, /RESEND_SEGMENT_ID does not match/);
+});
+
+test('sign-up and confirmation write log lines without the address', async () => {
+  const lines = [];
+  const original = console.log;
+  console.log = (line) => lines.push(String(line));
+  try {
+    routes['POST /emails'] = () => [200, { id: 'email_1' }];
+    routes['POST /contacts'] = () => [200, { id: 'c_1' }];
+    await handle(subscribeRequest({ email: 'private@example.com' }), env());
+    await handle(confirmPost(await createToken('private@example.com', await secret())), env());
+  } finally {
+    console.log = original;
+  }
+  assert.deepEqual(lines, ['Sent a confirmation email', 'Confirmed: added a new contact to the segment']);
 });
 
 test('unknown paths return 404', async () => {

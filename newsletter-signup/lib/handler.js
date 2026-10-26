@@ -34,7 +34,8 @@ export async function handle(request, env) {
   const missing = REQUIRED_SETTINGS.filter((name) => !env[name]);
 
   if (route === '/health' && request.method === 'GET') {
-    return json({ ok: missing.length === 0, missing }, 200, { 'Access-Control-Allow-Origin': '*' });
+    const problem = missing.length ? `Missing settings: ${missing.join(', ')}` : await resendProblem(env);
+    return json({ ok: !problem, missing, problem }, 200, { 'Access-Control-Allow-Origin': '*' });
   }
   if (missing.length) {
     console.error(`Missing settings: ${missing.join(', ')}`);
@@ -58,6 +59,34 @@ export async function handle(request, env) {
     }
     return redirect(sitePage(env, 'error'));
   }
+}
+
+// ---------- Health ----------
+
+const HEALTH_CACHE_MS = 5 * 60_000;
+let healthCache = { config: null, at: 0, problem: null };
+
+// Reads the segment once, which proves the key has full access (contacts need it) and the segment
+// exists. Cached for five minutes so repeated /health calls cannot use up the Resend rate limit.
+async function resendProblem(env, now = Date.now()) {
+  const config = `${env.RESEND_API_KEY}\n${env.RESEND_SEGMENT_ID}`;
+  if (healthCache.config === config && now - healthCache.at < HEALTH_CACHE_MS) return healthCache.problem;
+
+  let problem = null;
+  try {
+    const response = await resend(env, 'GET', `/segments/${encodeURIComponent(env.RESEND_SEGMENT_ID)}`);
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({}));
+      if (body.name === 'restricted_api_key') problem = 'RESEND_API_KEY can only send emails. Adding contacts needs a key with Full access.';
+      else if (response.status === 401 || response.status === 403) problem = 'Resend rejected RESEND_API_KEY.';
+      else if (response.status === 404) problem = 'RESEND_SEGMENT_ID does not match a segment in this Resend account.';
+      else problem = `Resend answered ${response.status} when reading the segment.`;
+    }
+  } catch {
+    problem = 'Could not reach Resend.';
+  }
+  healthCache = { config, at: now, problem };
+  return problem;
 }
 
 // ---------- Sign-up ----------
@@ -113,6 +142,7 @@ async function sendConfirmation(email, workerOrigin, env) {
   if (!response.ok && response.status !== 409) {
     throw new Error(`Resend refused the confirmation email: ${response.status} ${await response.text()}`);
   }
+  console.log(response.status === 409 ? 'Confirmation email already sent this hour' : 'Sent a confirmation email');
 }
 
 // ---------- Confirmation ----------
@@ -153,6 +183,7 @@ async function addToSegment(email, env) {
   const existing = await resend(env, 'GET', `/contacts/${address}`);
   if (existing.status === 404) {
     await expectOk(resend(env, 'POST', '/contacts', { email, unsubscribed: false, segments: [{ id: segment }] }), 'create contact');
+    console.log('Confirmed: added a new contact to the segment');
     return;
   }
   const contact = await (await expectOk(existing, 'look up contact')).json();
@@ -161,9 +192,11 @@ async function addToSegment(email, env) {
     await expectOk(resend(env, 'PATCH', `/contacts/${contact.id}`, { unsubscribed: false }), 're-subscribe contact');
   }
   const segments = await (await expectOk(resend(env, 'GET', `/contacts/${contact.id}/segments`), 'list segments')).json();
-  if (!segments.data?.some((s) => s.id === segment)) {
+  const inSegment = segments.data?.some((s) => s.id === segment);
+  if (!inSegment) {
     await expectOk(resend(env, 'POST', `/contacts/${contact.id}/segments/${segment}`), 'add contact to segment');
   }
+  console.log(`Confirmed: existing contact${contact.unsubscribed ? ' re-subscribed' : ''}${inSegment ? ', already in the segment' : ', added to the segment'}`);
 }
 
 // ---------- Signed tokens ----------
